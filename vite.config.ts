@@ -3,8 +3,5 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  base: "/nindaford/",
-  build: {
-    outDir: "dist",
-  },
+  base: "/nindaford/", // <-- ใส่ชื่อ repo ของคุณตรงนี้
 });
