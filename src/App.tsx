@@ -6,6 +6,18 @@ import img7508 from "./assets/images/IMG_7508.JPG";
 import img7509 from "./assets/images/IMG_7509.JPG";
 import img7510 from "./assets/images/IMG_7510.JPG";
 
+// Delivery Images
+import del1 from "./assets/images/518354740_1356748536133668_1537036633555395839_n.jpg";
+import del2 from "./assets/images/520327181_1356644202810768_3359533342953354306_n.jpg";
+import del3 from "./assets/images/521008990_1357155082759680_266049088416494662_n.jpg";
+import del4 from "./assets/images/527224258_1369000494908472_6770609366300285063_n.jpg";
+import del5 from "./assets/images/534597078_1379261157215739_4765641842671221225_n.jpg";
+import del6 from "./assets/images/534633544_1380203383788183_423890981387154358_n.jpg";
+import del7 from "./assets/images/535920017_1382860176855837_5397091415575020861_n.jpg";
+import del8 from "./assets/images/536277688_1391181682690353_430960558036038701_n.jpg";
+import del9 from "./assets/images/549571249_1410725507402637_3770870615834480586_n.jpg";
+import del10 from "./assets/images/558304431_1427933749015146_1638164802735735501_n.jpg";
+
 /**
  * Quick question (to avoid guessing wrong):
  * ในกล่องตัวเลข 3 ช่อง (ราคาปกติ/ราคาพิเศษ/ส่วนลด) ถ้าหน้าจอแคบมาก คุณอยากให้ “เรียงเป็น 1 คอลัมน์” หรือ “ยังคง 3 คอลัมน์แต่ตัวเลขย่อ/ตัด …” ?
@@ -196,6 +208,7 @@ function AutoCarousel({
 const NAV = [
   { id: "offers", label: "โปรฯ Everest Trend" },
   { id: "features", label: "จุดเด่น" },
+  { id: "reviews", label: "ส่งมอบความประทับใจ" },
 ];
 
 const FEATURE_DATA = [
@@ -232,6 +245,10 @@ const EVEREST_TREND_IMAGES = [
   { src: img7508, caption: "Everest Trend — มุมเฉียง (โชว์เส้นสาย/ล้อ/ทรงรถ)" },
   { src: img7509, caption: "Everest Trend — มุมหน้าเต็ม (กระจัง/ไฟหน้า)" },
   { src: img7510, caption: "Everest Trend — มุมด้านข้าง (สัดส่วน/พื้นที่ห้องโดยสาร)" },
+];
+
+const DELIVERY_IMAGES = [
+  del1, del2, del3, del4, del5, del6, del7, del8, del9, del10
 ];
 
 // ---------- Page ----------
@@ -488,6 +505,35 @@ export default function WebsiteStarter() {
                         </div>
                       </Card>
                     ))}
+                  </div>
+                </Section>
+
+                {/* Reviews / Deliveries */}
+                <Section
+                  id="reviews"
+                  title="ภาพส่งมอบความประทับใจ"
+                  subtitle="ขอบคุณลูกค้าทุกท่านที่ไว้วางใจให้นินดาดูแลรถคันใหม่ของคุณ"
+                >
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    {DELIVERY_IMAGES.map((src, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: i * 0.05 }}
+                        className="aspect-square rounded-2xl overflow-hidden border border-black/10 bg-white shadow-sm"
+                      >
+                        <img src={src} alt={`Delivery review ${i + 1}`} className="h-full w-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+                      </motion.div>
+                    ))}
+                  </div>
+                  <div className="mt-6 text-center">
+                    <a href="https://www.facebook.com/nindaford/" target="_blank" rel="noreferrer">
+                      <Button className="bg-white border-black/10 hover:bg-[#ede7e3]">
+                        ดูรีวิวเพิ่มเติมที่เพจ <ArrowRight className="h-4 w-4" />
+                      </Button>
+                    </a>
                   </div>
                 </Section>
 
