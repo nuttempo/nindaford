@@ -2,6 +2,10 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Sparkles, ArrowRight, CheckCircle2 } from "lucide-react";
 
+import img7508 from "./assets/images/IMG_7508.JPG";
+import img7509 from "./assets/images/IMG_7509.JPG";
+import img7510 from "./assets/images/IMG_7510.JPG";
+
 /**
  * Quick question (to avoid guessing wrong):
  * ในกล่องตัวเลข 3 ช่อง (ราคาปกติ/ราคาพิเศษ/ส่วนลด) ถ้าหน้าจอแคบมาก คุณอยากให้ “เรียงเป็น 1 คอลัมน์” หรือ “ยังคง 3 คอลัมน์แต่ตัวเลขย่อ/ตัด …” ?
@@ -223,11 +227,11 @@ const EVEREST_TREND_OFFER = {
   allOffersUrl: "https://www.ford.co.th/showroom/all-offers/",
 };
 
-// รูปรถใหม่ (Everest Trend) — วางไฟล์ไว้ที่ /public/images/
+// รูปรถใหม่ (Everest Trend) — วางไฟล์ไว้ที่ /src/assets/images/
 const EVEREST_TREND_IMAGES = [
-  { src: "/images/IMG_7508.JPG", caption: "Everest Trend — มุมเฉียง (โชว์เส้นสาย/ล้อ/ทรงรถ)" },
-  { src: "/images/IMG_7509.JPG", caption: "Everest Trend — มุมหน้าเต็ม (กระจัง/ไฟหน้า)" },
-  { src: "/images/IMG_7510.JPG", caption: "Everest Trend — มุมด้านข้าง (สัดส่วน/พื้นที่ห้องโดยสาร)" },
+  { src: img7508, caption: "Everest Trend — มุมเฉียง (โชว์เส้นสาย/ล้อ/ทรงรถ)" },
+  { src: img7509, caption: "Everest Trend — มุมหน้าเต็ม (กระจัง/ไฟหน้า)" },
+  { src: img7510, caption: "Everest Trend — มุมด้านข้าง (สัดส่วน/พื้นที่ห้องโดยสาร)" },
 ];
 
 // ---------- Page ----------
