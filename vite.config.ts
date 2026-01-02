@@ -4,5 +4,8 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   base: "/nindaford/",
+  build: {
+    outDir: "docs",
+    emptyOutDir: true,
+  },
 });
-
