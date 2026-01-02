@@ -26,15 +26,15 @@ import del10 from "./assets/images/558304431_1427933749015146_163816480273573550
 
 // ---------- Theme ----------
 const THEME = {
-  primary: "#16697a",
-  secondary: "#489fb5",
-  soft: "#82c0cc",
-  cream: "#ede7e3",
-  accent: "#ffa62b",
+  primary: "#789DBC",
+  secondary: "#C6E7FF",
+  soft: "#C6E7FF",
+  cream: "#FBFBFB",
+  accent: "#FFDDAE",
 };
 
 // ---------- Small helpers (with tiny tests) ----------
-export function formatTHB(value: string | number) {
+function formatTHB(value: string | number) {
   const n = typeof value === "string" ? Number(value.replace(/,/g, "")) : value;
   if (Number.isNaN(n)) return String(value);
   return n.toLocaleString("th-TH");
@@ -63,10 +63,10 @@ const Section: React.FC<{
   children: React.ReactNode;
 }> = ({ id, title, subtitle, children }) => (
   <section id={id} className="scroll-mt-24 py-14">
-    <div className="mx-auto max-w-6xl px-4">
+    <div className="mx-auto max-w-7xl px-4 sm:px-6">
       <div className="mb-8">
-        <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">{title}</h2>
-        {subtitle ? <p className="mt-2 text-sm md:text-base text-zinc-600 max-w-3xl">{subtitle}</p> : null}
+        <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-zinc-900">{title}</h2>
+        {subtitle ? <p className="mt-2 text-base text-zinc-600 max-w-3xl leading-relaxed">{subtitle}</p> : null}
       </div>
       {children}
     </div>
@@ -76,7 +76,7 @@ const Section: React.FC<{
 const Pill: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = "" }) => (
   <span
     className={
-      "inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/70 px-3 py-1 text-xs backdrop-blur " +
+      "inline-flex items-center gap-1.5 rounded-full border border-black/5 bg-white/50 px-3 py-1 text-xs font-medium text-zinc-600 backdrop-blur " +
       className
     }
   >
@@ -85,22 +85,27 @@ const Pill: React.FC<{ children: React.ReactNode; className?: string }> = ({ chi
 );
 
 const Card: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = "" }) => (
-  <div className={`rounded-2xl border border-black/10 bg-white/75 shadow-sm backdrop-blur ${className}`}>{children}</div>
+  <div className={`rounded-3xl border border-black/5 bg-white shadow-sm ${className}`}>{children}</div>
 );
 
 const Button: React.FC<
-  React.ButtonHTMLAttributes<HTMLButtonElement> & { className?: string }
-> = ({ children, className = "", ...props }) => (
-  <button
-    className={
-      "inline-flex items-center justify-center gap-2 rounded-2xl border px-4 py-2 text-sm font-medium shadow-sm hover:shadow transition active:scale-[0.99] focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--c-accent)] focus-visible:ring-offset-2 " +
-      className
-    }
-    {...props}
-  >
-    {children}
-  </button>
-);
+  React.ButtonHTMLAttributes<HTMLButtonElement> & { className?: string; variant?: "primary" | "outline" | "ghost" }
+> = ({ children, className = "", variant = "primary", ...props }) => {
+  const base =
+    "inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-medium transition-all active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50 disabled:pointer-events-none";
+
+  const variants = {
+    primary: "bg-[color:var(--c-primary)] text-white hover:bg-[color:var(--c-secondary)] shadow-lg shadow-[color:var(--c-primary)]/20",
+    outline: "bg-white border border-black/10 text-zinc-700 hover:bg-zinc-50 hover:border-black/20",
+    ghost: "bg-transparent text-zinc-600 hover:bg-black/5",
+  };
+
+  return (
+    <button className={`${base} ${variants[variant]} ${className}`} {...props}>
+      {children}
+    </button>
+  );
+};
 
 function AutoCarousel({
   items,
@@ -255,7 +260,7 @@ const DELIVERY_IMAGES = [
 export default function WebsiteStarter() {
   return (
     <div
-      className="min-h-screen text-zinc-900 bg-gradient-to-b from-[#ede7e3] to-white"
+      className="min-h-screen text-zinc-800 bg-[color:var(--c-cream)] selection:bg-[color:var(--c-primary)] selection:text-white"
       style={
         {
           "--c-primary": THEME.primary,
@@ -267,15 +272,16 @@ export default function WebsiteStarter() {
       }
     >
       {/* Top Nav */}
-      <header className="sticky top-0 z-30 border-b border-black/5 bg-[#ede7e3]/80 backdrop-blur">
-        <div className="mx-auto max-w-6xl px-4">
+      <header className="sticky top-0 z-30 border-b border-black/5 bg-[color:var(--c-cream)]/90 backdrop-blur-md">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="flex h-16 items-center justify-between gap-4">
-            <a href="#" className="flex items-center gap-2 font-semibold tracking-tight">
-              <span className="inline-flex h-9 w-9 items-center justify-center rounded-2xl border border-black/10 bg-white shadow-sm">
-                <Sparkles className="h-5 w-5" />
+            <a href="#" className="flex items-center gap-2.5 group">
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-white shadow-sm ring-1 ring-black/5 text-[color:var(--c-primary)] group-hover:scale-105 transition-transform">
+                <Sparkles className="h-4.5 w-4.5" />
               </span>
-              <span>นินดาขายฟอร์ด</span>
-              <span className="hidden sm:inline text-xs text-zinc-500">(Starter)</span>
+              <div className="leading-tight">
+                <span className="font-bold text-base tracking-tight text-zinc-900 block">นินดาขายฟอร์ด</span>
+              </div>
             </a>
 
             <nav className="hidden md:flex items-center gap-1">
@@ -283,7 +289,7 @@ export default function WebsiteStarter() {
                 <a
                   key={item.id}
                   href={`#${item.id}`}
-                  className="rounded-xl px-3 py-2 text-sm text-zinc-800 hover:bg-[#82c0cc]/20"
+                  className="rounded-full px-4 py-1.5 text-sm font-medium text-zinc-600 hover:bg-black/5 transition-colors"
                 >
                   {item.label}
                 </a>
@@ -291,13 +297,13 @@ export default function WebsiteStarter() {
             </nav>
 
             <div className="flex items-center gap-2">
-              <a href="https://m.me/nindaford" target="_blank" rel="noreferrer" className="hidden sm:inline">
-                <Button className="bg-[color:var(--c-primary)] text-white border-[color:var(--c-primary)] hover:bg-[color:var(--c-secondary)]">
+              <a href="https://m.me/nindaford" target="_blank" rel="noreferrer" className="hidden sm:inline-block">
+                <Button variant="primary" className="rounded-full px-6">
                   ขอใบเสนอราคา <ArrowRight className="h-4 w-4" />
                 </Button>
               </a>
-              <a className="md:hidden rounded-xl px-3 py-2 text-sm border border-black/10 bg-white shadow-sm" href="#offers">
-                เมนู
+              <a className="md:hidden rounded-xl p-2 text-zinc-600 hover:bg-black/5" href="#offers">
+                <span className="text-sm font-medium">เมนู</span>
               </a>
             </div>
           </div>
@@ -312,48 +318,56 @@ export default function WebsiteStarter() {
             <div className="absolute top-24 -left-20 h-72 w-72 rounded-full bg-[#489fb5]/15 blur-2xl" />
           </div>
 
-          <div className="mx-auto max-w-6xl px-4">
-            <div className="grid gap-6 py-10 md:grid-cols-[1fr_380px] md:items-start">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6">
+            <div className="grid gap-12 py-12 lg:grid-cols-[1fr_400px] lg:items-start">
               {/* LEFT */}
               <div>
                 <div className="grid gap-8 py-6 md:grid-cols-2 md:items-center">
                   <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-                    <div className="flex flex-wrap gap-2">
-                      <Pill>
-                        <CheckCircle2 className="h-4 w-4" />
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      <Pill className="bg-white/80 border-transparent shadow-sm">
+                        <CheckCircle2 className="h-3.5 w-3.5 text-[color:var(--c-primary)]" />
                         โปรฯ อัปเดตตลอด
                       </Pill>
-                      <Pill className="border-[color:var(--c-accent)]/40">
-                        <CheckCircle2 className="h-4 w-4" />
+                      <Pill className="bg-white/80 border-transparent shadow-sm">
+                        <CheckCircle2 className="h-3.5 w-3.5 text-[color:var(--c-primary)]" />
                         ทำข้อเสนอเฉพาะคุณ
                       </Pill>
                     </div>
 
-                    <h1 className="mt-5 text-4xl md:text-5xl font-semibold tracking-tight leading-tight">
-                      นินดาขายฟอร์ด — โปรฯ ฟอร์ดอัปเดต
-                      <span className="block text-zinc-600">จองรถ • ทดลองขับ • ขอใบเสนอราคา ได้ไว</span>
+                    <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-zinc-900 leading-[1.1]">
+                      นินดาขายฟอร์ด <br />
+                      <span className="text-zinc-500 md:text-5xl">โปรฯ ฟอร์ดอัปเดต</span>
                     </h1>
 
-                    <p className="mt-4 text-base text-zinc-600 max-w-xl">
-                      สรุปโปรฯ และตัวเลขสำคัญแบบอ่านง่าย พร้อมทางลัดติดต่อ <span className="font-medium">Inbox/โทร</span> เพื่อทำข้อเสนอเฉพาะคุณ
+                    <div className="mt-4 text-xl md:text-2xl font-medium text-zinc-700">
+                      จองรถ • ทดลองขับ • ขอใบเสนอราคา ได้ไว
+                    </div>
+
+                    <p className="mt-6 text-base md:text-lg text-zinc-500 max-w-lg leading-relaxed">
+                      สรุปโปรฯ และตัวเลขสำคัญแบบอ่านง่าย พร้อมทางลัดติดต่อ <span className="font-semibold text-zinc-800">Inbox/โทร</span> เพื่อทำข้อเสนอเฉพาะคุณ
                       (ดาวน์/ผ่อน/ของแถม) ได้ทันที
                     </p>
 
-                    <div className="mt-6 flex flex-col sm:flex-row gap-3">
+                    <div className="mt-8 flex flex-col sm:flex-row gap-3">
                       <a href="https://m.me/nindaford" target="_blank" rel="noreferrer">
-                        <Button className="w-full sm:w-auto bg-[color:var(--c-primary)] text-white border-[color:var(--c-primary)] hover:bg-[color:var(--c-secondary)]">
+                        <Button variant="primary" className="w-full sm:w-auto px-8 py-3 text-base">
                           ขอโปร/ใบเสนอราคา <ArrowRight className="h-4 w-4" />
                         </Button>
                       </a>
                       <a href="#offers">
-                        <Button className="w-full sm:w-auto bg-white border-black/10 hover:bg-[#ede7e3]">ดูโปรฯ Everest Trend</Button>
+                        <Button variant="outline" className="w-full sm:w-auto px-8 py-3 text-base">
+                          ดูโปรฯ Everest Trend
+                        </Button>
                       </a>
                     </div>
 
-                    <div className="mt-6 flex flex-wrap gap-3 text-xs text-zinc-600">
-                      <span className="rounded-full border border-black/10 px-3 py-1 bg-white/70">Ranger</span>
-                      <span className="rounded-full border border-black/10 px-3 py-1 bg-white/70">Everest</span>
-                      <span className="rounded-full border border-black/10 px-3 py-1 bg-white/70">Raptor</span>
+                    <div className="mt-8 flex flex-wrap gap-2">
+                      {["Ranger", "Everest", "Raptor"].map(tag => (
+                        <span key={tag} className="inline-flex items-center px-3 py-1 rounded-md bg-black/5 text-xs font-medium text-zinc-600">
+                          {tag}
+                        </span>
+                      ))}
                     </div>
                   </motion.div>
 
@@ -372,15 +386,15 @@ export default function WebsiteStarter() {
 
                       <div className="mt-4 grid gap-3">
                         <a href="https://m.me/nindaford" target="_blank" rel="noreferrer">
-                          <Button className="w-full bg-[color:var(--c-primary)] text-white border-[color:var(--c-primary)] hover:bg-[color:var(--c-secondary)]">
+                          <Button variant="primary" className="w-full justify-between">
                             ขอโปร/ราคา <ArrowRight className="h-4 w-4" />
                           </Button>
                         </a>
                         <a href="https://m.me/nindaford" target="_blank" rel="noreferrer">
-                          <Button className="w-full bg-white border-black/10 hover:bg-[#ede7e3]">ทัก Inbox (Facebook)</Button>
+                          <Button variant="outline" className="w-full justify-center">ทัก Inbox (Facebook)</Button>
                         </a>
                         <a href="https://www.facebook.com/nindaford/" target="_blank" rel="noreferrer">
-                          <Button className="w-full bg-white border-black/10 hover:bg-[#ede7e3]">เปิดหน้าเพจ</Button>
+                          <Button variant="outline" className="w-full justify-center">เปิดหน้าเพจ</Button>
                         </a>
                       </div>
 
@@ -404,8 +418,8 @@ export default function WebsiteStarter() {
                   title="โปรฯ กลาง — Everest Trend"
                   subtitle="อ้างอิงโปรฯ ทางการจาก Ford Thailand (กดลิงก์เพื่อดูเงื่อนไข/ระยะเวลาล่าสุด)"
                 >
-                  <div className="grid gap-4 md:grid-cols-5">
-                    <Card className="p-5 md:col-span-3">
+                  <div className="flex flex-col gap-6">
+                    <Card className="p-5">
                       <div className="grid gap-4">
                         <AutoCarousel
                           items={EVEREST_TREND_IMAGES}
@@ -417,29 +431,29 @@ export default function WebsiteStarter() {
 
                         <div className="flex items-start justify-between gap-3">
                           <div className="min-w-0">
-                            <Pill className="border-black/10">Everest Trend</Pill>
-                            <div className="mt-3 text-lg font-semibold truncate">{EVEREST_TREND_OFFER.name}</div>
-                            <div className="mt-2 text-sm text-zinc-600">{EVEREST_TREND_OFFER.note}</div>
+                            <Pill className="border-black/5 bg-zinc-100/50">Everest Trend</Pill>
+                            <div className="mt-3 text-xl font-bold text-zinc-900 truncate">{EVEREST_TREND_OFFER.name}</div>
+                            <div className="mt-2 text-sm text-zinc-500">{EVEREST_TREND_OFFER.note}</div>
                           </div>
-                          <Pill className="border-black/10">
-                            <Sparkles className="h-4 w-4" />
+                          <Pill className="bg-orange-100/50 text-orange-700 border-orange-200/50">
+                            <Sparkles className="h-3.5 w-3.5" />
                             Offer
                           </Pill>
                         </div>
 
                         {/* Numbers: prevent overflow */}
-                        <div className="mt-1 grid gap-3 grid-cols-1 md:grid-cols-3">
+                        <div className="mt-2 grid gap-3 grid-cols-1 sm:grid-cols-3">
                           {[{ label: "ราคาปกติ", value: EVEREST_TREND_OFFER.normalPrice }, { label: "ราคาพิเศษ", value: EVEREST_TREND_OFFER.specialPrice }, { label: "ส่วนลด", value: EVEREST_TREND_OFFER.save }].map(
                             (x) => (
                               <div
                                 key={x.label}
                                 className={
-                                  "rounded-2xl border border-black/10 p-4 min-w-0 " +
-                                  (x.label === "ราคาพิเศษ" ? "bg-white" : "bg-[#ede7e3]/50")
+                                  "rounded-2xl border border-black/5 p-4 min-w-0 " +
+                                  (x.label === "ราคาพิเศษ" ? "bg-[color:var(--c-primary)]/5 border-transparent" : "bg-zinc-50")
                                 }
                               >
-                                <div className="text-xs text-zinc-600">{x.label}</div>
-                                <div className="mt-1 text-[clamp(1rem,1.8vw,1.15rem)] font-semibold tracking-tight tabular-nums truncate">
+                                <div className="text-xs text-zinc-500">{x.label}</div>
+                                <div className={`mt-1 text-[clamp(1rem,1.8vw,1.25rem)] font-bold tracking-tight tabular-nums truncate ${x.label === "ราคาพิเศษ" ? "text-[color:var(--c-primary)]" : "text-zinc-900"}`}>
                                   ฿{formatTHB(x.value)}
                                 </div>
                               </div>
@@ -447,45 +461,50 @@ export default function WebsiteStarter() {
                           )}
                         </div>
 
-                        <div className="mt-2 flex flex-col sm:flex-row gap-3">
+                        <div className="mt-4 flex flex-col sm:flex-row gap-3">
                           <a href="https://m.me/nindaford" target="_blank" rel="noreferrer">
-                            <Button className="w-full sm:w-auto bg-[color:var(--c-primary)] text-white border-[color:var(--c-primary)] hover:bg-[color:var(--c-secondary)]">
+                            <Button variant="primary" className="w-full sm:w-auto">
                               ขอข้อเสนอเฉพาะของคุณ <ArrowRight className="h-4 w-4" />
                             </Button>
                           </a>
                           <a href={EVEREST_TREND_OFFER.offerUrl} target="_blank" rel="noreferrer">
-                            <Button className="w-full sm:w-auto bg-white border-black/10 hover:bg-[#ede7e3]">ดูโปรฯ ทางการ (Ford)</Button>
+                            <Button variant="outline" className="w-full sm:w-auto">ดูโปรฯ ทางการ (Ford)</Button>
                           </a>
                           <a href={EVEREST_TREND_OFFER.allOffersUrl} target="_blank" rel="noreferrer">
-                            <Button className="w-full sm:w-auto bg-white border-black/10 hover:bg-[#ede7e3]">ดูรวมโปรฯ ทั้งหมด</Button>
+                            <Button variant="outline" className="w-full sm:w-auto">ดูรวมโปรฯ ทั้งหมด</Button>
                           </a>
                         </div>
 
-                        <p className="text-xs text-zinc-500">
+                        <p className="mt-4 text-xs text-zinc-400">
                           * หมายเหตุ: เงื่อนไข/ระยะเวลาโปรฯ อาจเปลี่ยนได้ตามประกาศของ Ford Thailand
                         </p>
                       </div>
                     </Card>
 
-                    <Card className="p-5 md:col-span-2">
-                      <div className="text-sm font-semibold">อยากได้ “ข้อเสนอเฉพาะคุณ” ต้องมีอะไรบ้าง</div>
-                      <ul className="mt-3 grid gap-2 text-sm">
-                        {["พื้นที่จดทะเบียน", "สีที่ต้องการ", "ดาวน์/งบต่อเดือน", "อาชีพ/เอกสาร", "วันรับรถ"].map((t) => (
-                          <li key={t} className="flex items-center gap-2 text-zinc-700">
-                            <CheckCircle2 className="h-4 w-4" /> {t}
-                          </li>
-                        ))}
-                      </ul>
-                      <div className="mt-4">
+                    <Card className="p-6">
+                      <div>
+                        <div className="text-base font-semibold text-zinc-900">อยากได้ “ข้อเสนอเฉพาะคุณ” ต้องมีอะไรบ้าง</div>
+                        <ul className="mt-5 grid gap-3 text-sm">
+                          {["พื้นที่จดทะเบียน", "สีที่ต้องการ", "ดาวน์/งบต่อเดือน", "อาชีพ/เอกสาร", "วันรับรถ"].map((t) => (
+                            <li key={t} className="flex items-center gap-3 text-zinc-600">
+                              <span className="flex-none rounded-full bg-[color:var(--c-soft)]/20 p-1 text-[color:var(--c-primary)]">
+                                <CheckCircle2 className="h-3.5 w-3.5" />
+                              </span>
+                              {t}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className="mt-8">
                         <a href="https://m.me/nindaford" target="_blank" rel="noreferrer">
-                          <Button className="w-full bg-white border-black/10 hover:bg-[#ede7e3]">ทัก Inbox เพื่อคุยรายละเอียด</Button>
+                          <Button variant="outline" className="w-full justify-center py-3">ทัก Inbox เพื่อคุยรายละเอียด</Button>
                         </a>
                       </div>
                     </Card>
                   </div>
                 </Section>
 
-                {/* Features (ปรับให้เป็นเรื่องขายรถ) */}
+                {/* Features */}
                 <Section
                   id="features"
                   title="ทำไมลูกค้าถึงเลือกนินดา"
@@ -493,14 +512,14 @@ export default function WebsiteStarter() {
                 >
                   <div className="grid gap-4 md:grid-cols-2">
                     {FEATURE_DATA.map((f) => (
-                      <Card key={f.title} className="p-5">
-                        <div className="flex items-start gap-3">
-                          <span className="mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-black/10 bg-white shadow-sm">
-                            <CheckCircle2 className="h-5 w-5" />
+                      <Card key={f.title} className="p-6 transition-colors hover:border-[color:var(--c-primary)]/20">
+                        <div className="flex items-start gap-4">
+                          <span className="mt-1 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[color:var(--c-cream)] text-[color:var(--c-primary)]">
+                            <CheckCircle2 className="h-6 w-6" />
                           </span>
                           <div>
-                            <div className="text-base font-semibold">{f.title}</div>
-                            <div className="mt-1 text-sm text-zinc-600">{f.desc}</div>
+                            <div className="text-lg font-semibold text-zinc-900">{f.title}</div>
+                            <div className="mt-2 text-sm text-zinc-600 leading-relaxed">{f.desc}</div>
                           </div>
                         </div>
                       </Card>
@@ -528,20 +547,27 @@ export default function WebsiteStarter() {
                       </motion.div>
                     ))}
                   </div>
-                  <div className="mt-6 text-center">
+                  <div className="mt-10 text-center">
                     <a href="https://www.facebook.com/nindaford/" target="_blank" rel="noreferrer">
-                      <Button className="bg-white border-black/10 hover:bg-[#ede7e3]">
+                      <Button variant="outline" className="rounded-full px-8">
                         ดูรีวิวเพิ่มเติมที่เพจ <ArrowRight className="h-4 w-4" />
                       </Button>
                     </a>
                   </div>
                 </Section>
 
-                <footer className="border-t border-black/5 bg-[#ede7e3]/70 backdrop-blur">
-                  <div className="mx-auto max-w-6xl px-4 py-10">
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-                      <div className="text-sm font-medium">นินดาขายฟอร์ด</div>
-                      <div className="text-xs text-zinc-500">© {new Date().getFullYear()} — พร้อมใช้งานหน้าแรก</div>
+                <footer className="border-t border-black/5 bg-white/50 backdrop-blur-sm mt-20">
+                  <div className="mx-auto max-w-7xl px-4 py-8">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                      <div className="flex items-center gap-2">
+                        <div className="h-8 w-8 rounded-lg bg-[color:var(--c-primary)] text-white flex items-center justify-center">
+                          <Sparkles className="h-5 w-5" />
+                        </div>
+                        <div className="text-sm font-bold text-zinc-900">นินดาขายฟอร์ด</div>
+                      </div>
+                      <div className="text-xs text-zinc-500">
+                        © 2026 — พร้อมใช้งานหน้าแรก
+                      </div>
                     </div>
                   </div>
                 </footer>
@@ -577,12 +603,12 @@ export default function WebsiteStarter() {
 
                   <div className="mt-4 grid gap-2">
                     <a href="https://m.me/nindaford" target="_blank" rel="noreferrer">
-                      <Button className="w-full bg-[color:var(--c-primary)] text-white border-[color:var(--c-primary)] hover:bg-[color:var(--c-secondary)]">
+                      <Button variant="primary" className="w-full justify-center">
                         ทัก Inbox <ArrowRight className="h-4 w-4" />
                       </Button>
                     </a>
                     <a href="https://www.facebook.com/nindaford/" target="_blank" rel="noreferrer">
-                      <Button className="w-full bg-white border-black/10 hover:bg-[#ede7e3]">เปิดหน้าเพจ</Button>
+                      <Button variant="outline" className="w-full justify-center">เปิดหน้าเพจ</Button>
                     </a>
                   </div>
 
