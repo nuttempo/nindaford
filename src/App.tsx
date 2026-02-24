@@ -42,13 +42,13 @@ function formatTHB(value: string | number) {
 
 (function runMiniTests() {
   try {
-     
+
     console.assert(formatTHB("1249000") === "1,249,000", "formatTHB should format numeric strings");
-     
+
     console.assert(formatTHB("1,249,000") === "1,249,000", "formatTHB should tolerate commas");
-     
+
     console.assert(formatTHB(1397000) === "1,397,000", "formatTHB should format numbers");
-     
+
     console.assert(formatTHB("abc") === "abc", "formatTHB should passthrough non-numeric");
   } catch {
     // ignore
@@ -213,6 +213,7 @@ function AutoCarousel({
 const NAV = [
   { id: "offers", label: "โปรฯ Everest Trend" },
   { id: "features", label: "จุดเด่น" },
+  { id: "calculator", label: "คำนวณค่างวด" },
   { id: "reviews", label: "ส่งมอบความประทับใจ" },
 ];
 
@@ -258,6 +259,36 @@ const DELIVERY_IMAGES = [
 
 // ---------- Page ----------
 export default function WebsiteStarter() {
+  // --- Calculator State ---
+  const [carPrice, setCarPrice] = React.useState<number>(1249000);
+  const [downType, setDownType] = React.useState<"percent" | "amount">("percent");
+  const [downPercent, setDownPercent] = React.useState<number>(25);
+  const [downAmount, setDownAmount] = React.useState<number>(312250); // 25% of 1,249,000
+  const [interestRate, setInterestRate] = React.useState<number>(2.99); // 2.99% fixed string fallback handling
+  const [months, setMonths] = React.useState<number>(84);
+
+  // Sync downPercent <-> downAmount when carPrice changes or user toggles
+  React.useEffect(() => {
+    if (downType === "percent") {
+      setDownAmount(Math.round(carPrice * (downPercent / 100)));
+    } else {
+      setDownPercent(Math.round((downAmount / carPrice) * 100));
+    }
+  }, [carPrice, downPercent, downAmount, downType]);
+
+  // Handle Percentage change from Range Slider
+  const handleDownPercentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const p = Number(e.target.value);
+    setDownType("percent");
+    setDownPercent(p);
+  };
+
+  // Safe Calculator math
+  const financeAmount = Math.max(0, carPrice - downAmount); // ยอดจัดไฟแนนซ์
+  const totalInterest = financeAmount * (interestRate / 100) * (months / 12);
+  const totalFinance = financeAmount + totalInterest;
+  const monthlyInstallment = months > 0 ? Math.ceil(totalFinance / months) : 0;
+
   return (
     <div
       className="min-h-screen text-zinc-800 bg-[color:var(--c-cream)] selection:bg-[color:var(--c-primary)] selection:text-white"
@@ -525,6 +556,195 @@ export default function WebsiteStarter() {
                       </Card>
                     ))}
                   </div>
+                </Section>
+
+                {/* Calculator */}
+                <Section
+                  id="calculator"
+                  title="ประเมินค่างวดรถเบื้องต้น"
+                  subtitle="ลองปรับตัวเลขเพื่อหาค่างวดที่เหมาะกับคุณ (ค่างวดจริงอาจแตกต่างเล็กน้อยตามแคมเปญไฟแนนซ์แต่ละเดือน)"
+                >
+                  <Card className="p-6 md:p-8 border-[color:var(--c-primary)]/20 shadow-[0_4px_24px_rgba(0,0,0,0.04)]">
+                    <div className="grid gap-10 lg:grid-cols-[1fr_400px] lg:items-start">
+                      {/* Left: Input Form */}
+                      <div className="flex flex-col gap-6">
+
+                        {/* Car Price */}
+                        <div>
+                          <label className="block text-sm font-semibold text-zinc-900 mb-2">ราคารถ (บาท)</label>
+                          <div className="relative">
+                            <input
+                              type="number"
+                              min={0}
+                              value={carPrice}
+                              onChange={(e) => setCarPrice(Number(e.target.value))}
+                              className="w-full rounded-2xl border border-black/10 bg-zinc-50/50 px-4 py-3.5 text-lg font-bold text-zinc-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all font-sans"
+                            />
+                            <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-zinc-400 font-medium">฿</div>
+                          </div>
+                        </div>
+
+                        {/* Down Payment */}
+                        <div>
+                          <div className="flex items-center justify-between mb-2">
+                            <label className="block text-sm font-semibold text-zinc-900">เงินดาวน์</label>
+                            <div className="flex items-center rounded-lg bg-black/5 p-1">
+                              <button
+                                type="button"
+                                onClick={() => setDownType("percent")}
+                                className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all ${downType === "percent" ? "bg-white text-zinc-900 shadow-sm" : "text-zinc-500 hover:text-zinc-700 hover:bg-black/5"}`}
+                              >
+                                % เปอร์เซ็นต์
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setDownType("amount")}
+                                className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all ${downType === "amount" ? "bg-white text-zinc-900 shadow-sm" : "text-zinc-500 hover:text-zinc-700 hover:bg-black/5"}`}
+                              >
+                                บาท
+                              </button>
+                            </div>
+                          </div>
+
+                          {downType === "amount" ? (
+                            <div className="relative mb-4">
+                              <input
+                                type="number"
+                                min={0}
+                                value={downAmount}
+                                onChange={(e) => {
+                                  setDownType("amount");
+                                  setDownAmount(Number(e.target.value));
+                                }}
+                                className="w-full rounded-2xl border border-black/10 bg-zinc-50/50 px-4 py-3.5 text-lg font-bold text-zinc-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all font-sans"
+                              />
+                              <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-zinc-400 font-medium">฿</div>
+                            </div>
+                          ) : (
+                            <div className="relative mb-4">
+                              <input
+                                type="number"
+                                min={0}
+                                max={100}
+                                value={downPercent}
+                                onChange={(e) => {
+                                  setDownType("percent");
+                                  setDownPercent(Number(e.target.value));
+                                }}
+                                className="w-full rounded-2xl border border-black/10 bg-zinc-50/50 px-4 py-3.5 text-lg font-bold text-zinc-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all font-sans"
+                              />
+                              <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-zinc-400 font-medium">%</div>
+                            </div>
+                          )}
+
+                          {/* Slider for quick adjustments */}
+                          <div className="px-1 mt-2">
+                            <input
+                              type="range"
+                              min="0" max="50" step="5"
+                              value={downPercent}
+                              onChange={handleDownPercentChange}
+                              className="w-full accent-[color:var(--c-primary)] h-1.5 rounded-lg appearance-none bg-black/10 cursor-pointer"
+                            />
+                            <div className="flex justify-between text-[11px] text-zinc-400 mt-2 font-medium px-1">
+                              <span>0%</span>
+                              <span>15%</span>
+                              <span>25%</span>
+                              <span>50%</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Details (Interest + Duration) */}
+                        <div className="grid grid-cols-2 gap-4 mt-2">
+                          <div>
+                            <label className="block text-sm font-semibold text-zinc-900 mb-2">ดอกเบี้ยต่อปี (%)</label>
+                            <div className="relative">
+                              <input
+                                type="number"
+                                step="0.01"
+                                min={0}
+                                value={interestRate}
+                                onChange={(e) => setInterestRate(Number(e.target.value))}
+                                className="w-full rounded-2xl border border-black/10 bg-zinc-50/50 px-4 py-3.5 font-bold text-zinc-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all font-sans"
+                              />
+                            </div>
+                          </div>
+                          <div>
+                            <label className="block text-sm font-semibold text-zinc-900 mb-2">ระยะเวลา (งวด)</label>
+                            <div className="relative">
+                              <select
+                                value={months}
+                                onChange={(e) => setMonths(Number(e.target.value))}
+                                className="w-full rounded-2xl border border-black/10 bg-zinc-50/50 px-4 py-3.5 font-bold text-zinc-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all cursor-pointer font-sans appearance-none"
+                              >
+                                <option value={48}>48 งวด (4 ปี)</option>
+                                <option value={60}>60 งวด (5 ปี)</option>
+                                <option value={72}>72 งวด (6 ปี)</option>
+                                <option value={84}>84 งวด (7 ปี)</option>
+                              </select>
+                              <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-zinc-400">
+                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+
+                      {/* Right: Summary Result */}
+                      <div className="rounded-3xl bg-gradient-to-b from-[color:var(--c-primary)]/[0.08] to-[color:var(--c-primary)]/[0.02] border border-[color:var(--c-primary)]/10 p-6 md:p-8 flex flex-col h-full justify-center relative overflow-hidden">
+
+                        <div className="absolute -top-12 -right-12 h-32 w-32 rounded-full bg-[color:var(--c-primary)]/10 blur-2xl pointer-events-none"></div>
+
+                        <div className="text-center relative z-10 pt-2">
+                          <div className="inline-flex items-center gap-1.5 rounded-full bg-white/60 px-3 py-1 mb-4 border border-[color:var(--c-primary)]/10 shadow-sm backdrop-blur-sm">
+                            <span className="relative flex h-2 w-2">
+                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[color:var(--c-primary)] opacity-75"></span>
+                              <span className="relative inline-flex rounded-full h-2 w-2 bg-[color:var(--c-primary)]"></span>
+                            </span>
+                            <span className="text-xs font-semibold text-[color:var(--c-primary)]">ยอดผ่อนชำระประมาณการ</span>
+                          </div>
+
+                          <div className="text-[clamp(2.5rem,4vw,3.5rem)] font-bold text-zinc-900 tabular-nums tracking-tight leading-none mb-1">
+                            <span className="text-[color:var(--c-primary)] text-2xl md:text-3xl font-medium mr-1.5">฿</span>
+                            {formatTHB(monthlyInstallment)}
+                          </div>
+                          <div className="text-sm font-medium text-zinc-500">ต่อเดือน</div>
+                        </div>
+
+                        <div className="mt-8 space-y-3.5 relative z-10 flex-1">
+                          <div className="flex justify-between items-center pb-3 border-b border-black/5">
+                            <div className="text-sm text-zinc-500">ราคารถยนต์</div>
+                            <div className="font-semibold text-zinc-900">฿{formatTHB(carPrice)}</div>
+                          </div>
+                          <div className="flex justify-between items-center pb-3 border-b border-black/5">
+                            <div className="text-sm text-zinc-500">ยอดเงินดาวน์ ({downPercent}%)</div>
+                            <div className="font-semibold text-zinc-900">฿{formatTHB(downAmount)}</div>
+                          </div>
+                          <div className="flex justify-between items-center pb-3 border-b border-black/5">
+                            <div className="text-sm text-zinc-500">ยอดจัดไฟแนนซ์</div>
+                            <div className="font-semibold text-zinc-900">฿{formatTHB(financeAmount)}</div>
+                          </div>
+                          <div className="flex justify-between items-center text-[color:var(--c-primary)] font-medium">
+                            <div className="text-sm">ดอกเบี้ยรวม ({months} งวด)</div>
+                            <div>฿{formatTHB(Math.ceil(totalInterest))}</div>
+                          </div>
+                        </div>
+
+                        <div className="mt-8 relative z-10">
+                          <a href={`https://m.me/nindaford?text=${encodeURIComponent(`สนใจให้ทำใบเสนอราคา\nราคารถ: ${formatTHB(carPrice)} บ.\nดาวน์: ${downPercent}% (${formatTHB(downAmount)} บ.)\nผ่อน: ${months} งวด\n(รบกวนคำนวณดอกเบี้ยจริงให้หน่อยครับ/ค่ะ)`)}`} target="_blank" rel="noreferrer" className="block w-full">
+                            <Button variant="primary" className="w-full py-4 text-[15px] rounded-2xl shadow-xl shadow-[color:var(--c-primary)]/20 hover:scale-[1.02] transition-transform">
+                              ทักแชทพร้อมยอดนี้ <ArrowRight className="h-4.5 w-4.5" />
+                            </Button>
+                          </a>
+                          <p className="mt-4 text-[11px] text-zinc-500 text-center leading-relaxed px-2">
+                            * การคำนวณเบื้องต้นแบบ Flat Rate ยังไม่รวมประกันภัยและรายละเอียดอื่น ยอดผ่อนและดอกเบี้ยจริงขึ้นอยู่กับการอนุมัติของไฟแนนซ์
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
                 </Section>
 
                 {/* Reviews / Deliveries */}
