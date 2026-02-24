@@ -653,27 +653,27 @@ export default function WebsiteStarter() {
 
                       {/* Details (Interest + Duration) */}
                       <div className="grid grid-cols-2 gap-5 mt-4">
-                        <div>
-                          <label className="block text-sm font-bold text-slate-800 mb-3">ดอกเบี้ยต่อปี (%)</label>
-                          <div className="relative">
+                        <div className="flex flex-col">
+                          <label className="text-sm font-bold text-slate-800 mb-3 whitespace-nowrap">ดอกเบี้ย/ปี</label>
+                          <div className="relative flex-1">
                             <input
                               type="number"
                               step="0.01"
                               min={0}
                               value={interestRate}
                               onChange={(e) => setInterestRate(Number(e.target.value))}
-                              className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 pl-5 pr-12 py-4 font-bold text-slate-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all font-sans shadow-inner"
+                              className="w-full h-full rounded-2xl border border-slate-200 bg-slate-50/50 pl-5 pr-12 py-4 text-base font-bold text-slate-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all font-sans shadow-inner"
                             />
                             <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-slate-400 font-bold">%</div>
                           </div>
                         </div>
-                        <div>
-                          <label className="block text-sm font-bold text-slate-800 mb-3">ระยะเวลา (งวด)</label>
-                          <div className="relative">
+                        <div className="flex flex-col">
+                          <label className="text-sm font-bold text-slate-800 mb-3 whitespace-nowrap">ระยะเวลา</label>
+                          <div className="relative flex-1">
                             <select
                               value={months}
                               onChange={(e) => setMonths(Number(e.target.value))}
-                              className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 pl-5 pr-10 py-4 font-bold text-slate-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all cursor-pointer font-sans appearance-none shadow-inner"
+                              className="w-full h-full rounded-2xl border border-slate-200 bg-slate-50/50 pl-5 pr-10 py-4 text-base font-bold text-slate-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all cursor-pointer font-sans appearance-none shadow-inner"
                             >
                               <option value={48}>48 งวด (4 ปี)</option>
                               <option value={60}>60 งวด (5 ปี)</option>
