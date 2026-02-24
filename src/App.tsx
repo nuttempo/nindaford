@@ -461,7 +461,7 @@ export default function WebsiteStarter() {
                 subtitle="อ้างอิงโปรฯ ทางการจาก Ford Thailand (กดลิงก์เพื่อดูเงื่อนไข/ระยะเวลาล่าสุด)"
               >
                 <div className="flex flex-col gap-8">
-                  <Card className="p-6 md:p-8 shadow-sm ring-1 ring-slate-900/5 bg-white">
+                  <Card className="p-6 md:p-8 shadow-sm ring-1 ring-slate-900/5 bg-white hover:shadow-lg hover:ring-slate-900/10 transition-all duration-300">
                     <div className="grid gap-4">
                       <AutoCarousel
                         items={EVEREST_TREND_IMAGES}
@@ -523,7 +523,7 @@ export default function WebsiteStarter() {
                     </div>
                   </Card>
 
-                  <Card className="p-6 md:p-8 shadow-sm ring-1 ring-slate-900/5 bg-gradient-to-br from-white to-slate-50/50">
+                  <Card className="p-6 md:p-8 shadow-sm ring-1 ring-slate-900/5 bg-gradient-to-br from-white to-slate-50/50 hover:shadow-md hover:ring-slate-900/10 transition-all duration-300">
                     <div>
                       <div className="text-lg font-bold text-slate-800">อยากได้ “ข้อเสนอเฉพาะคุณ” ต้องเตรียมข้อมูลอะไรบ้าง?</div>
                       <ul className="mt-5 grid gap-4 text-sm md:text-base">
@@ -554,7 +554,7 @@ export default function WebsiteStarter() {
               >
                 <div className="grid gap-6 md:grid-cols-2">
                   {FEATURE_DATA.map((f) => (
-                    <Card key={f.title} className="p-6 md:p-8 shadow-sm bg-white ring-1 ring-slate-900/5">
+                    <Card key={f.title} className="p-6 md:p-8 shadow-sm bg-white ring-1 ring-slate-900/5 hover:-translate-y-1 hover:shadow-md hover:ring-slate-900/10 transition-all duration-300">
                       <div className="flex flex-col sm:flex-row items-start gap-5">
                         <span className="flex-none mt-1 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[color:var(--c-soft)] text-[color:var(--c-primary)] shadow-inner">
                           <CheckCircle2 className="h-7 w-7" />
@@ -773,9 +773,10 @@ export default function WebsiteStarter() {
                       whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true }}
                       transition={{ delay: i * 0.05 }}
-                      className="aspect-square rounded-2xl md:rounded-3xl overflow-hidden shadow-sm ring-1 ring-slate-900/5 bg-white relative"
+                      className="aspect-square rounded-2xl md:rounded-3xl overflow-hidden shadow-sm ring-1 ring-slate-900/5 bg-white relative group cursor-pointer"
                     >
-                      <img src={src} alt={`Delivery review ${i + 1}`} className="h-full w-full object-cover pointer-events-none" loading="lazy" />
+                      <img src={src} alt={`Delivery review ${i + 1}`} className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                     </motion.div>
                   ))}
                 </div>
@@ -792,7 +793,7 @@ export default function WebsiteStarter() {
 
             {/* RIGHT: Sidebar (Facebook Embed) */}
             <aside className="md:sticky md:top-24 h-fit">
-              <Card className="p-6 md:p-8 shadow-sm ring-1 ring-slate-900/5 rounded-[2rem] bg-gradient-to-br from-white to-slate-50/50">
+              <Card className="p-6 md:p-8 shadow-sm ring-1 ring-slate-900/5 rounded-[2rem] bg-gradient-to-br from-white to-slate-50/50 hover:shadow-md transition-shadow duration-300">
                 <div className="flex items-center justify-between mb-4">
                   <div>
                     <div className="text-base font-bold text-slate-800">อัปเดตจากเพจ</div>
