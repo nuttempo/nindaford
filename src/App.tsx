@@ -25,13 +25,8 @@ import del10 from "./assets/images/558304431_1427933749015146_163816480273573550
  */
 
 // ---------- Theme ----------
-const THEME = {
-  primary: "#1d4ed8",   // Blue 700: น้ำเงินเข้ม ดูน่าเชื่อถือ ทันสมัย อ่านง่ายชัดเจนบนพื้นขาว
-  secondary: "#3b82f6", // Blue 500: น้ำเงินอ่อนลงมา สำหรับ hover หรือองค์ประกอบรอง
-  soft: "#eff6ff",      // Blue 50: พื้นหลังฟ้าอ่อนสุดๆ ดูสบายตา
-  cream: "#f1f5f9",     // Slate 100: เทาอ่อนๆ สบายตา ตัดกับการ์ดสีขาวได้ชัดเจน
-  accent: "#f59e0b",    // Amber 500: สีส้มตัดกับน้ำเงิน ไว้เน้นจุดสำคัญ
-};
+// 🎨 สีทั้งหมดถูกย้ายไปอยู่ที่ src/index.css (:root) แล้ว
+// แก้ไขสีได้ที่ไฟล์เดียว ไม่ต้องมาแก้ที่นี่อีก!
 
 // ---------- Small helpers (with tiny tests) ----------
 function formatTHB(value: string | number) {
@@ -290,18 +285,7 @@ export default function WebsiteStarter() {
   const monthlyInstallment = months > 0 ? Math.ceil(totalFinance / months) : 0;
 
   return (
-    <div
-      className="min-h-screen text-zinc-800 bg-slate-100 selection:bg-[color:var(--c-primary)] selection:text-white"
-      style={
-        {
-          "--c-primary": THEME.primary,
-          "--c-secondary": THEME.secondary,
-          "--c-soft": THEME.soft,
-          "--c-cream": THEME.cream,
-          "--c-accent": THEME.accent,
-        } as React.CSSProperties
-      }
-    >
+    <div className="min-h-screen text-zinc-800 bg-[color:var(--c-bg)] selection:bg-[color:var(--c-primary)] selection:text-white">
       {/* Top Nav */}
       <header className="sticky top-0 z-30 border-b border-white/10 bg-slate-900/90 backdrop-blur-md">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
