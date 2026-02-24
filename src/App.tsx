@@ -42,13 +42,13 @@ function formatTHB(value: string | number) {
 
 (function runMiniTests() {
   try {
-    // eslint-disable-next-line no-console
+     
     console.assert(formatTHB("1249000") === "1,249,000", "formatTHB should format numeric strings");
-    // eslint-disable-next-line no-console
+     
     console.assert(formatTHB("1,249,000") === "1,249,000", "formatTHB should tolerate commas");
-    // eslint-disable-next-line no-console
+     
     console.assert(formatTHB(1397000) === "1,397,000", "formatTHB should format numbers");
-    // eslint-disable-next-line no-console
+     
     console.assert(formatTHB("abc") === "abc", "formatTHB should passthrough non-numeric");
   } catch {
     // ignore
@@ -556,21 +556,6 @@ export default function WebsiteStarter() {
                   </div>
                 </Section>
 
-                <footer className="border-t border-black/5 bg-white/50 backdrop-blur-sm mt-20">
-                  <div className="mx-auto max-w-7xl px-4 py-8">
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                      <div className="flex items-center gap-2">
-                        <div className="h-8 w-8 rounded-lg bg-[color:var(--c-primary)] text-white flex items-center justify-center">
-                          <Sparkles className="h-5 w-5" />
-                        </div>
-                        <div className="text-sm font-bold text-zinc-900">นินดาขายฟอร์ด</div>
-                      </div>
-                      <div className="text-xs text-zinc-500">
-                        © 2026 — พร้อมใช้งานหน้าแรก
-                      </div>
-                    </div>
-                  </div>
-                </footer>
               </div>
 
               {/* RIGHT: Sidebar (Facebook Embed) */}
@@ -621,6 +606,22 @@ export default function WebsiteStarter() {
           </div>
         </section>
       </main>
+
+      <footer className="border-t border-black/5 bg-white/50 backdrop-blur-sm mt-20">
+        <div className="mx-auto max-w-7xl px-4 py-8">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div className="flex items-center gap-2">
+              <div className="h-8 w-8 rounded-lg bg-[color:var(--c-primary)] text-white flex items-center justify-center">
+                <Sparkles className="h-5 w-5" />
+              </div>
+              <div className="text-sm font-bold text-zinc-900">นินดาขายฟอร์ด</div>
+            </div>
+            <div className="text-xs text-zinc-500">
+              © 2026 — นินดาขายฟอร์ด
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
