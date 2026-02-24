@@ -773,10 +773,9 @@ export default function WebsiteStarter() {
                       whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true }}
                       transition={{ delay: i * 0.05 }}
-                      className="aspect-square rounded-2xl md:rounded-3xl overflow-hidden shadow-sm ring-1 ring-slate-900/5 group bg-white"
+                      className="aspect-square rounded-2xl md:rounded-3xl overflow-hidden shadow-sm ring-1 ring-slate-900/5 bg-white relative"
                     >
-                      <img src={src} alt={`Delivery review ${i + 1}`} className="h-full w-full object-cover group-hover:scale-110 group-hover:rotate-1 transition-transform duration-700 pointer-events-none" loading="lazy" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                      <img src={src} alt={`Delivery review ${i + 1}`} className="h-full w-full object-cover pointer-events-none" loading="lazy" />
                     </motion.div>
                   ))}
                 </div>
