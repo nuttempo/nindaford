@@ -57,11 +57,12 @@ const Section: React.FC<{
   subtitle?: string;
   children: React.ReactNode;
 }> = ({ id, title, subtitle, children }) => (
-  <section id={id} className="scroll-mt-24 py-14">
+  <section id={id} className="scroll-mt-24 py-16 md:py-20">
     <div className="mx-auto max-w-7xl px-4 sm:px-6">
-      <div className="mb-10 text-center">
-        <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-800 drop-shadow-sm">{title}</h2>
-        {subtitle ? <p className="mt-3 text-base md:text-lg text-slate-500 max-w-3xl mx-auto leading-relaxed">{subtitle}</p> : null}
+      <div className="mb-12 text-center">
+        <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gradient">{title}</h2>
+        {subtitle ? <p className="mt-4 text-base md:text-lg text-slate-500 max-w-3xl mx-auto leading-relaxed">{subtitle}</p> : null}
+        <div className="section-divider mx-auto mt-6 w-32"></div>
       </div>
       {children}
     </div>
@@ -327,11 +328,12 @@ export default function WebsiteStarter() {
 
       {/* Hero */}
       <main>
-        <section className="relative overflow-hidden bg-slate-900 pb-16 pt-8 md:pt-16 rounded-b-[2.5rem] md:rounded-b-[4rem] shadow-2xl z-20">
+        <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-900 to-[color:var(--c-primary)]/30 pb-20 pt-10 md:pt-20 rounded-b-[2.5rem] md:rounded-b-[4rem] shadow-2xl z-20">
           <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-0 right-0 h-[500px] w-[500px] rounded-full bg-[color:var(--c-primary)]/20 blur-[100px] mix-blend-screen" />
-            <div className="absolute -bottom-32 -left-32 h-[400px] w-[400px] rounded-full bg-[color:var(--c-secondary)]/15 blur-[80px] mix-blend-screen" />
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10"></div>
+            <div className="absolute top-0 right-0 h-[600px] w-[600px] rounded-full bg-[color:var(--c-primary)]/25 blur-[120px] mix-blend-screen animate-pulse" />
+            <div className="absolute -bottom-40 -left-40 h-[500px] w-[500px] rounded-full bg-[color:var(--c-secondary)]/20 blur-[100px] mix-blend-screen" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[300px] w-[300px] rounded-full bg-[color:var(--c-accent)]/8 blur-[80px] mix-blend-screen" />
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-[0.07]"></div>
           </div>
 
           <div className="mx-auto max-w-7xl px-4 sm:px-6 relative z-10">
@@ -352,7 +354,7 @@ export default function WebsiteStarter() {
 
                   <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white leading-[1.1]">
                     นินดาขายฟอร์ด <br />
-                    <span className="text-[color:var(--c-secondary)] md:text-5xl">โปรฯ ฟอร์ดอัปเดต</span>
+                    <span className="bg-gradient-to-r from-blue-400 via-blue-300 to-cyan-300 bg-clip-text text-transparent md:text-5xl">โปรฯ ฟอร์ดอัปเดต</span>
                   </h1>
 
                   <div className="mt-4 text-xl md:text-2xl font-medium text-slate-300">
@@ -387,7 +389,7 @@ export default function WebsiteStarter() {
                 </motion.div>
 
                 <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.55, delay: 0.05 }}>
-                  <Card className="p-6 md:p-8 shadow-2xl shadow-black/20 ring-1 ring-white/10 bg-white/95 backdrop-blur-xl">
+                  <Card className="p-6 md:p-8 shadow-2xl shadow-black/20 ring-1 ring-white/10 bg-white/90 backdrop-blur-2xl">
                     <div className="flex items-center justify-between">
                       <div>
                         <div className="text-sm font-semibold text-zinc-900">ติดต่อด่วน (Quick CTA)</div>
@@ -537,11 +539,11 @@ export default function WebsiteStarter() {
                 subtitle="โฟกัสเรื่องที่ลูกค้าซื้อรถสนใจจริง ๆ: ตัวเลขชัด, ติดต่อไว, ดูแลเอกสาร, อัปเดตส่งมอบ"
               >
                 <div className="grid gap-6 md:grid-cols-2">
-                  {FEATURE_DATA.map((f) => (
-                    <Card key={f.title} className="p-6 md:p-8 shadow-sm bg-white ring-1 ring-slate-900/5 hover:-translate-y-1 hover:shadow-md hover:ring-slate-900/10 transition-all duration-300">
+                  {FEATURE_DATA.map((f, i) => (
+                    <Card key={f.title} className="p-6 md:p-8 shadow-sm bg-gradient-to-br from-white to-slate-50 ring-1 ring-slate-900/5 hover:-translate-y-1.5 hover:shadow-xl hover:ring-[color:var(--c-primary)]/20 transition-all duration-300 group">
                       <div className="flex flex-col sm:flex-row items-start gap-5">
-                        <span className="flex-none mt-1 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[color:var(--c-soft)] text-[color:var(--c-primary)] shadow-inner">
-                          <CheckCircle2 className="h-7 w-7" />
+                        <span className="flex-none mt-1 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[color:var(--c-primary)] to-[color:var(--c-secondary)] text-white shadow-lg shadow-[color:var(--c-primary)]/20 group-hover:scale-110 transition-transform duration-300">
+                          <span className="text-lg font-bold">0{i + 1}</span>
                         </span>
                         <div>
                           <div className="text-xl font-bold text-slate-900">{f.title}</div>
@@ -559,7 +561,7 @@ export default function WebsiteStarter() {
                 title="ประเมินค่างวดรถเบื้องต้น"
                 subtitle="ลองปรับตัวเลขเพื่อหาค่างวดที่เหมาะกับคุณ (ค่างวดจริงอาจแตกต่างเล็กน้อยตามแคมเปญไฟแนนซ์แต่ละเดือน)"
               >
-                <Card className="p-6 md:p-10 border-none shadow-2xl shadow-[color:var(--c-primary)]/10 ring-1 ring-slate-900/5 bg-white relative overflow-hidden">
+                <Card className="glow-ring p-6 md:p-10 border-none shadow-2xl shadow-[color:var(--c-primary)]/10 ring-1 ring-slate-900/5 bg-white relative overflow-hidden">
                   <div className="absolute top-0 right-0 h-40 w-40 bg-[color:var(--c-soft)] blur-[60px] opacity-60 pointer-events-none rounded-full"></div>
                   <div className="grid gap-12 lg:grid-cols-[1fr_400px] lg:items-start relative z-10">
                     {/* Left: Input Form */}
@@ -824,17 +826,20 @@ export default function WebsiteStarter() {
         </div>
       </main>
 
-      <footer className="border-t border-black/5 bg-white/50 backdrop-blur-sm mt-20">
-        <div className="mx-auto max-w-7xl px-4 py-8">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-lg bg-[color:var(--c-primary)] text-white flex items-center justify-center">
-                <Sparkles className="h-5 w-5" />
+      <footer className="relative mt-20 overflow-hidden">
+        <div className="section-divider mx-auto w-full max-w-7xl"></div>
+        <div className="bg-gradient-to-b from-transparent to-white/80 backdrop-blur-sm">
+          <div className="mx-auto max-w-7xl px-4 py-10">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-[color:var(--c-primary)] to-[color:var(--c-secondary)] text-white flex items-center justify-center shadow-lg shadow-[color:var(--c-primary)]/20">
+                  <Sparkles className="h-5 w-5" />
+                </div>
+                <div className="text-sm font-bold text-gradient">นินดาขายฟอร์ด</div>
               </div>
-              <div className="text-sm font-bold text-zinc-900">นินดาขายฟอร์ด</div>
-            </div>
-            <div className="text-xs text-zinc-500">
-              © 2026 — นินดาขายฟอร์ด
+              <div className="text-xs text-zinc-400">
+                © 2026 — นินดาขายฟอร์ด | สุขุมวิท 62
+              </div>
             </div>
           </div>
         </div>

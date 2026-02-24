@@ -64,3 +64,58 @@ input[type="number"] {
   -moz-appearance: textfield;
   appearance: textfield;
 }
+
+/* ============================================================
+   ✨ MODERN UI UTILITIES
+   ============================================================ */
+
+/* Gradient text helper */
+.text-gradient {
+  background: linear-gradient(135deg, var(--c-primary), var(--c-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Animated glow ring for calculator card */
+.glow-ring {
+  position: relative;
+}
+
+.glow-ring::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 1.5rem;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--c-primary), var(--c-secondary), var(--c-accent));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* Section divider gradient */
+.section-divider {
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--c-primary), var(--c-secondary), transparent);
+  border-radius: 999px;
+  opacity: 0.15;
+}
+
+/* Smooth scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--c-primary);
+  border-radius: 999px;
+  opacity: 0.3;
+}
