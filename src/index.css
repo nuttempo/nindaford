@@ -16,6 +16,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
 
 /* Removed default Vite styles to allow Tailwind to control styling completely */

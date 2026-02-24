@@ -64,9 +64,9 @@ const Section: React.FC<{
 }> = ({ id, title, subtitle, children }) => (
   <section id={id} className="scroll-mt-24 py-14">
     <div className="mx-auto max-w-7xl px-4 sm:px-6">
-      <div className="mb-8">
-        <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-zinc-900">{title}</h2>
-        {subtitle ? <p className="mt-2 text-base text-zinc-600 max-w-3xl leading-relaxed">{subtitle}</p> : null}
+      <div className="mb-10 text-center">
+        <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-800 drop-shadow-sm">{title}</h2>
+        {subtitle ? <p className="mt-3 text-base md:text-lg text-slate-500 max-w-3xl mx-auto leading-relaxed">{subtitle}</p> : null}
       </div>
       {children}
     </div>
