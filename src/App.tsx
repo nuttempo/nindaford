@@ -291,7 +291,7 @@ export default function WebsiteStarter() {
 
   return (
     <div
-      className="min-h-screen text-zinc-800 bg-[color:var(--c-cream)] selection:bg-[color:var(--c-primary)] selection:text-white"
+      className="min-h-screen text-zinc-800 bg-slate-100 selection:bg-[color:var(--c-primary)] selection:text-white"
       style={
         {
           "--c-primary": THEME.primary,
