@@ -48,3 +48,15 @@ html {
 }
 
 /* Removed default Vite styles to allow Tailwind to control styling completely */
+
+/* ซ่อนลูกศรขึ้น-ลงของ input[type=number] เพื่อไม่ให้ทับสัญลักษณ์ */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}

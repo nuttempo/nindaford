@@ -574,9 +574,9 @@ export default function WebsiteStarter() {
                             min={0}
                             value={carPrice}
                             onChange={(e) => setCarPrice(Number(e.target.value))}
-                            className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 px-5 py-4 text-xl font-bold text-slate-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all font-sans shadow-inner"
+                            className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 pl-5 pr-12 py-4 text-xl font-bold text-slate-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all font-sans shadow-inner"
                           />
-                          <div className="absolute inset-y-0 right-5 flex items-center pointer-events-none text-slate-400 font-bold">฿</div>
+                          <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-slate-400 font-bold text-lg">฿</div>
                         </div>
                       </div>
 
@@ -612,9 +612,9 @@ export default function WebsiteStarter() {
                                 setDownType("amount");
                                 setDownAmount(Number(e.target.value));
                               }}
-                              className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 px-5 py-4 text-xl font-bold text-slate-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all font-sans shadow-inner"
+                              className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 pl-5 pr-12 py-4 text-xl font-bold text-slate-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all font-sans shadow-inner"
                             />
-                            <div className="absolute inset-y-0 right-5 flex items-center pointer-events-none text-slate-400 font-bold">฿</div>
+                            <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-slate-400 font-bold text-lg">฿</div>
                           </div>
                         ) : (
                           <div className="relative mb-6">
@@ -627,9 +627,9 @@ export default function WebsiteStarter() {
                                 setDownType("percent");
                                 setDownPercent(Number(e.target.value));
                               }}
-                              className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 px-5 py-4 text-xl font-bold text-slate-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all font-sans shadow-inner"
+                              className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 pl-5 pr-12 py-4 text-xl font-bold text-slate-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all font-sans shadow-inner"
                             />
-                            <div className="absolute inset-y-0 right-5 flex items-center pointer-events-none text-slate-400 font-bold">%</div>
+                            <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-slate-400 font-bold text-lg">%</div>
                           </div>
                         )}
 
@@ -662,8 +662,9 @@ export default function WebsiteStarter() {
                               min={0}
                               value={interestRate}
                               onChange={(e) => setInterestRate(Number(e.target.value))}
-                              className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 px-4 py-4 font-bold text-slate-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all font-sans shadow-inner"
+                              className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 pl-5 pr-12 py-4 font-bold text-slate-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all font-sans shadow-inner"
                             />
+                            <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-slate-400 font-bold">%</div>
                           </div>
                         </div>
                         <div>
@@ -672,7 +673,7 @@ export default function WebsiteStarter() {
                             <select
                               value={months}
                               onChange={(e) => setMonths(Number(e.target.value))}
-                              className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 px-4 py-4 font-bold text-slate-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all cursor-pointer font-sans appearance-none shadow-inner"
+                              className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 pl-5 pr-10 py-4 font-bold text-slate-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all cursor-pointer font-sans appearance-none shadow-inner"
                             >
                               <option value={48}>48 งวด (4 ปี)</option>
                               <option value={60}>60 งวด (5 ปี)</option>
@@ -680,7 +681,7 @@ export default function WebsiteStarter() {
                               <option value={84}>84 งวด (7 ปี)</option>
                             </select>
                             <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-slate-400">
-                              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                              <svg width="14" height="14" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
                             </div>
                           </div>
                         </div>
