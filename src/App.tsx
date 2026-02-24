@@ -646,11 +646,11 @@ export default function WebsiteStarter() {
                               onChange={handleDownPercentChange}
                               className="w-full accent-[color:var(--c-primary)] h-1.5 rounded-lg appearance-none bg-black/10 cursor-pointer"
                             />
-                            <div className="flex justify-between text-[11px] text-zinc-400 mt-2 font-medium px-1">
-                              <span>0%</span>
-                              <span>15%</span>
-                              <span>25%</span>
-                              <span>50%</span>
+                            <div className="relative h-4 mt-2 text-[11px] text-zinc-400 font-medium px-1">
+                              <span className="absolute left-1">0%</span>
+                              <span className="absolute left-[30%] -translate-x-1/2">15%</span>
+                              <span className="absolute left-[50%] -translate-x-1/2">25%</span>
+                              <span className="absolute right-1">50%</span>
                             </div>
                           </div>
                         </div>
