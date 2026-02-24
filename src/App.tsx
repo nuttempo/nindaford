@@ -303,15 +303,15 @@ export default function WebsiteStarter() {
       }
     >
       {/* Top Nav */}
-      <header className="sticky top-0 z-30 border-b border-black/5 bg-[color:var(--c-cream)]/90 backdrop-blur-md">
+      <header className="sticky top-0 z-30 border-b border-white/10 bg-slate-900/90 backdrop-blur-md">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="flex h-16 items-center justify-between gap-4">
             <a href="#" className="flex items-center gap-2.5 group">
-              <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-white shadow-sm ring-1 ring-black/5 text-[color:var(--c-primary)] group-hover:scale-105 transition-transform">
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 shadow-sm ring-1 ring-white/20 text-white group-hover:scale-105 transition-transform">
                 <Sparkles className="h-4.5 w-4.5" />
               </span>
               <div className="leading-tight">
-                <span className="font-bold text-base tracking-tight text-zinc-900 block">นินดาขายฟอร์ด</span>
+                <span className="font-bold text-base tracking-tight text-white block">นินดาขายฟอร์ด</span>
               </div>
             </a>
 
@@ -320,7 +320,7 @@ export default function WebsiteStarter() {
                 <a
                   key={item.id}
                   href={`#${item.id}`}
-                  className="rounded-full px-4 py-1.5 text-sm font-medium text-zinc-600 hover:bg-black/5 transition-colors"
+                  className="rounded-full px-4 py-1.5 text-sm font-medium text-slate-300 hover:bg-white/10 hover:text-white transition-colors"
                 >
                   {item.label}
                 </a>
@@ -329,11 +329,11 @@ export default function WebsiteStarter() {
 
             <div className="flex items-center gap-2">
               <a href="https://m.me/nindaford" target="_blank" rel="noreferrer" className="hidden sm:inline-block">
-                <Button variant="primary" className="rounded-full px-6">
+                <Button variant="primary" className="rounded-full px-6 shadow-[color:var(--c-primary)]/40 hover:shadow-[color:var(--c-primary)]/60">
                   ขอใบเสนอราคา <ArrowRight className="h-4 w-4" />
                 </Button>
               </a>
-              <a className="md:hidden rounded-xl p-2 text-zinc-600 hover:bg-black/5" href="#offers">
+              <a className="md:hidden rounded-xl p-2 text-slate-300 hover:bg-white/10" href="#offers">
                 <span className="text-sm font-medium">เมนู</span>
               </a>
             </div>
@@ -343,51 +343,52 @@ export default function WebsiteStarter() {
 
       {/* Hero */}
       <main>
-        <section className="relative overflow-hidden">
+        <section className="relative overflow-hidden bg-slate-900 pb-16 pt-8 md:pt-16 rounded-b-[2.5rem] md:rounded-b-[4rem] shadow-2xl z-20">
           <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute -top-28 -right-28 h-72 w-72 rounded-full bg-[#82c0cc]/25 blur-2xl" />
-            <div className="absolute top-24 -left-20 h-72 w-72 rounded-full bg-[#489fb5]/15 blur-2xl" />
+            <div className="absolute top-0 right-0 h-[500px] w-[500px] rounded-full bg-[color:var(--c-primary)]/20 blur-[100px] mix-blend-screen" />
+            <div className="absolute -bottom-32 -left-32 h-[400px] w-[400px] rounded-full bg-[color:var(--c-secondary)]/15 blur-[80px] mix-blend-screen" />
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10"></div>
           </div>
 
-          <div className="mx-auto max-w-7xl px-4 sm:px-6">
-            <div className="grid gap-12 py-12 lg:grid-cols-[1fr_400px] lg:items-start">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 relative z-10">
+            <div className="grid gap-12 lg:grid-cols-[1fr_400px] lg:items-start">
               {/* LEFT */}
               <div>
-                <div className="grid gap-8 py-6 md:grid-cols-2 md:items-center">
+                <div className="grid gap-8 md:grid-cols-2 md:items-center">
                   <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
                     <div className="flex flex-wrap gap-2 mb-6">
-                      <Pill className="bg-white/80 border-transparent shadow-sm">
-                        <CheckCircle2 className="h-3.5 w-3.5 text-[color:var(--c-primary)]" />
+                      <Pill className="bg-white/10 text-white border-white/20 shadow-sm backdrop-blur">
+                        <CheckCircle2 className="h-3.5 w-3.5 text-[color:var(--c-secondary)]" />
                         โปรฯ อัปเดตตลอด
                       </Pill>
-                      <Pill className="bg-white/80 border-transparent shadow-sm">
-                        <CheckCircle2 className="h-3.5 w-3.5 text-[color:var(--c-primary)]" />
+                      <Pill className="bg-white/10 text-white border-white/20 shadow-sm backdrop-blur">
+                        <CheckCircle2 className="h-3.5 w-3.5 text-[color:var(--c-secondary)]" />
                         ทำข้อเสนอเฉพาะคุณ
                       </Pill>
                     </div>
 
-                    <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-zinc-900 leading-[1.1]">
+                    <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white leading-[1.1]">
                       นินดาขายฟอร์ด <br />
-                      <span className="text-zinc-500 md:text-5xl">โปรฯ ฟอร์ดอัปเดต</span>
+                      <span className="text-[color:var(--c-secondary)] md:text-5xl">โปรฯ ฟอร์ดอัปเดต</span>
                     </h1>
 
-                    <div className="mt-4 text-xl md:text-2xl font-medium text-zinc-700">
+                    <div className="mt-4 text-xl md:text-2xl font-medium text-slate-300">
                       จองรถ • ทดลองขับ • ขอใบเสนอราคา ได้ไว
                     </div>
 
-                    <p className="mt-6 text-base md:text-lg text-zinc-500 max-w-lg leading-relaxed">
-                      สรุปโปรฯ และตัวเลขสำคัญแบบอ่านง่าย พร้อมทางลัดติดต่อ <span className="font-semibold text-zinc-800">Inbox/โทร</span> เพื่อทำข้อเสนอเฉพาะคุณ
+                    <p className="mt-6 text-base md:text-lg text-slate-400 max-w-lg leading-relaxed mix-blend-lighten">
+                      สรุปโปรฯ และตัวเลขสำคัญแบบอ่านง่าย พร้อมทางลัดติดต่อ <span className="font-semibold text-white">Inbox/โทร</span> เพื่อทำข้อเสนอเฉพาะคุณ
                       (ดาวน์/ผ่อน/ของแถม) ได้ทันที
                     </p>
 
                     <div className="mt-8 flex flex-col sm:flex-row gap-3">
                       <a href="https://m.me/nindaford" target="_blank" rel="noreferrer">
-                        <Button variant="primary" className="w-full sm:w-auto px-8 py-3 text-base">
+                        <Button variant="primary" className="w-full sm:w-auto px-8 py-3.5 text-base rounded-2xl shadow-[0_8px_30px_rgb(29,78,216,0.3)]">
                           ขอโปร/ใบเสนอราคา <ArrowRight className="h-4 w-4" />
                         </Button>
                       </a>
                       <a href="#offers">
-                        <Button variant="outline" className="w-full sm:w-auto px-8 py-3 text-base">
+                        <Button variant="outline" className="w-full sm:w-auto px-8 py-3.5 text-base rounded-2xl bg-white/5 border-white/20 text-white hover:bg-white/10 hover:border-white/30 backdrop-blur-sm">
                           ดูโปรฯ Everest Trend
                         </Button>
                       </a>
@@ -395,7 +396,7 @@ export default function WebsiteStarter() {
 
                     <div className="mt-8 flex flex-wrap gap-2">
                       {["Ranger", "Everest", "Raptor"].map(tag => (
-                        <span key={tag} className="inline-flex items-center px-3 py-1 rounded-md bg-black/5 text-xs font-medium text-zinc-600">
+                        <span key={tag} className="inline-flex items-center px-3 py-1 rounded-md bg-white/10 text-xs font-medium text-slate-300 border border-white/5">
                           {tag}
                         </span>
                       ))}
@@ -403,31 +404,32 @@ export default function WebsiteStarter() {
                   </motion.div>
 
                   <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.55, delay: 0.05 }}>
-                    <Card className="p-5">
+                    <Card className="p-6 md:p-8 shadow-2xl shadow-black/20 ring-1 ring-white/10 bg-white/95 backdrop-blur-xl">
                       <div className="flex items-center justify-between">
                         <div>
-                          <div className="text-sm font-medium">Quick CTA</div>
-                          <div className="text-xs text-zinc-500">กดแล้วทักได้ทันที</div>
+                          <div className="text-sm font-semibold text-zinc-900">ติดต่อด่วน (Quick CTA)</div>
+                          <div className="text-xs text-zinc-500">กดแล้วทักแชทได้ทันที</div>
                         </div>
-                        <Pill className="border-black/10">
-                          <Sparkles className="h-4 w-4" />
+                        <Pill className="border-black/5 bg-slate-100 text-slate-800">
+                          <Sparkles className="h-4 w-4 text-[color:var(--c-accent)]" />
                           Fast
                         </Pill>
                       </div>
 
-                      <div className="mt-4 grid gap-3">
+                      <div className="mt-6 grid gap-3">
                         <a href="https://m.me/nindaford" target="_blank" rel="noreferrer">
-                          <Button variant="primary" className="w-full justify-between">
-                            ขอโปร/ราคา <ArrowRight className="h-4 w-4" />
+                          <Button variant="primary" className="w-full justify-between py-3.5 rounded-xl text-base shadow-lg shadow-[color:var(--c-primary)]/20 hover:scale-[1.02] transition-transform">
+                            ขอใบเสนอราคา <ArrowRight className="h-4.5 w-4.5" />
                           </Button>
                         </a>
                         <a href="https://m.me/nindaford" target="_blank" rel="noreferrer">
-                          <Button variant="outline" className="w-full justify-center">ทัก Inbox (Facebook)</Button>
+                          <Button variant="outline" className="w-full justify-center py-3 rounded-xl border-black/10 text-zinc-700 bg-white hover:bg-zinc-50 font-medium">ทัก Inbox เพจ</Button>
                         </a>
                         <a href="https://www.facebook.com/nindaford/" target="_blank" rel="noreferrer">
-                          <Button variant="outline" className="w-full justify-center">เปิดหน้าเพจ</Button>
+                          <Button variant="outline" className="w-full justify-center py-3 rounded-xl border-black/10 text-zinc-700 bg-white hover:bg-zinc-50 font-medium">เปิดดูเพจ Facebook</Button>
                         </a>
                       </div>
+
 
                       <div className="mt-5 rounded-2xl border border-black/10 bg-[#ede7e3]/50 p-4">
                         <div className="text-sm font-semibold">ต้องการข้อเสนอแบบไว ๆ</div>
@@ -449,8 +451,8 @@ export default function WebsiteStarter() {
                   title="โปรฯ กลาง — Everest Trend"
                   subtitle="อ้างอิงโปรฯ ทางการจาก Ford Thailand (กดลิงก์เพื่อดูเงื่อนไข/ระยะเวลาล่าสุด)"
                 >
-                  <div className="flex flex-col gap-6">
-                    <Card className="p-5">
+                  <div className="flex flex-col gap-8">
+                    <Card className="p-6 md:p-8 shadow-xl shadow-black/5 ring-1 ring-slate-900/5 hover:shadow-2xl hover:shadow-black/10 transition-shadow">
                       <div className="grid gap-4">
                         <AutoCarousel
                           items={EVEREST_TREND_IMAGES}
@@ -492,17 +494,17 @@ export default function WebsiteStarter() {
                           )}
                         </div>
 
-                        <div className="mt-4 flex flex-col sm:flex-row gap-3">
+                        <div className="mt-8 flex flex-col sm:flex-row gap-3">
                           <a href="https://m.me/nindaford" target="_blank" rel="noreferrer">
-                            <Button variant="primary" className="w-full sm:w-auto">
+                            <Button variant="primary" className="w-full sm:w-auto py-3 rounded-xl shadow-md shadow-[color:var(--c-primary)]/20">
                               ขอข้อเสนอเฉพาะของคุณ <ArrowRight className="h-4 w-4" />
                             </Button>
                           </a>
                           <a href={EVEREST_TREND_OFFER.offerUrl} target="_blank" rel="noreferrer">
-                            <Button variant="outline" className="w-full sm:w-auto">ดูโปรฯ ทางการ (Ford)</Button>
+                            <Button variant="outline" className="w-full sm:w-auto py-3 rounded-xl bg-slate-50 border-black/5 hover:bg-slate-100">ดูโปรฯ ทางการ (Ford)</Button>
                           </a>
                           <a href={EVEREST_TREND_OFFER.allOffersUrl} target="_blank" rel="noreferrer">
-                            <Button variant="outline" className="w-full sm:w-auto">ดูรวมโปรฯ ทั้งหมด</Button>
+                            <Button variant="outline" className="w-full sm:w-auto py-3 rounded-xl bg-slate-50 border-black/5 hover:bg-slate-100">ดูรวมโปรฯ ทั้งหมด</Button>
                           </a>
                         </div>
 
@@ -512,14 +514,14 @@ export default function WebsiteStarter() {
                       </div>
                     </Card>
 
-                    <Card className="p-6">
+                    <Card className="p-6 md:p-8 shadow-xl shadow-black/5 ring-1 ring-slate-900/5 bg-gradient-to-br from-white to-slate-50/50">
                       <div>
-                        <div className="text-base font-semibold text-zinc-900">อยากได้ “ข้อเสนอเฉพาะคุณ” ต้องมีอะไรบ้าง</div>
-                        <ul className="mt-5 grid gap-3 text-sm">
-                          {["พื้นที่จดทะเบียน", "สีที่ต้องการ", "ดาวน์/งบต่อเดือน", "อาชีพ/เอกสาร", "วันรับรถ"].map((t) => (
-                            <li key={t} className="flex items-center gap-3 text-zinc-600">
-                              <span className="flex-none rounded-full bg-[color:var(--c-soft)]/20 p-1 text-[color:var(--c-primary)]">
-                                <CheckCircle2 className="h-3.5 w-3.5" />
+                        <div className="text-lg font-bold text-slate-800">อยากได้ “ข้อเสนอเฉพาะคุณ” ต้องเตรียมข้อมูลอะไรบ้าง?</div>
+                        <ul className="mt-5 grid gap-4 text-sm md:text-base">
+                          {["พื้นที่รับรถ (จังหวัดจดทะเบียน)", "สีที่ต้องการ (มีผลต่อตัวรถในสต๊อก)", "เงินดาวน์ หรือ งบผ่อนต่อเดือนที่ตั้งไว้", "อาชีพ/รายได้ (เพื่อประเมินไฟแนนซ์)", "ระบุเดือนที่สะดวกรับรถ"].map((t) => (
+                            <li key={t} className="flex items-start gap-3 text-slate-600">
+                              <span className="flex-none rounded-full bg-[color:var(--c-primary)]/10 p-1.5 text-[color:var(--c-primary)] mt-0.5">
+                                <CheckCircle2 className="h-4 w-4" />
                               </span>
                               {t}
                             </li>
@@ -528,7 +530,7 @@ export default function WebsiteStarter() {
                       </div>
                       <div className="mt-8">
                         <a href="https://m.me/nindaford" target="_blank" rel="noreferrer">
-                          <Button variant="outline" className="w-full justify-center py-3">ทัก Inbox เพื่อคุยรายละเอียด</Button>
+                          <Button variant="outline" className="w-full justify-center py-3.5 rounded-xl border-[color:var(--c-primary)]/20 text-[color:var(--c-primary)] hover:bg-[color:var(--c-primary)]/5 font-semibold text-base">ทัก Inbox รับข้อเสนอทันที</Button>
                         </a>
                       </div>
                     </Card>
@@ -541,16 +543,16 @@ export default function WebsiteStarter() {
                   title="ทำไมลูกค้าถึงเลือกนินดา"
                   subtitle="โฟกัสเรื่องที่ลูกค้าซื้อรถสนใจจริง ๆ: ตัวเลขชัด, ติดต่อไว, ดูแลเอกสาร, อัปเดตส่งมอบ"
                 >
-                  <div className="grid gap-4 md:grid-cols-2">
+                  <div className="grid gap-6 md:grid-cols-2">
                     {FEATURE_DATA.map((f) => (
-                      <Card key={f.title} className="p-6 transition-colors hover:border-[color:var(--c-primary)]/20">
-                        <div className="flex items-start gap-4">
-                          <span className="mt-1 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[color:var(--c-cream)] text-[color:var(--c-primary)]">
-                            <CheckCircle2 className="h-6 w-6" />
+                      <Card key={f.title} className="p-6 md:p-8 transition-all hover:border-[color:var(--c-primary)]/30 hover:shadow-xl hover:-translate-y-1 shadow-md shadow-black/5 bg-white">
+                        <div className="flex flex-col sm:flex-row items-start gap-5">
+                          <span className="flex-none mt-1 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[color:var(--c-soft)] text-[color:var(--c-primary)] shadow-inner">
+                            <CheckCircle2 className="h-7 w-7" />
                           </span>
                           <div>
-                            <div className="text-lg font-semibold text-zinc-900">{f.title}</div>
-                            <div className="mt-2 text-sm text-zinc-600 leading-relaxed">{f.desc}</div>
+                            <div className="text-xl font-bold text-slate-900">{f.title}</div>
+                            <div className="mt-2.5 text-base text-slate-500 leading-relaxed">{f.desc}</div>
                           </div>
                         </div>
                       </Card>
@@ -564,42 +566,43 @@ export default function WebsiteStarter() {
                   title="ประเมินค่างวดรถเบื้องต้น"
                   subtitle="ลองปรับตัวเลขเพื่อหาค่างวดที่เหมาะกับคุณ (ค่างวดจริงอาจแตกต่างเล็กน้อยตามแคมเปญไฟแนนซ์แต่ละเดือน)"
                 >
-                  <Card className="p-6 md:p-8 border-[color:var(--c-primary)]/20 shadow-[0_4px_24px_rgba(0,0,0,0.04)]">
-                    <div className="grid gap-10 lg:grid-cols-[1fr_400px] lg:items-start">
+                  <Card className="p-6 md:p-10 border-none shadow-2xl shadow-[color:var(--c-primary)]/10 ring-1 ring-slate-900/5 bg-white relative overflow-hidden">
+                    <div className="absolute top-0 right-0 h-40 w-40 bg-[color:var(--c-soft)] blur-[60px] opacity-60 pointer-events-none rounded-full"></div>
+                    <div className="grid gap-12 lg:grid-cols-[1fr_400px] lg:items-start relative z-10">
                       {/* Left: Input Form */}
-                      <div className="flex flex-col gap-6">
+                      <div className="flex flex-col gap-8 mt-2">
 
                         {/* Car Price */}
                         <div>
-                          <label className="block text-sm font-semibold text-zinc-900 mb-2">ราคารถ (บาท)</label>
+                          <label className="block text-sm font-bold text-slate-800 mb-3">ราคารถ (บาท)</label>
                           <div className="relative">
                             <input
                               type="number"
                               min={0}
                               value={carPrice}
                               onChange={(e) => setCarPrice(Number(e.target.value))}
-                              className="w-full rounded-2xl border border-black/10 bg-zinc-50/50 px-4 py-3.5 text-lg font-bold text-zinc-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all font-sans"
+                              className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 px-5 py-4 text-xl font-bold text-slate-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all font-sans shadow-inner"
                             />
-                            <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-zinc-400 font-medium">฿</div>
+                            <div className="absolute inset-y-0 right-5 flex items-center pointer-events-none text-slate-400 font-bold">฿</div>
                           </div>
                         </div>
 
                         {/* Down Payment */}
                         <div>
-                          <div className="flex items-center justify-between mb-2">
-                            <label className="block text-sm font-semibold text-zinc-900">เงินดาวน์</label>
-                            <div className="flex items-center rounded-lg bg-black/5 p-1">
+                          <div className="flex items-center justify-between mb-3">
+                            <label className="block text-sm font-bold text-slate-800">เงินดาวน์</label>
+                            <div className="flex items-center rounded-xl bg-slate-100 p-1">
                               <button
                                 type="button"
                                 onClick={() => setDownType("percent")}
-                                className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all ${downType === "percent" ? "bg-white text-zinc-900 shadow-sm" : "text-zinc-500 hover:text-zinc-700 hover:bg-black/5"}`}
+                                className={`px-4 py-1.5 text-xs font-bold rounded-lg transition-all ${downType === "percent" ? "bg-white text-slate-900 shadow-md ring-1 ring-black/5" : "text-slate-500 hover:text-slate-700 hover:bg-black/5"}`}
                               >
                                 % เปอร์เซ็นต์
                               </button>
                               <button
                                 type="button"
                                 onClick={() => setDownType("amount")}
-                                className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all ${downType === "amount" ? "bg-white text-zinc-900 shadow-sm" : "text-zinc-500 hover:text-zinc-700 hover:bg-black/5"}`}
+                                className={`px-4 py-1.5 text-xs font-bold rounded-lg transition-all ${downType === "amount" ? "bg-white text-slate-900 shadow-md ring-1 ring-black/5" : "text-slate-500 hover:text-slate-700 hover:bg-black/5"}`}
                               >
                                 บาท
                               </button>
@@ -607,7 +610,7 @@ export default function WebsiteStarter() {
                           </div>
 
                           {downType === "amount" ? (
-                            <div className="relative mb-4">
+                            <div className="relative mb-6">
                               <input
                                 type="number"
                                 min={0}
@@ -616,12 +619,12 @@ export default function WebsiteStarter() {
                                   setDownType("amount");
                                   setDownAmount(Number(e.target.value));
                                 }}
-                                className="w-full rounded-2xl border border-black/10 bg-zinc-50/50 px-4 py-3.5 text-lg font-bold text-zinc-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all font-sans"
+                                className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 px-5 py-4 text-xl font-bold text-slate-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all font-sans shadow-inner"
                               />
-                              <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-zinc-400 font-medium">฿</div>
+                              <div className="absolute inset-y-0 right-5 flex items-center pointer-events-none text-slate-400 font-bold">฿</div>
                             </div>
                           ) : (
-                            <div className="relative mb-4">
+                            <div className="relative mb-6">
                               <input
                                 type="number"
                                 min={0}
@@ -631,9 +634,9 @@ export default function WebsiteStarter() {
                                   setDownType("percent");
                                   setDownPercent(Number(e.target.value));
                                 }}
-                                className="w-full rounded-2xl border border-black/10 bg-zinc-50/50 px-4 py-3.5 text-lg font-bold text-zinc-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all font-sans"
+                                className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 px-5 py-4 text-xl font-bold text-slate-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all font-sans shadow-inner"
                               />
-                              <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-zinc-400 font-medium">%</div>
+                              <div className="absolute inset-y-0 right-5 flex items-center pointer-events-none text-slate-400 font-bold">%</div>
                             </div>
                           )}
 
@@ -656,9 +659,9 @@ export default function WebsiteStarter() {
                         </div>
 
                         {/* Details (Interest + Duration) */}
-                        <div className="grid grid-cols-2 gap-4 mt-2">
+                        <div className="grid grid-cols-2 gap-5 mt-4">
                           <div>
-                            <label className="block text-sm font-semibold text-zinc-900 mb-2">ดอกเบี้ยต่อปี (%)</label>
+                            <label className="block text-sm font-bold text-slate-800 mb-3">ดอกเบี้ยต่อปี (%)</label>
                             <div className="relative">
                               <input
                                 type="number"
@@ -666,24 +669,24 @@ export default function WebsiteStarter() {
                                 min={0}
                                 value={interestRate}
                                 onChange={(e) => setInterestRate(Number(e.target.value))}
-                                className="w-full rounded-2xl border border-black/10 bg-zinc-50/50 px-4 py-3.5 font-bold text-zinc-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all font-sans"
+                                className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 px-4 py-4 font-bold text-slate-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all font-sans shadow-inner"
                               />
                             </div>
                           </div>
                           <div>
-                            <label className="block text-sm font-semibold text-zinc-900 mb-2">ระยะเวลา (งวด)</label>
+                            <label className="block text-sm font-bold text-slate-800 mb-3">ระยะเวลา (งวด)</label>
                             <div className="relative">
                               <select
                                 value={months}
                                 onChange={(e) => setMonths(Number(e.target.value))}
-                                className="w-full rounded-2xl border border-black/10 bg-zinc-50/50 px-4 py-3.5 font-bold text-zinc-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all cursor-pointer font-sans appearance-none"
+                                className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 px-4 py-4 font-bold text-slate-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all cursor-pointer font-sans appearance-none shadow-inner"
                               >
                                 <option value={48}>48 งวด (4 ปี)</option>
                                 <option value={60}>60 งวด (5 ปี)</option>
                                 <option value={72}>72 งวด (6 ปี)</option>
                                 <option value={84}>84 งวด (7 ปี)</option>
                               </select>
-                              <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-zinc-400">
+                              <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-slate-400">
                                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
                               </div>
                             </div>
@@ -693,52 +696,52 @@ export default function WebsiteStarter() {
                       </div>
 
                       {/* Right: Summary Result */}
-                      <div className="rounded-3xl bg-gradient-to-b from-[color:var(--c-primary)]/[0.08] to-[color:var(--c-primary)]/[0.02] border border-[color:var(--c-primary)]/10 p-6 md:p-8 flex flex-col h-full justify-center relative overflow-hidden">
+                      <div className="rounded-3xl bg-[color:var(--c-primary)] text-white p-8 md:p-10 flex flex-col h-full justify-center relative overflow-hidden shadow-2xl shadow-[color:var(--c-primary)]/30">
 
-                        <div className="absolute -top-12 -right-12 h-32 w-32 rounded-full bg-[color:var(--c-primary)]/10 blur-2xl pointer-events-none"></div>
+                        <div className="absolute -top-[120px] -right-[120px] h-[300px] w-[300px] rounded-full bg-white/10 blur-3xl pointer-events-none"></div>
 
                         <div className="text-center relative z-10 pt-2">
-                          <div className="inline-flex items-center gap-1.5 rounded-full bg-white/60 px-3 py-1 mb-4 border border-[color:var(--c-primary)]/10 shadow-sm backdrop-blur-sm">
-                            <span className="relative flex h-2 w-2">
-                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[color:var(--c-primary)] opacity-75"></span>
-                              <span className="relative inline-flex rounded-full h-2 w-2 bg-[color:var(--c-primary)]"></span>
+                          <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 mb-6 border border-white/20 shadow-sm backdrop-blur-sm">
+                            <span className="relative flex h-2.5 w-2.5">
+                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[color:var(--c-accent)] opacity-75"></span>
+                              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[color:var(--c-accent)]"></span>
                             </span>
-                            <span className="text-xs font-semibold text-[color:var(--c-primary)]">ยอดผ่อนชำระประมาณการ</span>
+                            <span className="text-sm font-bold text-white tracking-wide">ยอดผ่อนชำระประมาณการ</span>
                           </div>
 
-                          <div className="text-[clamp(2.5rem,4vw,3.5rem)] font-bold text-zinc-900 tabular-nums tracking-tight leading-none mb-1">
-                            <span className="text-[color:var(--c-primary)] text-2xl md:text-3xl font-medium mr-1.5">฿</span>
-                            {formatTHB(monthlyInstallment)}
+                          <div className="text-[clamp(2.5rem,4vw,3.5rem)] font-bold text-white tabular-nums tracking-tight leading-none mb-2">
+                            <span className="text-[color:var(--c-soft)]/70 text-2xl md:text-3xl font-medium mr-1.5 align-top mt-2 inline-block">฿</span>
+                            <span className="drop-shadow-sm">{formatTHB(monthlyInstallment)}</span>
                           </div>
-                          <div className="text-sm font-medium text-zinc-500">ต่อเดือน</div>
+                          <div className="text-base font-medium text-white/70">ต่อเดือน</div>
                         </div>
 
-                        <div className="mt-8 space-y-3.5 relative z-10 flex-1">
-                          <div className="flex justify-between items-center pb-3 border-b border-black/5">
-                            <div className="text-sm text-zinc-500">ราคารถยนต์</div>
-                            <div className="font-semibold text-zinc-900">฿{formatTHB(carPrice)}</div>
+                        <div className="mt-10 space-y-4 relative z-10 flex-1">
+                          <div className="flex justify-between items-center pb-4 border-b border-white/10">
+                            <div className="text-sm text-white/70">ราคารถยนต์</div>
+                            <div className="font-bold text-white tracking-wide">฿{formatTHB(carPrice)}</div>
                           </div>
-                          <div className="flex justify-between items-center pb-3 border-b border-black/5">
-                            <div className="text-sm text-zinc-500">ยอดเงินดาวน์ ({downPercent}%)</div>
-                            <div className="font-semibold text-zinc-900">฿{formatTHB(downAmount)}</div>
+                          <div className="flex justify-between items-center pb-4 border-b border-white/10">
+                            <div className="text-sm text-white/70">ยอดเงินดาวน์ ({downPercent}%)</div>
+                            <div className="font-bold text-white tracking-wide">฿{formatTHB(downAmount)}</div>
                           </div>
-                          <div className="flex justify-between items-center pb-3 border-b border-black/5">
-                            <div className="text-sm text-zinc-500">ยอดจัดไฟแนนซ์</div>
-                            <div className="font-semibold text-zinc-900">฿{formatTHB(financeAmount)}</div>
+                          <div className="flex justify-between items-center pb-4 border-b border-white/10">
+                            <div className="text-sm text-white/70">ยอดจัดไฟแนนซ์</div>
+                            <div className="font-bold text-white tracking-wide">฿{formatTHB(financeAmount)}</div>
                           </div>
-                          <div className="flex justify-between items-center text-[color:var(--c-primary)] font-medium">
+                          <div className="flex justify-between items-center text-[color:var(--c-accent)] font-bold">
                             <div className="text-sm">ดอกเบี้ยรวม ({months} งวด)</div>
                             <div>฿{formatTHB(Math.ceil(totalInterest))}</div>
                           </div>
                         </div>
 
-                        <div className="mt-8 relative z-10">
-                          <a href={`https://m.me/nindaford?text=${encodeURIComponent(`สนใจให้ทำใบเสนอราคา\nราคารถ: ${formatTHB(carPrice)} บ.\nดาวน์: ${downPercent}% (${formatTHB(downAmount)} บ.)\nผ่อน: ${months} งวด\n(รบกวนคำนวณดอกเบี้ยจริงให้หน่อยครับ/ค่ะ)`)}`} target="_blank" rel="noreferrer" className="block w-full">
-                            <Button variant="primary" className="w-full py-4 text-[15px] rounded-2xl shadow-xl shadow-[color:var(--c-primary)]/20 hover:scale-[1.02] transition-transform">
-                              ทักแชทพร้อมยอดนี้ <ArrowRight className="h-4.5 w-4.5" />
+                        <div className="mt-10 relative z-10">
+                          <a href={`https://m.me/nindaford?text=${encodeURIComponent(`สนใจให้ทำใบเสนอราคา\nราคารถ: ${formatTHB(carPrice)} บ.\nดาวน์: ${downPercent}% (${formatTHB(downAmount)} บ.)\nผ่อน: ${months} งวด\n(รบกวนคำนวณดอกเบี้ยจริงให้หน่อยครับ/ค่ะ)`)}`} target="_blank" rel="noreferrer" className="block w-full group">
+                            <Button variant="outline" className="w-full py-4 text-[16px] rounded-2xl bg-white text-[color:var(--c-primary)] shadow-xl hover:scale-[1.02] transition-transform font-bold border-transparent">
+                              ทักแชทพร้อมยอดนี้ <ArrowRight className="h-4.5 w-4.5 group-hover:translate-x-1 transition-transform" />
                             </Button>
                           </a>
-                          <p className="mt-4 text-[11px] text-zinc-500 text-center leading-relaxed px-2">
+                          <p className="mt-5 text-[11px] text-white/50 text-center leading-relaxed px-2">
                             * การคำนวณเบื้องต้นแบบ Flat Rate ยังไม่รวมประกันภัยและรายละเอียดอื่น ยอดผ่อนและดอกเบี้ยจริงขึ้นอยู่กับการอนุมัติของไฟแนนซ์
                           </p>
                         </div>
@@ -753,23 +756,24 @@ export default function WebsiteStarter() {
                   title="ภาพส่งมอบความประทับใจ"
                   subtitle="ขอบคุณลูกค้าทุกท่านที่ไว้วางใจให้นินดาดูแลรถคันใหม่ของคุณ"
                 >
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                     {DELIVERY_IMAGES.map((src, i) => (
                       <motion.div
                         key={i}
-                        initial={{ opacity: 0, scale: 0.9 }}
+                        initial={{ opacity: 0, scale: 0.95 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
                         transition={{ delay: i * 0.05 }}
-                        className="aspect-square rounded-2xl overflow-hidden border border-black/10 bg-white shadow-sm"
+                        className="aspect-square rounded-2xl md:rounded-3xl overflow-hidden shadow-lg shadow-black/10 ring-1 ring-slate-900/5 group"
                       >
-                        <img src={src} alt={`Delivery review ${i + 1}`} className="h-full w-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+                        <img src={src} alt={`Delivery review ${i + 1}`} className="h-full w-full object-cover group-hover:scale-110 group-hover:rotate-1 transition-transform duration-700 pointer-events-none" loading="lazy" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                       </motion.div>
                     ))}
                   </div>
-                  <div className="mt-10 text-center">
+                  <div className="mt-12 text-center">
                     <a href="https://www.facebook.com/nindaford/" target="_blank" rel="noreferrer">
-                      <Button variant="outline" className="rounded-full px-8">
+                      <Button variant="outline" className="rounded-2xl px-10 py-3 bg-white shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all text-slate-700">
                         ดูรีวิวเพิ่มเติมที่เพจ <ArrowRight className="h-4 w-4" />
                       </Button>
                     </a>
@@ -780,11 +784,11 @@ export default function WebsiteStarter() {
 
               {/* RIGHT: Sidebar (Facebook Embed) */}
               <aside className="md:sticky md:top-24 h-fit">
-                <Card className="p-5">
-                  <div className="flex items-center justify-between">
+                <Card className="p-6 md:p-8 shadow-xl shadow-black/5 ring-1 ring-slate-900/5 rounded-[2rem] bg-gradient-to-br from-white to-slate-50/50">
+                  <div className="flex items-center justify-between mb-4">
                     <div>
-                      <div className="text-sm font-semibold">อัปเดตจากเพจ</div>
-                      <div className="text-xs text-zinc-500">Timeline (Embed)</div>
+                      <div className="text-base font-bold text-slate-800">อัปเดตจากเพจ</div>
+                      <div className="text-xs text-slate-500 mt-1">Timeline (Embed)</div>
                     </div>
                     <Pill className="border-black/10">Live</Pill>
                   </div>
