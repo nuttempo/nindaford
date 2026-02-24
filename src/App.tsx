@@ -26,11 +26,11 @@ import del10 from "./assets/images/558304431_1427933749015146_163816480273573550
 
 // ---------- Theme ----------
 const THEME = {
-  primary: "#789DBC",
-  secondary: "#C6E7FF",
-  soft: "#C6E7FF",
-  cream: "#FBFBFB",
-  accent: "#FFDDAE",
+  primary: "#1d4ed8",   // Blue 700: น้ำเงินเข้ม ดูน่าเชื่อถือ ทันสมัย อ่านง่ายชัดเจนบนพื้นขาว
+  secondary: "#3b82f6", // Blue 500: น้ำเงินอ่อนลงมา สำหรับ hover หรือองค์ประกอบรอง
+  soft: "#eff6ff",      // Blue 50: พื้นหลังฟ้าอ่อนสุดๆ ดูสบายตา
+  cream: "#f8fafc",     // Slate 50: ขาวอมเทานวลๆ สะอาดตา ทันสมัยกว่าขาวล้วนหรือเหลือง
+  accent: "#f59e0b",    // Amber 500: สีส้มตัดกับน้ำเงิน ไว้เน้นจุดสำคัญ
 };
 
 // ---------- Small helpers (with tiny tests) ----------
