@@ -461,7 +461,7 @@ export default function WebsiteStarter() {
                 subtitle="อ้างอิงโปรฯ ทางการจาก Ford Thailand (กดลิงก์เพื่อดูเงื่อนไข/ระยะเวลาล่าสุด)"
               >
                 <div className="flex flex-col gap-8">
-                  <Card className="p-6 md:p-8 shadow-sm hover:shadow-lg ring-1 ring-slate-900/5 transition-shadow bg-white">
+                  <Card className="p-6 md:p-8 shadow-sm ring-1 ring-slate-900/5 bg-white">
                     <div className="grid gap-4">
                       <AutoCarousel
                         items={EVEREST_TREND_IMAGES}
@@ -523,7 +523,7 @@ export default function WebsiteStarter() {
                     </div>
                   </Card>
 
-                  <Card className="p-6 md:p-8 shadow-sm hover:shadow-md ring-1 ring-slate-900/5 bg-gradient-to-br from-white to-slate-50/50">
+                  <Card className="p-6 md:p-8 shadow-sm ring-1 ring-slate-900/5 bg-gradient-to-br from-white to-slate-50/50">
                     <div>
                       <div className="text-lg font-bold text-slate-800">อยากได้ “ข้อเสนอเฉพาะคุณ” ต้องเตรียมข้อมูลอะไรบ้าง?</div>
                       <ul className="mt-5 grid gap-4 text-sm md:text-base">
@@ -554,7 +554,7 @@ export default function WebsiteStarter() {
               >
                 <div className="grid gap-6 md:grid-cols-2">
                   {FEATURE_DATA.map((f) => (
-                    <Card key={f.title} className="p-6 md:p-8 transition-all hover:border-[color:var(--c-primary)]/30 hover:shadow-md hover:-translate-y-1 shadow-sm bg-white">
+                    <Card key={f.title} className="p-6 md:p-8 shadow-sm bg-white ring-1 ring-slate-900/5">
                       <div className="flex flex-col sm:flex-row items-start gap-5">
                         <span className="flex-none mt-1 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[color:var(--c-soft)] text-[color:var(--c-primary)] shadow-inner">
                           <CheckCircle2 className="h-7 w-7" />
@@ -793,7 +793,7 @@ export default function WebsiteStarter() {
 
             {/* RIGHT: Sidebar (Facebook Embed) */}
             <aside className="md:sticky md:top-24 h-fit">
-              <Card className="p-6 md:p-8 shadow-sm hover:shadow-md ring-1 ring-slate-900/5 rounded-[2rem] bg-gradient-to-br from-white to-slate-50/50">
+              <Card className="p-6 md:p-8 shadow-sm ring-1 ring-slate-900/5 rounded-[2rem] bg-gradient-to-br from-white to-slate-50/50">
                 <div className="flex items-center justify-between mb-4">
                   <div>
                     <div className="text-base font-bold text-slate-800">อัปเดตจากเพจ</div>
