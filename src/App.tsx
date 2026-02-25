@@ -740,7 +740,7 @@ export default function WebsiteStarter() {
                               setSelectedModelIndex(Number(e.target.value));
                               setDownType("percent");
                             }}
-                            className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 pl-5 pr-10 py-4 text-base md:text-lg font-bold text-slate-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all cursor-pointer font-sans appearance-none shadow-inner"
+                            className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 pl-5 pr-10 py-4 text-base md:text-lg font-medium text-slate-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all cursor-pointer font-sans appearance-none shadow-inner"
                           >
                             {FORD_MODELS.map((model, idx) => (
                               <option key={idx} value={idx}>
