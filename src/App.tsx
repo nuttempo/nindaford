@@ -218,7 +218,7 @@ const NAV = [
 const STATS = [
   { value: "200+", label: "คันที่ส่งมอบแล้ว" },
   { value: "5★", label: "คะแนนรีวิวเฉลี่ย" },
-  { value: "<24h", label: "ตอบกลับใน" },
+  { value: "15 นาที", label: "ตอบกลับใน" },
   { value: "10+", label: "ปีประสบการณ์" },
 ];
 
