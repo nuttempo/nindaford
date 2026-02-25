@@ -17,6 +17,8 @@ import del7 from "./assets/images/535920017_1382860176855837_5397091415575020861
 import del8 from "./assets/images/536277688_1391181682690353_430960558036038701_n.jpg";
 import del9 from "./assets/images/549571249_1410725507402637_3770870615834480586_n.jpg";
 import del10 from "./assets/images/558304431_1427933749015146_1638164802735735501_n.jpg";
+import del11 from "./assets/images/handover-11.jpg";
+import del12 from "./assets/images/handover-12.jpg";
 
 /**
  * Quick question (to avoid guessing wrong):
@@ -337,7 +339,7 @@ const EVEREST_TREND_IMAGES = [
 ];
 
 const DELIVERY_IMAGES = [
-  del1, del2, del3, del4, del5, del6, del7, del8, del9, del10
+  del1, del2, del3, del4, del5, del6, del7, del8, del9, del10, del11, del12
 ];
 
 const FORD_MODELS = [
