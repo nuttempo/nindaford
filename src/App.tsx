@@ -277,6 +277,8 @@ const FAQS = [
   { q: "ซื้อผ่านนินดาต่างจากไปซื้อที่โชว์รูมโดยตรงอย่างไร?", a: "นินดาช่วยทำข้อเสนอเฉพาะบุคคล ดูแลเรื่องเอกสาร ติดตามสถานะรถ และช่วยเจรจาของแถมและโปรพิเศษที่อาจไม่ได้ประกาศทั่วไป" },
   { q: "รอรถนานไหม?", a: "บางรุ่นมีสต๊อกพร้อมส่งทันที บางรุ่นรอ 4-8 สัปดาห์ ทักมาเช็กสต๊อกก่อนได้เลยค่ะ" },
   { q: "ทดลองขับได้ไหม?", a: "ได้เลยค่ะ! ทักนัดวันเวลาที่สะดวก นินดาจะจัดรถทดลองขับให้ถึงที่ หรือนัดที่โชว์รูมก็ได้" },
+  { q: "ซื้อรถใหม่ต้องเสียภาษีอะไรบ้าง?", a: "รถใหม่ป้ายแดงเสียภาษีสรรพสามิตและภาษีแสตมป์รถยนต์ ชำระครั้งเดียว (รวมท้ายอยู่ในราคาโครงผู้ผลิตแล้ว) มีค่าโอน ค่าจดทะเบียน และค่าประกันภัยแยกต่างหาก ทักมาถามรายละเอียดได้ค่ะ" },
+  { q: "ผ่อนได้นานแค่ไหน?", a: "โดยทั่วไปอยู่ที่ 48-84 งวด (4-7 ปี) ขึ้นอยู่กับโปรแกรมไฟแนนซ์แต่ละรอบ ผ่อนนานกว่า ค่างวดลดลง แต่ดอกเบี้ยรวมสูงขึ้น นินดาจะช่วยวิเคราะห์ว่าเหมาะกับคุณที่สุดค่ะ" },
 ];
 
 function FaqAccordion({ q, a }: { q: string; a: string }) {
@@ -338,13 +340,27 @@ const DELIVERY_IMAGES = [
   del1, del2, del3, del4, del5, del6, del7, del8, del9, del10
 ];
 
-// ---------- Page ----------
+const FORD_MODELS = [
+  { name: "Everest Trend 2.0L Turbo 4x2 6AT", price: 1397000 },
+  { name: "Everest Sport 2.0L Turbo 4x2 6AT", price: 1527000 },
+  { name: "Everest Titanium+ 2.0L Bi-Turbo 4x2 10AT", price: 1767000 },
+  { name: "Everest Titanium+ 2.0L Bi-Turbo 4x4 10AT", price: 1917000 },
+  { name: "Everest Wildtrak 2.0L Bi-Turbo 4x4 10AT", price: 1942000 },
+  { name: "Ranger Double Cab XLS 2.0L Turbo HR 6AT", price: 924000 },
+  { name: "Ranger Double Cab Sport 2.0L Turbo HR 6AT", price: 999000 },
+  { name: "Ranger Double Cab Wildtrak 2.0L Turbo HR 6AT", price: 1094000 },
+  { name: "Ranger Double Cab Stormtrak 2.0L Bi-Turbo HR 10AT", price: 1294000 },
+  { name: "Ranger Double Cab Raptor 2.0L Bi-Turbo 4WD 10AT", price: 1804000 },
+  { name: "Ranger Double Cab Raptor 3.0L V6 Twin-Turbo 4WD 10AT", price: 1984000 },
+];
+
 export default function WebsiteStarter() {
   // --- Calculator State ---
-  const [carPrice, setCarPrice] = React.useState<number>(1249000);
+  const [selectedModelIndex, setSelectedModelIndex] = React.useState<number>(0);
+  const carPrice = FORD_MODELS[selectedModelIndex].price;
   const [downType, setDownType] = React.useState<"percent" | "amount">("percent");
   const [downPercent, setDownPercent] = React.useState<number>(25);
-  const [downAmount, setDownAmount] = React.useState<number>(312250);
+  const [downAmount, setDownAmount] = React.useState<number>(Math.round(FORD_MODELS[0].price * 0.25));
   const [interestRate, setInterestRate] = React.useState<number>(2.99);
   const [months, setMonths] = React.useState<number>(84);
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
@@ -487,6 +503,11 @@ export default function WebsiteStarter() {
                     <a href="https://m.me/nindaford" target="_blank" rel="noreferrer">
                       <Button variant="primary" className="w-full sm:w-auto px-8 py-3.5 text-base rounded-2xl shadow-[0_8px_30px_rgb(29,78,216,0.3)]">
                         ขอโปร/ใบเสนอราคา <ArrowRight className="h-4 w-4" />
+                      </Button>
+                    </a>
+                    <a href="tel:0959608274">
+                      <Button variant="outline" className="w-full sm:w-auto px-8 py-3.5 text-base rounded-2xl bg-white/5 border-white/20 text-white hover:bg-white/10 hover:border-white/30 backdrop-blur-sm">
+                        <Phone className="h-4 w-4" /> โทรเลย
                       </Button>
                     </a>
                     <a href="#offers">
@@ -693,18 +714,27 @@ export default function WebsiteStarter() {
                     {/* Left: Input Form */}
                     <div className="flex flex-col gap-8 mt-2">
 
-                      {/* Car Price */}
+                      {/* Car Model Select */}
                       <div>
-                        <label className="block text-sm font-bold text-slate-800 mb-3">ราคารถ (บาท)</label>
+                        <label className="block text-sm font-bold text-slate-800 mb-3">เลือกรุ่นรถ</label>
                         <div className="relative">
-                          <input
-                            type="number"
-                            min={0}
-                            value={carPrice}
-                            onChange={(e) => setCarPrice(Number(e.target.value))}
-                            className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 pl-5 pr-12 py-4 text-xl font-bold text-slate-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all font-sans shadow-inner"
-                          />
-                          <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-slate-400 font-bold text-lg">฿</div>
+                          <select
+                            value={selectedModelIndex}
+                            onChange={(e) => {
+                              setSelectedModelIndex(Number(e.target.value));
+                              setDownType("percent");
+                            }}
+                            className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 pl-5 pr-10 py-4 text-base md:text-lg font-bold text-slate-900 outline-none focus:border-[color:var(--c-primary)] focus:bg-white focus:ring-4 focus:ring-[color:var(--c-primary)]/10 transition-all cursor-pointer font-sans appearance-none shadow-inner"
+                          >
+                            {FORD_MODELS.map((model, idx) => (
+                              <option key={idx} value={idx}>
+                                {model.name} — ฿{formatTHB(model.price)}
+                              </option>
+                            ))}
+                          </select>
+                          <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-slate-400">
+                            <svg width="14" height="14" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                          </div>
                         </div>
                       </div>
 
@@ -858,7 +888,7 @@ export default function WebsiteStarter() {
                       </div>
 
                       <div className="mt-10 relative z-10">
-                        <a href={`https://m.me/nindaford?text=${encodeURIComponent(`สนใจให้ทำใบเสนอราคา\nราคารถ: ${formatTHB(carPrice)} บ.\nดาวน์: ${downPercent}% (${formatTHB(downAmount)} บ.)\nผ่อน: ${months} งวด\n(รบกวนคำนวณดอกเบี้ยจริงให้หน่อยค่ะ)`)}`} target="_blank" rel="noreferrer" className="block w-full group">
+                        <a href={`https://m.me/nindaford?text=${encodeURIComponent(`สนใจให้ทำใบเสนอราคา\nรุ่นรถ: ${FORD_MODELS[selectedModelIndex].name}\nราคารถ: ${formatTHB(carPrice)} บ.\nดาวน์: ${downPercent}% (${formatTHB(downAmount)} บ.)\nผ่อน: ${months} งวด\n(รบกวนคำนวณเรทดอกเบี้ย ${interestRate}% ให้หน่อยค่ะ)`)}`} target="_blank" rel="noreferrer" className="block w-full group">
                           <Button variant="outline" className="w-full py-4 text-[16px] rounded-2xl bg-white text-[color:var(--c-primary)] shadow-xl hover:scale-[1.02] transition-transform font-bold border-transparent">
                             ทักแชทพร้อมยอดนี้ <ArrowRight className="h-4.5 w-4.5 group-hover:translate-x-1 transition-transform" />
                           </Button>
@@ -1058,8 +1088,18 @@ export default function WebsiteStarter() {
         </div>
       </main>
 
-      {/* Floating CTA */}
-      <div className="fixed bottom-6 right-6 z-50">
+      {/* Floating CTA — dual buttons */}
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-2 items-end">
+        <motion.a
+          href="tel:0959608274"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 1.5, type: "spring", stiffness: 260, damping: 20 }}
+          className="flex items-center gap-2 rounded-full bg-white border border-black/10 px-4 py-3 text-zinc-800 font-semibold text-sm shadow-lg hover:bg-zinc-50 hover:scale-105 active:scale-95 transition-all duration-200"
+        >
+          <Phone className="h-4 w-4 text-[color:var(--c-primary)]" />
+          <span>โทรเลย</span>
+        </motion.a>
         <motion.a
           href="https://m.me/nindaford"
           target="_blank"
@@ -1096,6 +1136,6 @@ export default function WebsiteStarter() {
           </div>
         </div>
       </footer>
-    </div>
+    </div >
   );
 }
