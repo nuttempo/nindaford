@@ -1,12 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'Prompt', system-ui, sans-serif;
+  --font-sans: 'Noto Sans Thai', system-ui, sans-serif;
 }
 
 :root {
-  font-family: 'Prompt', system-ui, sans-serif;
+  font-family: 'Noto Sans Thai', system-ui, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
