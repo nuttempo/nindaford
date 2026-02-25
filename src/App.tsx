@@ -60,7 +60,7 @@ const Section: React.FC<{
   <section id={id} className="scroll-mt-20 py-10 md:py-16">
     <div className="mx-auto max-w-7xl px-4 sm:px-6">
       <div className="mb-8 md:mb-12 text-center">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-gradient">{title}</h2>
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-snug text-gradient">{title}</h2>
         {subtitle ? <p className="mt-3 text-sm sm:text-base md:text-lg text-slate-500 max-w-3xl mx-auto leading-relaxed">{subtitle}</p> : null}
         <div className="section-divider mx-auto mt-5 w-24 md:w-32"></div>
       </div>
@@ -411,7 +411,8 @@ export default function WebsiteStarter() {
                 <Sparkles className="h-4.5 w-4.5" />
               </span>
               <div className="leading-tight">
-                <span className="font-bold text-base tracking-tight text-white block">นินดาขายฟอร์ด</span>
+                <span className="font-bold text-base text-white block">นินดาขายฟอร์ด</span>
+                <span className="text-[10px] text-white/70 block uppercase tracking-wide">ที่ปรึกษาการขายมืออาชีพ</span>
               </div>
             </a>
 
@@ -501,7 +502,7 @@ export default function WebsiteStarter() {
                     </Pill>
                   </div>
 
-                  <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight text-white leading-[1.1]">
+                  <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white leading-[1.2]">
                     นินดาขายฟอร์ด <br />
                     <span className="bg-gradient-to-r from-blue-400 via-blue-300 to-cyan-300 bg-clip-text text-transparent sm:text-4xl md:text-5xl">โปรฯ ฟอร์ดอัปเดต</span>
                   </h1>
@@ -597,8 +598,10 @@ export default function WebsiteStarter() {
               <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
                 {STATS.map((s) => (
                   <div key={s.label} className="rounded-2xl bg-white border border-black/5 shadow-sm p-5 text-center hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-                    <div className="text-3xl font-extrabold text-gradient tracking-tight">{s.value}</div>
-                    <div className="mt-1 text-xs text-zinc-500 font-medium">{s.label}</div>
+                    <div className="text-center relative z-10">
+                      <div className="text-3xl font-extrabold text-gradient">{s.value}</div>
+                      <div className="text-xs font-semibold text-slate-500 uppercase tracking-widest mt-2 bg-white/50 backdrop-blur-sm rounded-full py-1 inline-block px-3 border border-slate-100">{s.label}</div>
+                    </div>
                   </div>
                 ))}
               </motion.div>
@@ -877,7 +880,7 @@ export default function WebsiteStarter() {
                           <span className="text-sm font-bold text-white tracking-wide">ยอดผ่อนชำระประมาณการ</span>
                         </div>
 
-                        <div className="text-[clamp(2.5rem,4vw,3.5rem)] font-bold text-white tabular-nums tracking-tight leading-none mb-2">
+                        <div className="text-[clamp(2.5rem,4vw,3.5rem)] font-bold text-white tabular-nums leading-snug mb-2">
                           <span className="text-[color:var(--c-soft)]/70 text-2xl md:text-3xl font-medium mr-1.5 align-top mt-2 inline-block">฿</span>
                           <span className="drop-shadow-sm">{formatTHB(monthlyInstallment)}</span>
                         </div>
