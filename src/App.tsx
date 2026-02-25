@@ -586,7 +586,7 @@ export default function WebsiteStarter() {
                       <div className="flex items-start justify-between gap-3">
                         <div className="min-w-0">
                           <Pill className="border-black/5 bg-zinc-100/50">Everest Trend</Pill>
-                          <div className="mt-3 text-xl font-bold text-zinc-900 truncate">{EVEREST_TREND_OFFER.name}</div>
+                          <div className="mt-3 text-lg font-bold text-zinc-900 break-words">{EVEREST_TREND_OFFER.name}</div>
                           <div className="mt-2 text-sm text-zinc-500">{EVEREST_TREND_OFFER.note}</div>
                         </div>
                         <Pill className="bg-orange-100/50 text-orange-700 border-orange-200/50">
@@ -607,7 +607,7 @@ export default function WebsiteStarter() {
                               }
                             >
                               <div className="text-xs text-zinc-500">{x.label}</div>
-                              <div className={`mt-1 text-[clamp(1rem,1.8vw,1.25rem)] font-bold tracking-tight tabular-nums truncate ${x.label === "ราคาพิเศษ" ? "text-[color:var(--c-primary)]" : "text-zinc-900"}`}>
+                              <div className={`mt-1 text-base font-bold tracking-tight tabular-nums truncate ${x.label === "ราคาพิเศษ" ? "text-[color:var(--c-primary)]" : "text-zinc-900"}`}>
                                 ฿{formatTHB(x.value)}
                               </div>
                             </div>
