@@ -60,7 +60,7 @@ const Section: React.FC<{
   <section id={id} className="scroll-mt-20 py-10 md:py-16">
     <div className="mx-auto max-w-7xl px-4 sm:px-6">
       <div className="mb-8 md:mb-12 text-center">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-snug text-gradient">{title}</h2>
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-normal text-gradient pt-2 pb-1">{title}</h2>
         {subtitle ? <p className="mt-3 text-sm sm:text-base md:text-lg text-slate-500 max-w-3xl mx-auto leading-relaxed">{subtitle}</p> : null}
         <div className="section-divider mx-auto mt-5 w-24 md:w-32"></div>
       </div>
@@ -502,7 +502,7 @@ export default function WebsiteStarter() {
                     </Pill>
                   </div>
 
-                  <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white leading-[1.2]">
+                  <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white leading-[1.3] pt-2 pb-1">
                     นินดาขายฟอร์ด <br />
                     <span className="bg-gradient-to-r from-blue-400 via-blue-300 to-cyan-300 bg-clip-text text-transparent sm:text-4xl md:text-5xl">โปรฯ ฟอร์ดอัปเดต</span>
                   </h1>
@@ -599,7 +599,7 @@ export default function WebsiteStarter() {
                 {STATS.map((s) => (
                   <div key={s.label} className="rounded-2xl bg-white border border-black/5 shadow-sm p-5 text-center hover:shadow-md hover:-translate-y-1 transition-all duration-300">
                     <div className="text-center relative z-10">
-                      <div className="text-3xl font-extrabold text-gradient">{s.value}</div>
+                      <div className="text-3xl font-extrabold text-gradient pt-1">{s.value}</div>
                       <div className="text-xs font-semibold text-slate-500 uppercase tracking-widest mt-2 bg-white/50 backdrop-blur-sm rounded-full py-1 inline-block px-3 border border-slate-100">{s.label}</div>
                     </div>
                   </div>
@@ -712,8 +712,8 @@ export default function WebsiteStarter() {
                           <span className="text-lg font-bold">0{i + 1}</span>
                         </span>
                         <div>
-                          <div className="text-xl font-bold text-slate-900">{f.title}</div>
-                          <div className="mt-2.5 text-base text-slate-500 leading-relaxed">{f.desc}</div>
+                          <div className="text-xl font-bold text-slate-900 pt-1">{f.title}</div>
+                          <div className="mt-2 text-base text-slate-500 leading-relaxed">{f.desc}</div>
                         </div>
                       </div>
                     </Card>
