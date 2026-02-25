@@ -341,17 +341,33 @@ const DELIVERY_IMAGES = [
 ];
 
 const FORD_MODELS = [
-  { name: "Everest Trend 2.0L Turbo 4x2 6AT", price: 1397000 },
-  { name: "Everest Sport 2.0L Turbo 4x2 6AT", price: 1527000 },
-  { name: "Everest Titanium+ 2.0L Bi-Turbo 4x2 10AT", price: 1767000 },
-  { name: "Everest Titanium+ 2.0L Bi-Turbo 4x4 10AT", price: 1917000 },
-  { name: "Everest Wildtrak 2.0L Bi-Turbo 4x4 10AT", price: 1942000 },
+  // Everest
+  { name: "Everest 2.0L Turbo Trend 4x2 6AT", price: 1397000 },
+  { name: "Everest 2.0L Turbo Sport 4x2 6AT", price: 1527000 },
+  { name: "Everest 2.0L Turbo Sport 4x2 6AT (Special Edition)", price: 1619000 },
+  { name: "Everest 2.0L Bi-Turbo Titanium+ 4x2 10AT", price: 1767000 },
+  { name: "Everest 2.0L Bi-Turbo Titanium+ 4x4 10AT", price: 1917000 },
+  { name: "Everest 2.0L Bi-Turbo Wildtrak 4x4 10AT", price: 1942000 },
+  { name: "Everest 3.0L V6 Turbo Platinum 4WD 10AT", price: 2284000 },
+  // Ranger XL / XLS
+  { name: "Ranger Standard Cab XL 2.0L Turbo 4x4 6MT", price: 732000 },
+  { name: "Ranger Open Cab XL+ 2.0L Turbo HR 6MT", price: 734000 },
+  { name: "Ranger Open Cab XLS 2.0L Turbo HR 6AT", price: 814000 },
   { name: "Ranger Double Cab XLS 2.0L Turbo HR 6AT", price: 924000 },
+  { name: "Ranger Double Cab XLS 2.0L Turbo HR 6AT (Extra Pack)", price: 934000 },
+  // Ranger Sport / Wildtrak / SWB
+  { name: "Ranger SWB 2.0L Bi-turbo 4x4 10AT", price: 919000 },
   { name: "Ranger Double Cab Sport 2.0L Turbo HR 6AT", price: 999000 },
+  { name: "Ranger Double Cab Sport 2.0L Turbo 4x4 6AT", price: 1089000 },
   { name: "Ranger Double Cab Wildtrak 2.0L Turbo HR 6AT", price: 1094000 },
+  { name: "Ranger Double Cab Wildtrak 2.0L Turbo HR 6AT (Extra Pack)", price: 1104000 },
+  { name: "Ranger Double Cab Wildtrak 3.0L V6 Turbo 4WD 10AT", price: 1534000 },
+  // Ranger Stormtrak
   { name: "Ranger Double Cab Stormtrak 2.0L Bi-Turbo HR 10AT", price: 1294000 },
+  { name: "Ranger Double Cab Stormtrak 2.0L Bi-Turbo 4x4 10AT", price: 1429000 },
+  // Ranger Raptor
   { name: "Ranger Double Cab Raptor 2.0L Bi-Turbo 4WD 10AT", price: 1804000 },
-  { name: "Ranger Double Cab Raptor 3.0L V6 Twin-Turbo 4WD 10AT", price: 1984000 },
+  { name: "Ranger Double Cab Raptor 3.0L V6 Twin-Turbo EcoBoost 4WD 10AT", price: 1984000 },
 ];
 
 export default function WebsiteStarter() {
