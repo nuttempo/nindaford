@@ -995,8 +995,7 @@ export default function WebsiteStarter() {
                     </div>
                     <div className="font-bold text-zinc-900">เวลาทำการ</div>
                     <div className="mt-2 text-sm text-zinc-500">
-                      <div>จันทร์–ศุกร์: 9:00–19:00</div>
-                      <div>เสาร์–อาทิตย์: 10:00–18:00</div>
+                      <div>ทุกวัน: 08:00–18:00</div>
                     </div>
                   </Card>
                 </div>
