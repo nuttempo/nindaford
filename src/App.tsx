@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Sparkles, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Sparkles, ArrowRight, CheckCircle2, Phone, MapPin, Clock, MessageCircle, Star, ChevronDown } from "lucide-react";
 
 import img7508 from "./assets/images/IMG_7508.JPG";
 import img7509 from "./assets/images/IMG_7509.JPG";
@@ -207,11 +207,96 @@ function AutoCarousel({
 
 // ---------- Data ----------
 const NAV = [
-  { id: "offers", label: "โปรฯ Everest Trend" },
+  { id: "offers", label: "โปรฯ Everest" },
+  { id: "models", label: "รุ่นอื่นๆ" },
   { id: "features", label: "จุดเด่น" },
   { id: "calculator", label: "คำนวณค่างวด" },
-  { id: "reviews", label: "ส่งมอบความประทับใจ" },
+  { id: "reviews", label: "รีวิว" },
+  { id: "contact", label: "ติดต่อ" },
 ];
+
+const STATS = [
+  { value: "200+", label: "คันที่ส่งมอบแล้ว" },
+  { value: "5★", label: "คะแนนรีวิวเฉลี่ย" },
+  { value: "<24h", label: "ตอบกลับใน" },
+  { value: "10+", label: "ปีประสบการณ์" },
+];
+
+const OTHER_MODELS = [
+  {
+    name: "Ford Ranger XLS 2.0L",
+    badge: "Ranger",
+    tagline: "กระบะ 4 ประตู ดุดัน พร้อมทุกเส้นทาง ราคาเริ่มต้น 814,000 บาท",
+    normalPrice: "814,000",
+    specialPrice: "814,000",
+    save: "ติดต่อสอบถาม",
+    highlights: ["2.0L Turbo 170 แรงม้า", "เกียร์อัตโนมัติ 6 สปีด 4x2", "SYNC 4A 10.1\" Apple CarPlay", "ล้ออัลลอย 17\" ถุงลม 6 จุด"],
+    color: "from-emerald-600 to-teal-500",
+  },
+  {
+    name: "Ford Ranger Raptor V6 3.0L",
+    badge: "Raptor",
+    tagline: "สุดยอดสมรรถนะ V6 EcoBoost® เทอร์โบคู่ 397 แรงม้า ราคาเริ่มต้น 1,804,000 บาท",
+    normalPrice: "1,804,000",
+    specialPrice: "1,804,000",
+    save: "ติดต่อสอบถาม",
+    highlights: ["V6 3.0L EcoBoost® 397 แรงม้า", "4WD เกียร์อัตโนมัติ 10 สปีด", "โช้ค FOX 2.5\" Live Valve", "ยาง BFGoodrich K02 285/70 R17"],
+    color: "from-orange-600 to-red-500",
+  },
+  {
+    name: "Ford Ranger Wildtrak",
+    badge: "Wildtrak",
+    tagline: "ออฟโร้ดระดับพรีเมียม ครบครัน ราคาเริ่มต้น 1,534,000 บาท",
+    normalPrice: "1,534,000",
+    specialPrice: "1,534,000",
+    save: "ติดต่อสอบถาม",
+    highlights: ["2.0L Turbo / V6 3.0L 4WD", "SYNC 4A 12\" Apple CarPlay", "ถุงลม 7 จุด + ชาร์จไร้สาย", "ฝาท้าย Easy Lift + ช่อง 230V"],
+    color: "from-blue-700 to-cyan-500",
+  },
+  {
+    name: "Ford Ranger Sport 4x4",
+    badge: "Sport",
+    tagline: "สปอร์ตสุด 4x4 6 โหมดขับขี่ ราคาเริ่มต้น 1,089,000 บาท",
+    normalPrice: "1,089,000",
+    specialPrice: "1,089,000",
+    save: "ติดต่อสอบถาม",
+    highlights: ["2.0L Turbo 170 แรงม้า 4x4", "SYNC 4A 10.1\" Apple CarPlay", "6 โหมดขับขี่ + สตาร์ทไร้กุญแจ", "ชุดแต่งสปอร์ต ฝาท้าย Easy Lift"],
+    color: "from-violet-700 to-purple-500",
+  },
+];
+
+const TESTIMONIALS = [
+  { name: "คุณสมชาย", role: "เจ้าของธุรกิจ", car: "Everest Trend", rating: 5, text: "นินดาช่วยดูแลเรื่องไฟแนนซ์ทุกขั้นตอน ตั้งแต่เช็กเครดิตยันรับรถ ติดต่อง่าย ตอบไว ประทับใจมากครับ" },
+  { name: "คุณมินตรา", role: "พยาบาล", car: "Ranger XLS", rating: 5, text: "ถามเรื่องดาวน์เยอะมาก นินดาตอบทุกคำถามอย่างละเอียด ได้ราคาและของแถมที่พอใจ จะแนะนำเพื่อนต่อแน่นอนค่ะ" },
+  { name: "คุณวิชัย", role: "ผู้รับเหมา", car: "Ranger Raptor", rating: 5, text: "ซื้อ Raptor ผ่านนินดา ได้โปรพิเศษที่ดีกว่าโชว์รูมหลายหมื่น อัปเดตสถานะตลอด รับรถเร็วกว่าที่คิด 2 สัปดาห์ครับ" },
+];
+
+const FAQS = [
+  { q: "ต้องใช้เอกสารอะไรบ้างในการยื่นไฟแนนซ์?", a: "พนักงานประจำ: บัตรประชาชน + สลิปเงินเดือน 1-3 เดือน + statement 3-6 เดือน\nเจ้าของกิจการ: บัตรประชาชน + ทะเบียนพาณิชย์ + statement 6 เดือน" },
+  { q: "ดาวน์ขั้นต่ำเท่าไหร่?", a: "โดยทั่วไปอยู่ที่ 15-20% ขึ้นอยู่กับโปรแกรมไฟแนนซ์แต่ละเดือน บางแคมเปญอาจดาวน์ต่ำกว่านั้นได้ ทักมาคุยเพื่อหาตัวเลขที่เหมาะกับงบได้เลย" },
+  { q: "ซื้อผ่านนินดาต่างจากไปซื้อที่โชว์รูมโดยตรงอย่างไร?", a: "นินดาช่วยทำข้อเสนอเฉพาะบุคคล ดูแลเรื่องเอกสาร ติดตามสถานะรถ และช่วยเจรจาของแถมและโปรพิเศษที่อาจไม่ได้ประกาศทั่วไป" },
+  { q: "รอรถนานไหม?", a: "บางรุ่นมีสต๊อกพร้อมส่งทันที บางรุ่นรอ 4-8 สัปดาห์ ทักมาเช็กสต๊อกก่อนได้เลยค่ะ" },
+  { q: "ทดลองขับได้ไหม?", a: "ได้เลยค่ะ! ทักนัดวันเวลาที่สะดวก นินดาจะจัดรถทดลองขับให้ถึงที่ หรือนัดที่โชว์รูมก็ได้" },
+];
+
+function FaqAccordion({ q, a }: { q: string; a: string }) {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <div className="rounded-2xl border border-black/5 bg-white shadow-sm overflow-hidden">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="w-full flex items-center justify-between gap-4 px-6 py-4 text-left font-semibold text-zinc-800 hover:bg-zinc-50 transition-colors"
+      >
+        <span>{q}</span>
+        <ChevronDown className={`h-4 w-4 flex-none text-zinc-400 transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
+      </button>
+      {open && (
+        <div className="px-6 pb-5 text-sm text-zinc-600 leading-relaxed border-t border-black/5 pt-3 whitespace-pre-line">{a}</div>
+      )}
+    </div>
+  );
+}
 
 const FEATURE_DATA = [
   {
@@ -439,7 +524,16 @@ export default function WebsiteStarter() {
             {/* LEFT (Offers, Features, Calculator) */}
             <div className="min-w-0">
 
-              {/* Everest Trend Offer */}
+              {/* Stats */}
+              <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+                {STATS.map((s) => (
+                  <div key={s.label} className="rounded-2xl bg-white border border-black/5 shadow-sm p-5 text-center hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                    <div className="text-3xl font-extrabold text-gradient tracking-tight">{s.value}</div>
+                    <div className="mt-1 text-xs text-zinc-500 font-medium">{s.label}</div>
+                  </div>
+                ))}
+              </motion.div>
+
               {/* Everest Trend Offer */}
               <Section
                 id="offers"
@@ -732,7 +826,7 @@ export default function WebsiteStarter() {
                       </div>
 
                       <div className="mt-10 relative z-10">
-                        <a href={`https://m.me/nindaford?text=${encodeURIComponent(`สนใจให้ทำใบเสนอราคา\nราคารถ: ${formatTHB(carPrice)} บ.\nดาวน์: ${downPercent}% (${formatTHB(downAmount)} บ.)\nผ่อน: ${months} งวด\n(รบกวนคำนวณดอกเบี้ยจริงให้หน่อยครับ/ค่ะ)`)}`} target="_blank" rel="noreferrer" className="block w-full group">
+                        <a href={`https://m.me/nindaford?text=${encodeURIComponent(`สนใจให้ทำใบเสนอราคา\nราคารถ: ${formatTHB(carPrice)} บ.\nดาวน์: ${downPercent}% (${formatTHB(downAmount)} บ.)\nผ่อน: ${months} งวด\n(รบกวนคำนวณดอกเบี้ยจริงให้หน่อยค่ะ)`)}`} target="_blank" rel="noreferrer" className="block w-full group">
                           <Button variant="outline" className="w-full py-4 text-[16px] rounded-2xl bg-white text-[color:var(--c-primary)] shadow-xl hover:scale-[1.02] transition-transform font-bold border-transparent">
                             ทักแชทพร้อมยอดนี้ <ArrowRight className="h-4.5 w-4.5 group-hover:translate-x-1 transition-transform" />
                           </Button>
@@ -773,6 +867,113 @@ export default function WebsiteStarter() {
                       ดูรีวิวเพิ่มเติมที่เพจ <ArrowRight className="h-4 w-4" />
                     </Button>
                   </a>
+                </div>
+              </Section>
+
+              {/* Ranger & Raptor */}
+              <Section id="models" title="รุ่นรถอื่นๆ ที่น่าสนใจ" subtitle="ไม่ใช่แค่ Everest — นินดาดูแลทุกรุ่น ทุกโปร พร้อมทำข้อเสนอเฉพาะคุณ">
+                <div className="grid gap-6 md:grid-cols-2">
+                  {OTHER_MODELS.map((m) => (
+                    <Card key={m.name} className="overflow-hidden shadow-sm ring-1 ring-slate-900/5 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300">
+                      <div className={`h-3 bg-gradient-to-r ${m.color}`} />
+                      <div className="p-6">
+                        <Pill className={`bg-gradient-to-r ${m.color} text-white border-transparent mb-3`}>{m.badge}</Pill>
+                        <div className="text-xl font-bold text-zinc-900">{m.name}</div>
+                        <div className="mt-1 text-sm text-zinc-500 mb-4">{m.tagline}</div>
+                        <ul className="mb-5 grid grid-cols-2 gap-2">
+                          {m.highlights.map((h) => (
+                            <li key={h} className="flex items-center gap-2 text-sm text-zinc-600">
+                              <CheckCircle2 className="h-4 w-4 flex-none text-[color:var(--c-primary)]" />{h}
+                            </li>
+                          ))}
+                        </ul>
+                        <div className="grid grid-cols-3 gap-2 mb-5">
+                          {[{ label: "ราคาปกติ", value: m.normalPrice }, { label: "ราคาพิเศษ", value: m.specialPrice }, { label: "ส่วนลด", value: m.save }].map((x) => (
+                            <div key={x.label} className={`rounded-xl border border-black/5 p-3 ${x.label === "ราคาพิเศษ" ? "bg-[color:var(--c-primary)]/5" : "bg-zinc-50"}`}>
+                              <div className="text-[10px] text-zinc-400">{x.label}</div>
+                              <div className={`mt-0.5 text-xs font-bold truncate ${x.label === "ราคาพิเศษ" ? "text-[color:var(--c-primary)]" : "text-zinc-800"}`}>฿{formatTHB(x.value)}</div>
+                            </div>
+                          ))}
+                        </div>
+                        <a href="https://m.me/nindaford" target="_blank" rel="noreferrer">
+                          <Button variant="primary" className="w-full py-3 rounded-xl">ขอข้อเสนอ {m.badge} <ArrowRight className="h-4 w-4" /></Button>
+                        </a>
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+              </Section>
+
+              {/* Testimonials */}
+              <Section id="testimonials" title="ลูกค้าพูดถึงนินดา" subtitle="ความประทับใจจากลูกค้าที่ไว้วางใจให้นินดาดูแลรถคันใหม่">
+                <div className="grid gap-6 md:grid-cols-3">
+                  {TESTIMONIALS.map((t, i) => (
+                    <motion.div key={t.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
+                      <Card className="p-6 h-full flex flex-col shadow-sm ring-1 ring-slate-900/5 bg-gradient-to-br from-white to-slate-50/70 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                        <div className="flex items-center gap-1 mb-4">
+                          {Array.from({ length: t.rating }).map((_, si) => <Star key={si} className="h-4 w-4 fill-amber-400 text-amber-400" />)}
+                        </div>
+                        <p className="flex-1 text-sm text-zinc-600 leading-relaxed italic">"{t.text}"</p>
+                        <div className="mt-5 pt-4 border-t border-black/5 flex items-center gap-3">
+                          <div className="h-10 w-10 rounded-full bg-gradient-to-br from-[color:var(--c-primary)] to-[color:var(--c-secondary)] flex items-center justify-center text-white font-bold text-base shadow-sm">{t.name.charAt(0)}</div>
+                          <div>
+                            <div className="text-sm font-semibold text-zinc-900">{t.name}</div>
+                            <div className="text-xs text-zinc-500">{t.role} · {t.car}</div>
+                          </div>
+                        </div>
+                      </Card>
+                    </motion.div>
+                  ))}
+                </div>
+              </Section>
+
+              {/* FAQ */}
+              <Section id="faq" title="คำถามที่พบบ่อย" subtitle="ข้อสงสัยทั่วไปเกี่ยวกับการซื้อรถและไฟแนนซ์">
+                <div className="max-w-3xl mx-auto grid gap-3">
+                  {FAQS.map((faq, i) => <FaqAccordion key={i} q={faq.q} a={faq.a} />)}
+                </div>
+              </Section>
+
+              {/* Contact */}
+              <Section id="contact" title="ติดต่อนินดา" subtitle="พร้อมดูแลคุณทุกวัน ทักแชทหรือโทรมาได้เลย">
+                <div className="grid gap-6 md:grid-cols-3">
+                  <a href="tel:0959608274" className="group">
+                    <Card className="p-6 text-center shadow-sm ring-1 ring-slate-900/5 hover:shadow-lg hover:-translate-y-1.5 transition-all duration-300">
+                      <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[color:var(--c-primary)] to-[color:var(--c-secondary)] text-white shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <Phone className="h-6 w-6" />
+                      </div>
+                      <div className="font-bold text-zinc-900">โทร</div>
+                      <div className="mt-1 text-sm text-zinc-500">095-960-8274</div>
+                      <div className="text-xs text-[color:var(--c-primary)] font-medium mt-0.5">กดเพื่อโทรทันที</div>
+                    </Card>
+                  </a>
+                  <a href="https://m.me/nindaford" target="_blank" rel="noreferrer" className="group">
+                    <Card className="p-6 text-center shadow-sm ring-1 ring-slate-900/5 hover:shadow-lg hover:-translate-y-1.5 transition-all duration-300">
+                      <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <MessageCircle className="h-6 w-6" />
+                      </div>
+                      <div className="font-bold text-zinc-900">Inbox Facebook</div>
+                      <div className="mt-1 text-sm text-zinc-500">nindaford</div>
+                      <div className="text-xs text-[color:var(--c-primary)] font-medium mt-0.5">ตอบภายใน 24 ชม.</div>
+                    </Card>
+                  </a>
+                  <Card className="p-6 text-center shadow-sm ring-1 ring-slate-900/5">
+                    <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-slate-700 to-slate-800 text-white shadow-lg mb-4">
+                      <Clock className="h-6 w-6" />
+                    </div>
+                    <div className="font-bold text-zinc-900">เวลาทำการ</div>
+                    <div className="mt-2 text-sm text-zinc-500">
+                      <div>จันทร์–ศุกร์: 9:00–19:00</div>
+                      <div>เสาร์–อาทิตย์: 10:00–18:00</div>
+                    </div>
+                  </Card>
+                </div>
+                <div className="mt-8 rounded-3xl overflow-hidden border border-black/5 shadow-sm">
+                  <div className="flex items-center gap-2 px-5 py-3 bg-white border-b border-black/5">
+                    <MapPin className="h-4 w-4 text-[color:var(--c-primary)]" />
+                    <span className="text-sm font-semibold text-zinc-800">นินดาขายฟอร์ด — สุขุมวิท 62</span>
+                  </div>
+                  <iframe title="NindaFord Location" src="https://www.google.com/maps?q=13.694910870806051,100.6040596960761&output=embed" width="100%" height="280" style={{ border: "none" }} loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
                 </div>
               </Section>
 
@@ -825,6 +1026,26 @@ export default function WebsiteStarter() {
           </div>
         </div>
       </main>
+
+      {/* Floating CTA */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <motion.a
+          href="https://m.me/nindaford"
+          target="_blank"
+          rel="noreferrer"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 1.2, type: "spring", stiffness: 260, damping: 20 }}
+          className="flex items-center gap-2.5 rounded-full bg-[color:var(--c-primary)] px-5 py-3.5 text-white font-semibold text-sm shadow-xl shadow-[color:var(--c-primary)]/40 hover:bg-[color:var(--c-secondary)] hover:scale-105 active:scale-95 transition-all duration-200 ring-4 ring-white/20"
+        >
+          <MessageCircle className="h-5 w-5" />
+          <span>ทักแชทเลย</span>
+          <span className="relative flex h-2.5 w-2.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-300 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-400"></span>
+          </span>
+        </motion.a>
+      </div>
 
       <footer className="relative mt-20 overflow-hidden">
         <div className="section-divider mx-auto w-full max-w-7xl"></div>
