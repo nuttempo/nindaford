@@ -57,12 +57,12 @@ const Section: React.FC<{
   subtitle?: string;
   children: React.ReactNode;
 }> = ({ id, title, subtitle, children }) => (
-  <section id={id} className="scroll-mt-24 py-16 md:py-20">
+  <section id={id} className="scroll-mt-20 py-10 md:py-16">
     <div className="mx-auto max-w-7xl px-4 sm:px-6">
-      <div className="mb-12 text-center">
-        <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gradient">{title}</h2>
-        {subtitle ? <p className="mt-4 text-base md:text-lg text-slate-500 max-w-3xl mx-auto leading-relaxed">{subtitle}</p> : null}
-        <div className="section-divider mx-auto mt-6 w-32"></div>
+      <div className="mb-8 md:mb-12 text-center">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-gradient">{title}</h2>
+        {subtitle ? <p className="mt-3 text-sm sm:text-base md:text-lg text-slate-500 max-w-3xl mx-auto leading-relaxed">{subtitle}</p> : null}
+        <div className="section-divider mx-auto mt-5 w-24 md:w-32"></div>
       </div>
       {children}
     </div>
@@ -344,11 +344,11 @@ export default function WebsiteStarter() {
   const [carPrice, setCarPrice] = React.useState<number>(1249000);
   const [downType, setDownType] = React.useState<"percent" | "amount">("percent");
   const [downPercent, setDownPercent] = React.useState<number>(25);
-  const [downAmount, setDownAmount] = React.useState<number>(312250); // 25% of 1,249,000
-  const [interestRate, setInterestRate] = React.useState<number>(2.99); // 2.99% fixed string fallback handling
+  const [downAmount, setDownAmount] = React.useState<number>(312250);
+  const [interestRate, setInterestRate] = React.useState<number>(2.99);
   const [months, setMonths] = React.useState<number>(84);
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
-  // Sync downPercent <-> downAmount when carPrice changes or user toggles
   React.useEffect(() => {
     if (downType === "percent") {
       setDownAmount(Math.round(carPrice * (downPercent / 100)));
@@ -357,15 +357,13 @@ export default function WebsiteStarter() {
     }
   }, [carPrice, downPercent, downAmount, downType]);
 
-  // Handle Percentage change from Range Slider
   const handleDownPercentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const p = Number(e.target.value);
     setDownType("percent");
     setDownPercent(p);
   };
 
-  // Safe Calculator math
-  const financeAmount = Math.max(0, carPrice - downAmount); // ยอดจัดไฟแนนซ์
+  const financeAmount = Math.max(0, carPrice - downAmount);
   const totalInterest = financeAmount * (interestRate / 100) * (months / 12);
   const totalFinance = financeAmount + totalInterest;
   const monthlyInstallment = months > 0 ? Math.ceil(totalFinance / months) : 0;
@@ -386,6 +384,7 @@ export default function WebsiteStarter() {
             </a>
 
             <nav className="hidden md:flex items-center gap-1">
+
               {NAV.map((item) => (
                 <a
                   key={item.id}
@@ -403,11 +402,44 @@ export default function WebsiteStarter() {
                   ขอใบเสนอราคา <ArrowRight className="h-4 w-4" />
                 </Button>
               </a>
-              <a className="md:hidden rounded-xl p-2 text-slate-300 hover:bg-white/10" href="#offers">
-                <span className="text-sm font-medium">เมนู</span>
-              </a>
+              {/* Hamburger */}
+              <button
+                type="button"
+                className="md:hidden rounded-xl p-2 text-slate-300 hover:bg-white/10 transition-colors"
+                onClick={() => setMobileMenuOpen((v) => !v)}
+                aria-label="Toggle menu"
+              >
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  {mobileMenuOpen
+                    ? <><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></>
+                    : <><line x1="3" y1="8" x2="21" y2="8" /><line x1="3" y1="16" x2="21" y2="16" /></>}
+                </svg>
+              </button>
             </div>
           </div>
+
+          {/* Mobile dropdown menu */}
+          {mobileMenuOpen && (
+            <div className="md:hidden pb-4 border-t border-white/10 mt-0">
+              <nav className="flex flex-col gap-1 pt-3">
+                {NAV.map((item) => (
+                  <a
+                    key={item.id}
+                    href={`#${item.id}`}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="rounded-xl px-4 py-2.5 text-sm font-medium text-slate-300 hover:bg-white/10 hover:text-white transition-colors"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+                <a href="https://m.me/nindaford" target="_blank" rel="noreferrer" onClick={() => setMobileMenuOpen(false)}>
+                  <Button variant="primary" className="w-full mt-2 rounded-xl justify-center">
+                    ทักแชทเลย <ArrowRight className="h-4 w-4" />
+                  </Button>
+                </a>
+              </nav>
+            </div>
+          )}
         </div>
       </header>
 
@@ -437,9 +469,9 @@ export default function WebsiteStarter() {
                     </Pill>
                   </div>
 
-                  <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white leading-[1.1]">
+                  <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight text-white leading-[1.1]">
                     นินดาขายฟอร์ด <br />
-                    <span className="bg-gradient-to-r from-blue-400 via-blue-300 to-cyan-300 bg-clip-text text-transparent md:text-5xl">โปรฯ ฟอร์ดอัปเดต</span>
+                    <span className="bg-gradient-to-r from-blue-400 via-blue-300 to-cyan-300 bg-clip-text text-transparent sm:text-4xl md:text-5xl">โปรฯ ฟอร์ดอัปเดต</span>
                   </h1>
 
                   <div className="mt-4 text-xl md:text-2xl font-medium text-slate-300">
@@ -632,7 +664,7 @@ export default function WebsiteStarter() {
                 title="ทำไมลูกค้าถึงเลือกนินดา"
                 subtitle="โฟกัสเรื่องที่ลูกค้าซื้อรถสนใจจริง ๆ: ตัวเลขชัด, ติดต่อไว, ดูแลเอกสาร, อัปเดตส่งมอบ"
               >
-                <div className="grid gap-6 md:grid-cols-2">
+                <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2">
                   {FEATURE_DATA.map((f, i) => (
                     <Card key={f.title} className="p-6 md:p-8 shadow-sm bg-gradient-to-br from-white to-slate-50 ring-1 ring-slate-900/5 hover:-translate-y-1.5 hover:shadow-xl hover:ring-[color:var(--c-primary)]/20 transition-all duration-300 group">
                       <div className="flex flex-col sm:flex-row items-start gap-5">
@@ -872,7 +904,7 @@ export default function WebsiteStarter() {
 
               {/* Ranger & Raptor */}
               <Section id="models" title="รุ่นรถอื่นๆ ที่น่าสนใจ" subtitle="ไม่ใช่แค่ Everest — นินดาดูแลทุกรุ่น ทุกโปร พร้อมทำข้อเสนอเฉพาะคุณ">
-                <div className="grid gap-6 md:grid-cols-2">
+                <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2">
                   {OTHER_MODELS.map((m) => (
                     <Card key={m.name} className="overflow-hidden shadow-sm ring-1 ring-slate-900/5 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300">
                       <div className={`h-3 bg-gradient-to-r ${m.color}`} />
@@ -906,7 +938,7 @@ export default function WebsiteStarter() {
 
               {/* Testimonials */}
               <Section id="testimonials" title="ลูกค้าพูดถึงนินดา" subtitle="ความประทับใจจากลูกค้าที่ไว้วางใจให้นินดาดูแลรถคันใหม่">
-                <div className="grid gap-6 md:grid-cols-3">
+                <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
                   {TESTIMONIALS.map((t, i) => (
                     <motion.div key={t.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
                       <Card className="p-6 h-full flex flex-col shadow-sm ring-1 ring-slate-900/5 bg-gradient-to-br from-white to-slate-50/70 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
@@ -936,7 +968,7 @@ export default function WebsiteStarter() {
 
               {/* Contact */}
               <Section id="contact" title="ติดต่อนินดา" subtitle="พร้อมดูแลคุณทุกวัน ทักแชทหรือโทรมาได้เลย">
-                <div className="grid gap-6 md:grid-cols-3">
+                <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
                   <a href="tel:0959608274" className="group">
                     <Card className="p-6 text-center shadow-sm ring-1 ring-slate-900/5 hover:shadow-lg hover:-translate-y-1.5 transition-all duration-300">
                       <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[color:var(--c-primary)] to-[color:var(--c-secondary)] text-white shadow-lg mb-4 group-hover:scale-110 transition-transform">
