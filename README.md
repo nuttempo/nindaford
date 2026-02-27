@@ -1,73 +1,74 @@
-# React + TypeScript + Vite
+# NindaFord Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+เว็บไซต์แนะนำโปรโมชันรถ Ford พร้อมเครื่องมือคำนวณค่างวดเบื้องต้น พัฒนาโดยใช้ React + TypeScript + Vite
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS v4
+- Framer Motion
+- Lucide Icons
 
-## React Compiler
+## Scripts
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- `npm run dev` เริ่มโหมดพัฒนา
+- `npm run lint` ตรวจคุณภาพโค้ดด้วย ESLint
+- `npm run build` build production
+- `npm run preview` preview ไฟล์ที่ build แล้ว
+- `npm run images:webp` แปลงรูปใน `src/assets/images` เป็น `.webp`
+- `npm run gemini:plan` เปิด Gemini โหมดวางแผน (read-only)
+- `npm run gemini:control` เปิด Gemini โหมดควบคุมงานแก้โค้ด (auto-edit)
+- `npm run gemini:control:yolo` เปิด Gemini โหมดควบคุมแบบอนุมัติทุก action อัตโนมัติ
 
-## Expanding the ESLint configuration
+## Tracking Events
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- โปรเจกต์มี utility ติดตาม event ที่ `src/utils/analytics.ts`
+- CTA หลัก (Hero, Offers, Calculator, Contact, Floating CTA) ส่ง event `cta_click` ไปที่ `window.gtag` (ถ้ามี) หรือ `window.dataLayer`
+- หากต้องการยิงเข้า GA4/GTM จริง ให้เพิ่ม snippet ของเครื่องมือที่ใช้งานบนหน้าเว็บ
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## โครงสร้างหลัก
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+src/
+  App.tsx
+  data/
+    siteData.ts
+    types.ts
+  constants/
+    animation.ts
+  utils/
+    format.ts
+  features/
+    home/
+      hooks/
+        useFinanceCalculator.ts
+      layout/
+        PageShell.tsx
+      sections/
+        TopNav.tsx
+        HeroSection.tsx
+        StatsSection.tsx
+        OffersSection.tsx
+        FeaturesSection.tsx
+        CalculatorSection.tsx
+        ReviewsSection.tsx
+        ModelsSection.tsx
+        TestimonialsSection.tsx
+        FaqSection.tsx
+        ContactSection.tsx
+        SidebarEmbedSection.tsx
+        FloatingCta.tsx
+        SiteFooter.tsx
+        types.ts
+  components/
+    ui.tsx
+    FaqAccordion.tsx
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## หมายเหตุ
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- หน้า Home ถูกแยกแบบ co-location ไว้ใน `src/features/home`
+- `App.tsx` ทำหน้าที่ประกอบหน้า (composition) และส่ง props ระหว่างส่วนต่าง ๆ
+- คำสั่ง Gemini ใช้ policy จาก `.gemini/policies` และ instructions โครงการจาก `GEMINI.md`
