@@ -246,6 +246,75 @@ Suggested key events:
 - Confirm `test_drive_submit` includes `model` and `preferred_date` (when provided)
 - Confirm attribution params exist for paid campaigns (`utm_*`, `gclid`, `fbclid`)
 
+## GTM Container Checklist
+
+Use this checklist to configure GTM so event parameters are available in tags and preview.
+
+### 1) Data Layer Variables (DLV)
+
+Create Data Layer Variables for commonly used keys:
+
+- `event`
+- `area`
+- `channel`
+- `cta`
+- `section_id`
+- `campaign_id`
+- `variant`
+- `assignment_source`
+- `goal`
+- `lead_type`
+- `success`
+- `http_status`
+- `schema_version`
+- `release_version`
+- `attribution_source`
+- `attribution_medium`
+- `attribution_campaign`
+
+Optional DLVs (recommended):
+
+- `model`
+- `months`
+- `first_field`
+- `trigger`
+- `filled_fields`
+- `scroll_percent`
+- `seconds`
+
+### 2) Core Triggers
+
+Create Custom Event triggers:
+
+- `ce_all_events`: regex include all tracked events (`page_view|section_view|scroll_depth|time_on_page|cta_click|campaign_view|campaign_click_through|experiment_exposure|experiment_conversion|faq_toggle|carousel_interaction|test_drive_start|test_drive_validation_error|test_drive_abandon|test_drive_submit|lead_webhook_result`)
+- `ce_key_lead_events`: `test_drive_submit|campaign_click_through|experiment_conversion`
+- `ce_debug_campaign`: `campaign_view|campaign_click_through`
+
+### 3) Tags
+
+Minimum recommended tags:
+
+- GA4 Configuration tag (fires on All Pages)
+- GA4 Event tag (generic): event name from DLV `event`, mapped parameters from DLVs above
+- Optional GA4 Event tag (lead-only): fire on `ce_key_lead_events` for dedicated lead stream/route
+
+### 4) Parameter Mapping Baseline
+
+In GA4 Event tag, map at least:
+
+- `area`, `channel`, `cta`
+- `campaign_id`, `variant`, `assignment_source`, `goal`
+- `schema_version`, `release_version`
+- `attribution_source`, `attribution_medium`, `attribution_campaign`
+
+### 5) Preview and Publish QA
+
+- GTM Preview shows expected custom events firing in order
+- Each event has required params (`schema_version`, `release_version`, `area` where applicable)
+- `campaign_view` appears before `campaign_click_through` in normal journeys
+- Lead path test passes: `campaign_click_through` -> `test_drive_start` -> `test_drive_submit`
+- Publish with version note including release tag (same value as `VITE_RELEASE_VERSION` when available)
+
 ## Validation Checklist
 
 - Verify `window.dataLayer` exists

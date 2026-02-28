@@ -41,6 +41,7 @@
 
 ดู mapping events และ conversion recommendation ได้ที่ `ANALYTICS_EVENTS.md`
 มี GA4 setup แบบลงมือทำได้ทันทีในหัวข้อ `GA4 Implementation Checklist`
+มี GTM setup runbook แบบ step-by-step ในหัวข้อ `GTM Container Checklist`
 
 ## โครงสร้างหลัก
 
