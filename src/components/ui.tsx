@@ -1,6 +1,9 @@
 import React from "react";
+import { motion } from "framer-motion";
+import type { HTMLMotionProps } from "framer-motion";
 import { formatTHB } from "../utils/format";
 import { trackEvent } from "../utils/analytics";
+import { FADE_UP_VARIANTS, HOVER_LIFT } from "../constants/animation";
 
 export const Section: React.FC<{
   id: string;
@@ -61,14 +64,20 @@ export const Section: React.FC<{
 
   return (
     <section ref={sectionRef} id={id} className="scroll-mt-20 py-10 md:py-16">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+      <motion.div
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-50px" }}
+        variants={FADE_UP_VARIANTS}
+        className="mx-auto max-w-7xl px-4 sm:px-6"
+      >
         <div className="mb-8 md:mb-12 text-center">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-normal text-gradient pt-2 pb-1">{title}</h2>
           {subtitle ? <p className="mt-3 text-sm sm:text-base md:text-lg text-slate-500 max-w-3xl mx-auto leading-relaxed">{subtitle}</p> : null}
           <div className="section-divider mx-auto mt-5 w-24 md:w-32"></div>
         </div>
         {children}
-      </div>
+      </motion.div>
     </section>
   );
 };
@@ -84,15 +93,27 @@ export const Pill: React.FC<{ children: React.ReactNode; className?: string }> =
   </span>
 );
 
-export const Card: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = "" }) => (
-  <div className={`rounded-3xl border border-black/5 bg-white shadow-sm ${className}`}>{children}</div>
-);
+export const Card: React.FC<{ children: React.ReactNode; className?: string; hoverable?: boolean }> = ({ children, className = "", hoverable = false }) => {
+  if (hoverable) {
+    return (
+      <motion.div
+        initial="rest"
+        whileHover="hover"
+        variants={HOVER_LIFT}
+        className={`rounded-3xl border border-black/5 bg-white shadow-sm ${className}`}
+      >
+        {children}
+      </motion.div>
+    );
+  }
+  return <div className={`rounded-3xl border border-black/5 bg-white shadow-sm ${className}`}>{children}</div>;
+};
 
 export const Button: React.FC<
-  React.ButtonHTMLAttributes<HTMLButtonElement> & { className?: string; variant?: "primary" | "outline" | "ghost" }
+  HTMLMotionProps<"button"> & { className?: string; variant?: "primary" | "outline" | "ghost" }
 > = ({ children, className = "", variant = "primary", ...props }) => {
   const base =
-    "inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-medium transition-all active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50 disabled:pointer-events-none";
+    "inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50 disabled:pointer-events-none";
 
   const variants = {
     primary: "bg-[color:var(--c-primary)] text-white hover:bg-[color:var(--c-secondary)] shadow-lg shadow-[color:var(--c-primary)]/20",
@@ -101,9 +122,14 @@ export const Button: React.FC<
   };
 
   return (
-    <button className={`${base} ${variants[variant]} ${className}`} {...props}>
+    <motion.button 
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      className={`${base} ${variants[variant]} ${className}`} 
+      {...props}
+    >
       {children}
-    </button>
+    </motion.button>
   );
 };
 

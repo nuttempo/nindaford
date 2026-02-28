@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle2, Phone, Sparkles } from "lucide-react";
+import { FADE_UP_VARIANTS, SCALE_UP_VARIANTS } from "../../../constants/animation";
 import { Button, Card, Pill } from "../../../components/ui";
 import { trackEvent } from "../../../utils/analytics";
 import { useHeroCtaExperiment } from "../hooks";
@@ -50,7 +51,7 @@ export function HeroSection() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 relative z-10">
         <div className="max-w-7xl">
           <div className="grid gap-8 md:grid-cols-2 md:items-center">
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+            <motion.div initial="hidden" animate="show" variants={FADE_UP_VARIANTS}>
               <div className="flex flex-wrap gap-2 mb-6">
                 <Pill className="bg-white/10 text-white border-white/20 shadow-sm backdrop-blur">
                   <CheckCircle2 className="h-3.5 w-3.5 text-[color:var(--c-secondary)]" />
@@ -122,7 +123,7 @@ export function HeroSection() {
               </div>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.55, delay: 0.05 }}>
+            <motion.div initial="hidden" animate="show" variants={SCALE_UP_VARIANTS}>
               <Card className="p-6 md:p-8 shadow-2xl shadow-black/20 ring-1 ring-white/10 bg-white/90 backdrop-blur-2xl">
                 <div className="flex items-center justify-between">
                   <div>

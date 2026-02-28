@@ -1,4 +1,5 @@
 import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { trackEvent } from "../utils/analytics";
 
@@ -22,9 +23,19 @@ export function FaqAccordion({ q, a }: { q: string; a: string }) {
         <span>{q}</span>
         <ChevronDown className={`h-4 w-4 flex-none text-zinc-400 transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
       </button>
-      {open && (
-        <div className="px-6 pb-5 text-sm text-zinc-600 leading-relaxed border-t border-black/5 pt-3 whitespace-pre-line">{a}</div>
-      )}
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
+            style={{ overflow: "hidden" }}
+          >
+            <div className="px-6 pb-5 text-sm text-zinc-600 leading-relaxed border-t border-black/5 pt-3 whitespace-pre-line">{a}</div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
