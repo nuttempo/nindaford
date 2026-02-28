@@ -8,6 +8,20 @@ import { useHeroCtaExperiment } from "../hooks";
 export function HeroSection() {
   const { variant, primaryLabel, primaryCtaId, experimentId } = useHeroCtaExperiment();
   const hasTrackedExposure = useRef(false);
+  const hasTrackedHeroView = useRef(false);
+
+  useEffect(() => {
+    if (hasTrackedHeroView.current) {
+      return;
+    }
+
+    trackEvent("section_view", {
+      section_id: "hero",
+      section_title: "Hero",
+    });
+
+    hasTrackedHeroView.current = true;
+  }, []);
 
   useEffect(() => {
     if (hasTrackedExposure.current) {

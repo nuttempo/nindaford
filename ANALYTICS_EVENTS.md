@@ -16,6 +16,12 @@ Project bootstraps analytics in `src/main.tsx` via `bootstrapAnalytics()` and pu
   - page_path
   - page_title
 
+### section_view
+- Trigger: when section becomes visible in viewport
+- Params:
+  - section_id (hero, offers, models, calculator, contact, ...)
+  - section_title
+
 ### cta_click
 - Trigger: all major CTA links/buttons
 - Common params:
@@ -48,6 +54,7 @@ Project bootstraps analytics in `src/main.tsx` via `bootstrapAnalytics()` and pu
 - Call lead: `cta_click` where `channel=phone`
 - Offer intent: `cta_click` where `area=offers`
 - Experiment winner: `experiment_conversion / experiment_exposure` by `variant`
+- Funnel by section: `section_view(hero -> offers -> calculator -> contact)`
 
 ## Validation Checklist
 

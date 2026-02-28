@@ -1,23 +1,77 @@
 import React from "react";
 import { formatTHB } from "../utils/format";
+import { trackEvent } from "../utils/analytics";
 
 export const Section: React.FC<{
   id: string;
   title: string;
   subtitle?: string;
   children: React.ReactNode;
-}> = ({ id, title, subtitle, children }) => (
-  <section id={id} className="scroll-mt-20 py-10 md:py-16">
-    <div className="mx-auto max-w-7xl px-4 sm:px-6">
-      <div className="mb-8 md:mb-12 text-center">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-normal text-gradient pt-2 pb-1">{title}</h2>
-        {subtitle ? <p className="mt-3 text-sm sm:text-base md:text-lg text-slate-500 max-w-3xl mx-auto leading-relaxed">{subtitle}</p> : null}
-        <div className="section-divider mx-auto mt-5 w-24 md:w-32"></div>
+}> = ({ id, title, subtitle, children }) => {
+  const sectionRef = React.useRef<HTMLElement | null>(null);
+  const hasTrackedView = React.useRef(false);
+
+  React.useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const sectionEl = sectionRef.current;
+    if (!sectionEl) {
+      return;
+    }
+
+    if (!("IntersectionObserver" in window)) {
+      if (!hasTrackedView.current) {
+        hasTrackedView.current = true;
+        trackEvent("section_view", {
+          section_id: id,
+          section_title: title,
+        });
+      }
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (!entry?.isIntersecting || hasTrackedView.current) {
+          return;
+        }
+
+        hasTrackedView.current = true;
+        trackEvent("section_view", {
+          section_id: id,
+          section_title: title,
+        });
+
+        observer.disconnect();
+      },
+      {
+        threshold: 0.35,
+      }
+    );
+
+    observer.observe(sectionEl);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [id, title]);
+
+  return (
+    <section ref={sectionRef} id={id} className="scroll-mt-20 py-10 md:py-16">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <div className="mb-8 md:mb-12 text-center">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-normal text-gradient pt-2 pb-1">{title}</h2>
+          {subtitle ? <p className="mt-3 text-sm sm:text-base md:text-lg text-slate-500 max-w-3xl mx-auto leading-relaxed">{subtitle}</p> : null}
+          <div className="section-divider mx-auto mt-5 w-24 md:w-32"></div>
+        </div>
+        {children}
       </div>
-      {children}
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export const Pill: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = "" }) => (
   <span
