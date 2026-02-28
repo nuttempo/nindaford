@@ -315,6 +315,31 @@ In GA4 Event tag, map at least:
 - Lead path test passes: `campaign_click_through` -> `test_drive_start` -> `test_drive_submit`
 - Publish with version note including release tag (same value as `VITE_RELEASE_VERSION` when available)
 
+## KPI Definition Table
+
+Use this table as the baseline KPI contract for marketing, sales, and ops.
+
+| KPI | Formula | Primary Dimensions | Owner | Cadence |
+| --- | --- | --- | --- | --- |
+| Campaign CTR | `campaign_click_through / campaign_view` | `campaign_id`, `cta`, `channel`, `attribution_source` | Marketing | Daily / Weekly |
+| Campaign to Lead CVR | `test_drive_submit / campaign_click_through` | `campaign_id`, `cta`, `model` | Marketing + Sales | Weekly |
+| Test Drive Start Rate | `test_drive_start / campaign_view` | `campaign_id`, `attribution_source` | Marketing | Weekly |
+| Test Drive Completion Rate | `test_drive_submit / test_drive_start` | `model`, `attribution_source`, `release_version` | Sales Ops | Weekly |
+| Test Drive Abandon Rate | `test_drive_abandon / test_drive_start` | `trigger`, `filled_fields`, `model_changed` | Sales Ops | Weekly |
+| Validation Error Rate | `test_drive_validation_error / test_drive_start` | `missing_name`, `missing_phone`, `missing_model` | Product + Sales Ops | Weekly |
+| Messenger Lead Share | `cta_click(channel=messenger) / cta_click(all)` | `area`, `cta`, `campaign_id` | Marketing | Weekly |
+| Phone Lead Share | `cta_click(channel=phone) / cta_click(all)` | `area`, `campaign_id` | Marketing | Weekly |
+| Experiment Lift | `(experiment_conversion/exposure)_benefit vs control` | `variant`, `assignment_source`, `attribution_source` | Growth | Weekly / Per release |
+| CRM Relay Success Rate | `lead_webhook_result(success=true) / lead_webhook_result(all)` | `lead_type`, `http_status`, `release_version` | Sales Ops + Engineering | Daily / Weekly |
+| Scroll 75% Reach | `scroll_depth(>=75) / page_view` | `attribution_source`, `attribution_campaign` | Marketing | Weekly |
+| 60s Engagement Rate | `time_on_page(seconds>=60) / page_view` | `attribution_source`, `campaign_id` | Marketing | Weekly |
+
+### KPI Governance Notes
+
+- Use `schema_version` and `release_version` as standard report filters during release windows.
+- Compare KPI deltas by `attribution_source` before changing budget allocation.
+- Treat KPI drops >20% WoW as investigation alerts and validate in GTM Preview + GA4 DebugView first.
+
 ## Validation Checklist
 
 - Verify `window.dataLayer` exists
