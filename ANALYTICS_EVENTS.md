@@ -100,6 +100,14 @@ Analytics utility will automatically attach session context fields to every even
   - missing_phone
   - missing_model
 
+### test_drive_abandon
+- Trigger: when user starts test drive form but leaves page before submit
+- Params:
+  - area (`test_drive`)
+  - trigger (`pagehide` or `unmount`)
+  - filled_fields
+  - model_changed
+
 ### lead_webhook_result
 - Trigger: when optional lead webhook request completes
 - Params:
@@ -146,7 +154,7 @@ Analytics utility will automatically attach session context fields to every even
 - Engagement duration: distribution of `time_on_page` milestones by source/campaign
 - Content engagement: FAQ interest (`faq_toggle`) and offer image exploration (`carousel_interaction`)
 - Test drive demand: count `test_drive_submit` by model/date
-- Test drive drop-off: compare `test_drive_start` vs `test_drive_submit` and inspect `test_drive_validation_error`
+- Test drive drop-off: compare `test_drive_start` vs `test_drive_submit` and inspect `test_drive_validation_error` + `test_drive_abandon`
 - CRM relay health: monitor `lead_webhook_result.success` and `http_status`
 
 ## Validation Checklist

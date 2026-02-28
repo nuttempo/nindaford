@@ -11,7 +11,17 @@ export function TestDriveSection() {
   const [model, setModel] = React.useState(FORD_MODELS[0].name);
   const [date, setDate] = React.useState("");
   const [note, setNote] = React.useState("");
+  const defaultModel = FORD_MODELS[0].name;
   const hasStartedRef = React.useRef(false);
+  const hasSubmittedRef = React.useRef(false);
+  const hasTrackedAbandonRef = React.useRef(false);
+  const formSnapshotRef = React.useRef({
+    name: "",
+    phone: "",
+    model: FORD_MODELS[0].name,
+    date: "",
+    note: "",
+  });
 
   const canSubmit = name.trim().length > 1 && phone.trim().length >= 9 && model.trim().length > 0;
 
@@ -26,6 +36,43 @@ export function TestDriveSection() {
       first_field: firstField,
     });
   };
+
+  const trackAbandon = React.useCallback((trigger: "pagehide" | "unmount") => {
+    if (!hasStartedRef.current || hasSubmittedRef.current || hasTrackedAbandonRef.current) {
+      return;
+    }
+
+    hasTrackedAbandonRef.current = true;
+
+    const snapshot = formSnapshotRef.current;
+    const filledFields = [snapshot.name, snapshot.phone, snapshot.date, snapshot.note]
+      .map((value) => value.trim())
+      .filter(Boolean).length;
+
+    trackEvent("test_drive_abandon", {
+      area: "test_drive",
+      trigger,
+      filled_fields: filledFields,
+      model_changed: snapshot.model !== defaultModel,
+    });
+  }, [defaultModel]);
+
+  React.useEffect(() => {
+    formSnapshotRef.current = { name, phone, model, date, note };
+  }, [name, phone, model, date, note]);
+
+  React.useEffect(() => {
+    const handlePageHide = () => {
+      trackAbandon("pagehide");
+    };
+
+    window.addEventListener("pagehide", handlePageHide);
+
+    return () => {
+      window.removeEventListener("pagehide", handlePageHide);
+      trackAbandon("unmount");
+    };
+  }, [trackAbandon]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -55,6 +102,7 @@ export function TestDriveSection() {
       model,
       preferred_date: date || undefined,
     });
+    hasSubmittedRef.current = true;
 
     void submitLeadWebhook({
       lead_type: "test_drive",
