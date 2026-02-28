@@ -4,7 +4,7 @@ export function SiteFooter() {
   return (
     <footer className="relative mt-20 overflow-hidden">
       <div className="section-divider mx-auto w-full max-w-7xl"></div>
-      <div className="bg-gradient-to-b from-transparent to-white/80 backdrop-blur-sm">
+      <div className="bg-white/40 backdrop-blur-md">
         <div className="mx-auto max-w-7xl px-4 py-10">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div className="flex items-center gap-3">
