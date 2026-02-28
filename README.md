@@ -30,6 +30,7 @@
 - Hero CTA มี A/B test (`hero_primary_cta_v1`) พร้อม event `experiment_exposure` และ `experiment_conversion`
 - มี `section_view` อัตโนมัติสำหรับวิเคราะห์ funnel การเลื่อนดูแต่ละ section
 - มี first-touch attribution อัตโนมัติ (UTM/referrer) แนบไปกับทุก event
+- มี `scroll_depth` อัตโนมัติที่ milestone 25/50/75/100%
 
 ### ตั้งค่า GTM/GA4
 

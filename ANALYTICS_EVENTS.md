@@ -40,6 +40,13 @@ Priority:
   - section_id (hero, offers, models, calculator, contact, ...)
   - section_title
 
+### scroll_depth
+- Trigger: when user reaches page scroll milestones
+- Milestones: 25, 50, 75, 100
+- Params:
+  - scroll_percent
+  - page_path
+
 ### cta_click
 - Trigger: all major CTA links/buttons
 - Common params:
@@ -73,6 +80,7 @@ Priority:
 - Offer intent: `cta_click` where `area=offers`
 - Experiment winner: `experiment_conversion / experiment_exposure` by `variant`
 - Funnel by section: `section_view(hero -> offers -> calculator -> contact)`
+- Engagement depth: distribution of `scroll_depth` milestones per traffic source
 
 ## Validation Checklist
 

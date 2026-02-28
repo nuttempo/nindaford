@@ -12,8 +12,10 @@ type AttributionPayload = {
 };
 
 const ATTRIBUTION_STORAGE_KEY = "nf_attribution_v1";
+const SCROLL_MILESTONES = [25, 50, 75, 100] as const;
 
 let cachedAttribution: AttributionPayload | null = null;
+let hasInitializedScrollTracking = false;
 
 declare global {
   interface Window {
@@ -191,11 +193,55 @@ export function trackPageView(pagePath = `${window.location.pathname}${window.lo
   });
 }
 
+function initScrollDepthTracking() {
+  if (typeof window === "undefined" || typeof document === "undefined") {
+    return;
+  }
+
+  if (hasInitializedScrollTracking) {
+    return;
+  }
+
+  hasInitializedScrollTracking = true;
+  const reachedMilestones = new Set<number>();
+
+  const trackCurrentDepth = () => {
+    const docEl = document.documentElement;
+    const body = document.body;
+
+    const scrollTop = window.scrollY || docEl.scrollTop || body.scrollTop || 0;
+    const scrollHeight = Math.max(docEl.scrollHeight, body.scrollHeight);
+    const viewportHeight = window.innerHeight || docEl.clientHeight;
+    const scrollableHeight = Math.max(scrollHeight - viewportHeight, 1);
+    const percent = Math.min(100, Math.round((scrollTop / scrollableHeight) * 100));
+
+    for (const milestone of SCROLL_MILESTONES) {
+      if (percent < milestone || reachedMilestones.has(milestone)) {
+        continue;
+      }
+
+      reachedMilestones.add(milestone);
+      trackEvent("scroll_depth", {
+        scroll_percent: milestone,
+        page_path: `${window.location.pathname}${window.location.search}`,
+      });
+    }
+  };
+
+  const onScroll = () => {
+    window.requestAnimationFrame(trackCurrentDepth);
+  };
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  trackCurrentDepth();
+}
+
 export function bootstrapAnalytics() {
   initAnalyticsLayer();
   initAttributionContext();
   initTagManager();
   trackPageView();
+  initScrollDepthTracking();
 }
 
 export function trackEvent(eventName: string, params: EventParams = {}) {
