@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Gemini local outputs
+.gemini-plan-output.txt
