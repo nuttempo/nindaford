@@ -27,6 +27,7 @@
 - โปรเจกต์มี utility ติดตาม event ที่ `src/utils/analytics.ts`
 - CTA หลัก (Hero, Offers, Calculator, Contact, Floating CTA) ส่ง event `cta_click` ไปที่ `window.gtag` (ถ้ามี) หรือ `window.dataLayer`
 - รองรับ GTM แบบ env-safe: ตั้งค่า `VITE_GTM_ID` แล้วระบบจะ inject script อัตโนมัติ
+- Hero CTA มี A/B test (`hero_primary_cta_v1`) พร้อม event `experiment_exposure` และ `experiment_conversion`
 
 ### ตั้งค่า GTM/GA4
 
@@ -34,7 +35,7 @@
 2. ใส่ค่า `VITE_GTM_ID=GTM-XXXXXXX`
 3. รัน `npm run dev` หรือ deploy build
 
-ดู mapping events และ conversion recommendation ได้ที่ `docs/analytics-events.md`
+ดู mapping events และ conversion recommendation ได้ที่ `ANALYTICS_EVENTS.md`
 
 ## โครงสร้างหลัก
 

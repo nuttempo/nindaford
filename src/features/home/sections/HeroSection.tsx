@@ -1,9 +1,28 @@
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle2, Phone, Sparkles } from "lucide-react";
 import { Button, Card, Pill } from "../../../components/ui";
 import { trackEvent } from "../../../utils/analytics";
+import { useHeroCtaExperiment } from "../hooks";
 
 export function HeroSection() {
+  const { variant, primaryLabel, primaryCtaId, experimentId } = useHeroCtaExperiment();
+  const hasTrackedExposure = useRef(false);
+
+  useEffect(() => {
+    if (hasTrackedExposure.current) {
+      return;
+    }
+
+    trackEvent("experiment_exposure", {
+      experiment_id: experimentId,
+      variant,
+      placement: "hero_primary_cta",
+    });
+
+    hasTrackedExposure.current = true;
+  }, [experimentId, variant]);
+
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-900 to-[color:var(--c-primary)]/30 pb-20 pt-10 md:pt-20 rounded-b-[2.5rem] md:rounded-b-[4rem] shadow-2xl z-20">
       <div className="absolute inset-0 pointer-events-none">
@@ -41,9 +60,28 @@ export function HeroSection() {
               </p>
 
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
-                <a href="https://m.me/nindaford" target="_blank" rel="noreferrer" onClick={() => trackEvent("cta_click", { area: "hero", channel: "messenger", cta: "quote_primary" })}>
+                <a
+                  href="https://m.me/nindaford"
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => {
+                    trackEvent("cta_click", {
+                      area: "hero",
+                      channel: "messenger",
+                      cta: primaryCtaId,
+                      experiment_id: experimentId,
+                      variant,
+                    });
+
+                    trackEvent("experiment_conversion", {
+                      experiment_id: experimentId,
+                      variant,
+                      goal: "messenger_click",
+                    });
+                  }}
+                >
                   <Button variant="primary" className="w-full sm:w-auto px-8 py-3.5 text-base rounded-2xl shadow-[0_8px_30px_rgb(29,78,216,0.3)]">
-                    ขอโปร/ใบเสนอราคา <ArrowRight className="h-4 w-4" />
+                    {primaryLabel} <ArrowRight className="h-4 w-4" />
                   </Button>
                 </a>
                 <a href="tel:0959608274" onClick={() => trackEvent("cta_click", { area: "hero", channel: "phone", cta: "call_primary" })}>
