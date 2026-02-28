@@ -36,6 +36,13 @@ Analytics utility will automatically attach session context fields to every even
 - `session_id` (per browser tab/session)
 - `event_index` (incremental event order in current session)
 
+## Global Event Metadata
+
+Analytics utility will automatically attach metadata fields to every event:
+
+- `schema_version` (current value: `2026-02-28`)
+- `release_version` (from `VITE_RELEASE_VERSION`, fallback `dev`)
+
 ## Events
 
 ### page_view
@@ -179,3 +186,4 @@ Analytics utility will automatically attach session context fields to every even
 - Verify GTM script tag with id `gtm-script` is injected
 - In GTM Preview, confirm `page_view` and `cta_click` events fire with expected params
 - In GA4 DebugView, confirm conversions mapped correctly
+- Confirm `schema_version` and `release_version` appear in event params

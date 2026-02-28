@@ -31,6 +31,7 @@
 - มี event funnel ฟอร์มเพิ่ม: `test_drive_start`, `test_drive_validation_error`, `test_drive_abandon`
 - รองรับ `VITE_HERO_CTA_VARIANT` เพื่อบังคับ variant ตอน QA
 - รองรับ `VITE_LEAD_WEBHOOK_URL` สำหรับส่ง lead เข้า CRM/LINE OA
+- รองรับ `VITE_RELEASE_VERSION` เพื่อแนบเวอร์ชัน release ไปกับทุก analytics event
 
 ### ตั้งค่า GTM/GA4
 

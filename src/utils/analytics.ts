@@ -15,6 +15,7 @@ const ATTRIBUTION_STORAGE_KEY = "nf_attribution_v1";
 const SESSION_STORAGE_KEY = "nf_session_id_v1";
 const SCROLL_MILESTONES = [25, 50, 75, 100] as const;
 const TIME_ON_PAGE_MILESTONES = [30, 60, 120] as const;
+const ANALYTICS_SCHEMA_VERSION = "2026-02-28";
 
 let cachedAttribution: AttributionPayload | null = null;
 let cachedSessionId: string | null = null;
@@ -188,6 +189,15 @@ function initSessionContext() {
   }
 }
 
+function getReleaseVersion() {
+  const rawReleaseVersion = import.meta.env.VITE_RELEASE_VERSION?.trim();
+  if (!rawReleaseVersion) {
+    return "dev";
+  }
+
+  return rawReleaseVersion;
+}
+
 function getTagManagerId() {
   return import.meta.env.VITE_GTM_ID?.trim();
 }
@@ -330,6 +340,8 @@ export function trackEvent(eventName: string, params: EventParams = {}) {
   eventIndex += 1;
   const mergedParams = compactParams({
     ...attributionParams,
+    schema_version: ANALYTICS_SCHEMA_VERSION,
+    release_version: getReleaseVersion(),
     session_id: sessionId,
     event_index: eventIndex,
     ...params,
