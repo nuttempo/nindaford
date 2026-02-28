@@ -40,6 +40,7 @@
 3. รัน `npm run dev` หรือ deploy build
 
 ดู mapping events และ conversion recommendation ได้ที่ `ANALYTICS_EVENTS.md`
+มี GA4 setup แบบลงมือทำได้ทันทีในหัวข้อ `GA4 Implementation Checklist`
 
 ## โครงสร้างหลัก
 

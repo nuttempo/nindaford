@@ -180,6 +180,72 @@ Analytics utility will automatically attach metadata fields to every event:
 - Test drive drop-off: compare `test_drive_start` vs `test_drive_submit` and inspect `test_drive_validation_error` + `test_drive_abandon`
 - CRM relay health: monitor `lead_webhook_result.success` and `http_status`
 
+## GA4 Implementation Checklist
+
+Use this checklist when creating GA4 custom definitions and key events.
+
+### 1) Create Event-scoped Custom Dimensions
+
+Recommended dimensions (Event parameter):
+
+- `area`
+- `channel`
+- `cta`
+- `section_id`
+- `campaign_id`
+- `variant`
+- `assignment_source`
+- `goal`
+- `lead_type`
+- `http_status`
+- `schema_version`
+- `release_version`
+- `attribution_source`
+- `attribution_medium`
+- `attribution_campaign`
+- `attribution_term`
+- `attribution_content`
+
+Optional high-value dimensions:
+
+- `model`
+- `months`
+- `first_field`
+- `trigger`
+- `filled_fields`
+- `model_changed`
+
+### 2) Create Custom Metrics (if needed)
+
+If your reporting tool needs numeric dimensions as metrics, register:
+
+- `scroll_percent`
+- `seconds`
+- `event_index`
+
+### 3) Mark Key Events (Conversions)
+
+Suggested key events:
+
+- `test_drive_submit`
+- `experiment_conversion`
+- `campaign_click_through`
+- `cta_click` (use with parameter filters in Exploration)
+
+### 4) Recommended Exploration Reports
+
+- Campaign funnel: `campaign_view` -> `campaign_click_through` -> `test_drive_start` -> `test_drive_submit`
+- Campaign CTA performance: breakdown `campaign_click_through` by `cta`, `channel`, `attribution_source`
+- Form quality: `test_drive_validation_error` by missing fields and traffic source
+- Release quality: compare `schema_version` / `release_version` across key event rates
+
+### 5) QA Before Publishing Dashboards
+
+- In DebugView, verify all key events carry `schema_version` and `release_version`
+- Confirm `campaign_id` is present on both `campaign_view` and `campaign_click_through`
+- Confirm `test_drive_submit` includes `model` and `preferred_date` (when provided)
+- Confirm attribution params exist for paid campaigns (`utm_*`, `gclid`, `fbclid`)
+
 ## Validation Checklist
 
 - Verify `window.dataLayer` exists
