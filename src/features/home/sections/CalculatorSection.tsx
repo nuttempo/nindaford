@@ -164,7 +164,7 @@ export function CalculatorSection({
             </div>
           </div>
 
-          <div className="rounded-3xl bg-[color:var(--c-primary)] text-white p-8 md:p-10 flex flex-col h-full justify-center relative overflow-hidden shadow-2xl shadow-[color:var(--c-primary)]/30">
+          <div className="rounded-3xl bg-gradient-to-br from-[color:var(--c-primary)] via-[#2563eb] to-[color:var(--c-secondary)] animate-gradient-slow text-white p-8 md:p-10 flex flex-col h-full justify-center relative overflow-hidden shadow-2xl shadow-[color:var(--c-primary)]/30">
             <div className="absolute -top-[120px] -right-[120px] h-[300px] w-[300px] rounded-full bg-white/10 blur-3xl pointer-events-none"></div>
 
             <div className="text-center relative z-10 pt-2">

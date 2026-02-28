@@ -8,7 +8,7 @@ export function TopNav() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
   return (
-    <header className="sticky top-0 z-30 border-b border-white/10 bg-slate-900/90 backdrop-blur-md">
+    <header className="sticky top-0 z-30 glass-nav">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="flex h-16 items-center justify-between gap-4">
           <a href="#" className="flex items-center gap-2.5 group" onClick={() => trackEvent("cta_click", { area: "top_nav", channel: "onsite", cta: "brand_home" })}>

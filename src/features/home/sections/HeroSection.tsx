@@ -41,10 +41,10 @@ export function HeroSection() {
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-900 to-[color:var(--c-primary)]/30 pb-20 pt-10 md:pt-20 rounded-b-[2.5rem] md:rounded-b-[4rem] shadow-2xl z-20">
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 right-0 h-[600px] w-[600px] rounded-full bg-[color:var(--c-primary)]/25 blur-[120px] mix-blend-screen animate-pulse" />
-        <div className="absolute -bottom-40 -left-40 h-[500px] w-[500px] rounded-full bg-[color:var(--c-secondary)]/20 blur-[100px] mix-blend-screen" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[300px] w-[300px] rounded-full bg-[color:var(--c-accent)]/8 blur-[80px] mix-blend-screen" />
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-0 right-0 h-[600px] w-[600px] rounded-full bg-[color:var(--c-primary)]/25 blur-[120px] mix-blend-screen animate-blob" />
+        <div className="absolute -bottom-40 -left-40 h-[500px] w-[500px] rounded-full bg-[color:var(--c-secondary)]/20 blur-[100px] mix-blend-screen animate-blob [animation-delay:2s]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[300px] w-[300px] rounded-full bg-[color:var(--c-accent)]/8 blur-[80px] mix-blend-screen animate-blob [animation-delay:4s]" />
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-[0.07]"></div>
       </div>
 
@@ -124,7 +124,7 @@ export function HeroSection() {
             </motion.div>
 
             <motion.div initial="hidden" animate="show" variants={SCALE_UP_VARIANTS}>
-              <Card className="p-6 md:p-8 shadow-2xl shadow-black/20 ring-1 ring-white/10 bg-white/90 backdrop-blur-2xl">
+              <Card className="p-6 md:p-8 shadow-2xl shadow-black/20 ring-1 ring-white/10 glass-card">
                 <div className="flex items-center justify-between">
                   <div>
                     <div className="text-sm font-semibold text-zinc-900">ติดต่อด่วน (Quick CTA)</div>
