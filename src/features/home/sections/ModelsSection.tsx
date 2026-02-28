@@ -1,5 +1,6 @@
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { OTHER_MODELS } from "../../../data/siteData";
+import { trackEvent } from "../../../utils/analytics";
 import { formatTHB } from "../../../utils/format";
 import { Button, Card, Pill, Section } from "../../../components/ui";
 
@@ -29,7 +30,7 @@ export function ModelsSection() {
                   </div>
                 ))}
               </div>
-              <a href="https://m.me/nindaford" target="_blank" rel="noreferrer">
+              <a href="https://m.me/nindaford" target="_blank" rel="noreferrer" onClick={() => trackEvent("cta_click", { area: "models", channel: "messenger", cta: "request_model_offer", model: m.name })}>
                 <Button variant="primary" className="w-full py-3 rounded-xl">ขอข้อเสนอ {m.badge} <ArrowRight className="h-4 w-4" /></Button>
               </a>
             </div>

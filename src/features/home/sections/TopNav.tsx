@@ -2,6 +2,7 @@ import React from "react";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { NAV } from "../../../data/siteData";
 import { Button } from "../../../components/ui";
+import { trackEvent } from "../../../utils/analytics";
 
 export function TopNav() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
@@ -10,7 +11,7 @@ export function TopNav() {
     <header className="sticky top-0 z-30 border-b border-white/10 bg-slate-900/90 backdrop-blur-md">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="flex h-16 items-center justify-between gap-4">
-          <a href="#" className="flex items-center gap-2.5 group">
+          <a href="#" className="flex items-center gap-2.5 group" onClick={() => trackEvent("cta_click", { area: "top_nav", channel: "onsite", cta: "brand_home" })}>
             <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 shadow-sm ring-1 ring-white/20 text-white group-hover:scale-105 transition-transform">
               <Sparkles className="h-4.5 w-4.5" />
             </span>
@@ -25,6 +26,7 @@ export function TopNav() {
               <a
                 key={item.id}
                 href={`#${item.id}`}
+                onClick={() => trackEvent("cta_click", { area: "top_nav", channel: "onsite", cta: `nav_${item.id}` })}
                 className="rounded-full px-4 py-1.5 text-sm font-medium text-slate-300 hover:bg-white/10 hover:text-white transition-colors"
               >
                 {item.label}
@@ -33,7 +35,7 @@ export function TopNav() {
           </nav>
 
           <div className="flex items-center gap-2">
-            <a href="https://m.me/nindaford" target="_blank" rel="noreferrer" className="hidden sm:inline-block">
+            <a href="https://m.me/nindaford" target="_blank" rel="noreferrer" className="hidden sm:inline-block" onClick={() => trackEvent("cta_click", { area: "top_nav", channel: "messenger", cta: "quote_nav_desktop" })}>
               <Button variant="primary" className="rounded-full px-6 shadow-[color:var(--c-primary)]/40 hover:shadow-[color:var(--c-primary)]/60">
                 ขอใบเสนอราคา <ArrowRight className="h-4 w-4" />
               </Button>
@@ -60,13 +62,24 @@ export function TopNav() {
                 <a
                   key={item.id}
                   href={`#${item.id}`}
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={() => {
+                    trackEvent("cta_click", { area: "top_nav_mobile", channel: "onsite", cta: `nav_${item.id}` });
+                    setMobileMenuOpen(false);
+                  }}
                   className="rounded-xl px-4 py-2.5 text-sm font-medium text-slate-300 hover:bg-white/10 hover:text-white transition-colors"
                 >
                   {item.label}
                 </a>
               ))}
-              <a href="https://m.me/nindaford" target="_blank" rel="noreferrer" onClick={() => setMobileMenuOpen(false)}>
+              <a
+                href="https://m.me/nindaford"
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => {
+                  trackEvent("cta_click", { area: "top_nav_mobile", channel: "messenger", cta: "quote_nav_mobile" });
+                  setMobileMenuOpen(false);
+                }}
+              >
                 <Button variant="primary" className="w-full mt-2 rounded-xl justify-center">
                   ทักแชทเลย <ArrowRight className="h-4 w-4" />
                 </Button>

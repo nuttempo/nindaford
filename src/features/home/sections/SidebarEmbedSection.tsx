@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { Button, Card, Pill } from "../../../components/ui";
+import { trackEvent } from "../../../utils/analytics";
 
 export function SidebarEmbedSection() {
   return (
@@ -31,12 +32,12 @@ export function SidebarEmbedSection() {
         </div>
 
         <div className="mt-4 grid gap-2">
-          <a href="https://m.me/nindaford" target="_blank" rel="noreferrer">
+          <a href="https://m.me/nindaford" target="_blank" rel="noreferrer" onClick={() => trackEvent("cta_click", { area: "sidebar", channel: "messenger", cta: "sidebar_inbox" })}>
             <Button variant="primary" className="w-full justify-center">
               ทัก Inbox <ArrowRight className="h-4 w-4" />
             </Button>
           </a>
-          <a href="https://www.facebook.com/nindaford/" target="_blank" rel="noreferrer">
+          <a href="https://www.facebook.com/nindaford/" target="_blank" rel="noreferrer" onClick={() => trackEvent("cta_click", { area: "sidebar", channel: "facebook", cta: "sidebar_open_page" })}>
             <Button variant="outline" className="w-full justify-center">เปิดหน้าเพจ</Button>
           </a>
         </div>
