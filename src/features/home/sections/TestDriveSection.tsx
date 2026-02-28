@@ -3,6 +3,7 @@ import { ArrowRight, Calendar, CarFront, Phone, User } from "lucide-react";
 import { FORD_MODELS } from "../../../data/siteData";
 import { Button, Card, Section } from "../../../components/ui";
 import { trackEvent } from "../../../utils/analytics";
+import { submitLeadWebhook } from "../../../utils/leadWebhook";
 
 export function TestDriveSection() {
   const [name, setName] = React.useState("");
@@ -53,6 +54,27 @@ export function TestDriveSection() {
       channel: "messenger",
       model,
       preferred_date: date || undefined,
+    });
+
+    void submitLeadWebhook({
+      lead_type: "test_drive",
+      name: name.trim(),
+      phone: phone.trim(),
+      model,
+      preferred_date: date || null,
+      note: note.trim() || null,
+      source: "website",
+      submitted_at: new Date().toISOString(),
+    }).then((result) => {
+      if (!result.attempted) {
+        return;
+      }
+
+      trackEvent("lead_webhook_result", {
+        lead_type: "test_drive",
+        success: result.success,
+        http_status: result.httpStatus,
+      });
     });
 
     window.open(`https://m.me/nindaford?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");

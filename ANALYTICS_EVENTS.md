@@ -100,6 +100,13 @@ Analytics utility will automatically attach session context fields to every even
   - missing_phone
   - missing_model
 
+### lead_webhook_result
+- Trigger: when optional lead webhook request completes
+- Params:
+  - lead_type (`test_drive`)
+  - success
+  - http_status (optional)
+
 ### cta_click
 - Trigger: all major CTA links/buttons
 - Common params:
@@ -140,6 +147,7 @@ Analytics utility will automatically attach session context fields to every even
 - Content engagement: FAQ interest (`faq_toggle`) and offer image exploration (`carousel_interaction`)
 - Test drive demand: count `test_drive_submit` by model/date
 - Test drive drop-off: compare `test_drive_start` vs `test_drive_submit` and inspect `test_drive_validation_error`
+- CRM relay health: monitor `lead_webhook_result.success` and `http_status`
 
 ## Validation Checklist
 
