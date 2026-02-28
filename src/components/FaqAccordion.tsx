@@ -1,5 +1,6 @@
 import React from "react";
 import { ChevronDown } from "lucide-react";
+import { trackEvent } from "../utils/analytics";
 
 export function FaqAccordion({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = React.useState(false);
@@ -8,7 +9,14 @@ export function FaqAccordion({ q, a }: { q: string; a: string }) {
     <div className="rounded-2xl border border-black/5 bg-white shadow-sm overflow-hidden">
       <button
         type="button"
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => {
+          const nextOpen = !open;
+          setOpen(nextOpen);
+          trackEvent("faq_toggle", {
+            question: q,
+            state: nextOpen ? "open" : "close",
+          });
+        }}
         className="w-full flex items-center justify-between gap-4 px-6 py-4 text-left font-semibold text-zinc-800 hover:bg-zinc-50 transition-colors"
       >
         <span>{q}</span>

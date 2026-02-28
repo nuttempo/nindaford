@@ -31,6 +31,7 @@
 - มี `section_view` อัตโนมัติสำหรับวิเคราะห์ funnel การเลื่อนดูแต่ละ section
 - มี first-touch attribution อัตโนมัติ (UTM/referrer) แนบไปกับทุก event
 - มี `scroll_depth` อัตโนมัติที่ milestone 25/50/75/100%
+- มี engagement event เพิ่มเติม: `faq_toggle` และ `carousel_interaction`
 - รองรับ `VITE_HERO_CTA_VARIANT` เพื่อบังคับ variant ตอน QA
 
 ### ตั้งค่า GTM/GA4

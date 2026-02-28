@@ -134,6 +134,15 @@ export function AutoCarousel({
 
   const go = (n: number) => setIdx((n + items.length) % items.length);
 
+  const trackCarouselInteraction = (action: "next" | "previous" | "dot", targetIndex: number) => {
+    trackEvent("carousel_interaction", {
+      carousel_id: overlayTitle,
+      action,
+      target_index: targetIndex,
+      total_items: items.length,
+    });
+  };
+
   if (!items?.length) {
     return (
       <div className="rounded-2xl border border-black/10 bg-[color:var(--c-cream)]/60 p-6 text-sm text-zinc-700">
@@ -170,7 +179,11 @@ export function AutoCarousel({
         <button
           type="button"
           aria-label="Previous"
-          onClick={() => go(idx - 1)}
+          onClick={() => {
+            const targetIndex = (idx - 1 + items.length) % items.length;
+            trackCarouselInteraction("previous", targetIndex);
+            go(idx - 1);
+          }}
           className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full border border-black/10 bg-white/85 px-3 py-2 text-sm shadow-sm hover:bg-[color:var(--c-cream)]"
         >
           ‹
@@ -178,7 +191,11 @@ export function AutoCarousel({
         <button
           type="button"
           aria-label="Next"
-          onClick={() => go(idx + 1)}
+          onClick={() => {
+            const targetIndex = (idx + 1) % items.length;
+            trackCarouselInteraction("next", targetIndex);
+            go(idx + 1);
+          }}
           className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full border border-black/10 bg-white/85 px-3 py-2 text-sm shadow-sm hover:bg-[color:var(--c-cream)]"
         >
           ›
@@ -190,7 +207,10 @@ export function AutoCarousel({
               key={i}
               type="button"
               aria-label={`Go to slide ${i + 1}`}
-              onClick={() => go(i)}
+              onClick={() => {
+                trackCarouselInteraction("dot", i);
+                go(i);
+              }}
               className={
                 "h-2.5 w-2.5 rounded-full border border-black/10 bg-white/75 shadow-sm " +
                 (i === idx ? "opacity-100" : "opacity-45")

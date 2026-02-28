@@ -50,6 +50,20 @@ Priority:
   - scroll_percent
   - page_path
 
+### faq_toggle
+- Trigger: when user opens/closes FAQ item
+- Params:
+  - question
+  - state (`open` or `close`)
+
+### carousel_interaction
+- Trigger: when user manually navigates carousel
+- Params:
+  - carousel_id
+  - action (`next`, `previous`, `dot`)
+  - target_index
+  - total_items
+
 ### cta_click
 - Trigger: all major CTA links/buttons
 - Common params:
@@ -86,6 +100,7 @@ Priority:
 - Experiment winner: `experiment_conversion / experiment_exposure` by `variant`
 - Funnel by section: `section_view(hero -> offers -> calculator -> contact)`
 - Engagement depth: distribution of `scroll_depth` milestones per traffic source
+- Content engagement: FAQ interest (`faq_toggle`) and offer image exploration (`carousel_interaction`)
 
 ## Validation Checklist
 
