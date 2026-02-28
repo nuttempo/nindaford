@@ -340,6 +340,73 @@ Use this table as the baseline KPI contract for marketing, sales, and ops.
 - Compare KPI deltas by `attribution_source` before changing budget allocation.
 - Treat KPI drops >20% WoW as investigation alerts and validate in GTM Preview + GA4 DebugView first.
 
+## Looker Studio Dashboard Template
+
+Use this structure to build one operational dashboard for marketing + sales.
+
+### 1) Report-level Filters
+
+- Date range (default: last 28 days)
+- `attribution_source`
+- `campaign_id`
+- `release_version`
+
+### 2) Page A: Executive Scorecards
+
+Add scorecards:
+
+- Total `campaign_view`
+- Total `campaign_click_through`
+- Total `test_drive_start`
+- Total `test_drive_submit`
+- Campaign CTR
+- Campaign-to-Lead CVR
+- CRM Relay Success Rate
+
+Recommended calculated fields:
+
+- `Campaign CTR` = `SUM(campaign_click_through) / SUM(campaign_view)`
+- `Campaign to Lead CVR` = `SUM(test_drive_submit) / SUM(campaign_click_through)`
+- `CRM Relay Success Rate` = `SUM(lead_webhook_success) / SUM(lead_webhook_total)`
+
+### 3) Page B: Funnel & Drop-off
+
+Charts:
+
+- Funnel: `campaign_view` -> `campaign_click_through` -> `test_drive_start` -> `test_drive_submit`
+- Table: drop-off rate by step and `attribution_source`
+- Table: `test_drive_validation_error` breakdown (missing fields)
+- Table: `test_drive_abandon` breakdown by `trigger`, `filled_fields`, `model_changed`
+
+### 4) Page C: Campaign & Attribution
+
+Charts:
+
+- Time series: `campaign_view`, `campaign_click_through`, `test_drive_submit` by day
+- Pivot: `campaign_id` x `attribution_source` with CTR and CVR
+- Table: CTA performance by `cta`, `channel`, `campaign_id`
+
+### 5) Page D: Release Quality
+
+Charts:
+
+- Trend by `release_version`: `test_drive_submit`, CVR, validation error rate
+- Table by `schema_version` and `release_version` with event volumes
+- Alert table: rows where KPI changes >20% WoW
+
+### 6) Data Quality Guardrails
+
+- Ensure all dashboard queries filter out empty `event_name`
+- Monitor `% events with null release_version`; target < 1%
+- Monitor `% events with null schema_version`; target 0%
+- Validate event ordering in sample journeys (`campaign_view` before `campaign_click_through`)
+
+### 7) Delivery Cadence
+
+- Daily: monitor scorecards + alert table
+- Weekly: review funnel drop-off and channel attribution shifts
+- Per release: compare current `release_version` against previous 7-day baseline
+
 ## Validation Checklist
 
 - Verify `window.dataLayer` exists

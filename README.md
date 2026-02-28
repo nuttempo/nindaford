@@ -43,6 +43,7 @@
 มี GA4 setup แบบลงมือทำได้ทันทีในหัวข้อ `GA4 Implementation Checklist`
 มี GTM setup runbook แบบ step-by-step ในหัวข้อ `GTM Container Checklist`
 มี KPI metric/formula พร้อม owner/cadence ในหัวข้อ `KPI Definition Table`
+มี dashboard template สำหรับ Looker Studio ในหัวข้อ `Looker Studio Dashboard Template`
 
 ## โครงสร้างหลัก
 
