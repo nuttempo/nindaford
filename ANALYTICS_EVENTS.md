@@ -127,6 +127,21 @@ Analytics utility will automatically attach session context fields to every even
   - experiment_id (when CTA is under experiment)
   - variant (when CTA is under experiment)
 
+### campaign_view
+- Trigger: when campaign landing section becomes visible
+- Params:
+  - area (`campaign`)
+  - campaign_id (`everest_trend_campaign_v1`)
+  - placement (`campaign_section`)
+
+### campaign_click_through
+- Trigger: when user clicks CTA inside campaign landing section
+- Params:
+  - area (`campaign`)
+  - campaign_id (`everest_trend_campaign_v1`)
+  - cta (`campaign_quote_now`, `campaign_book_test_drive`, `campaign_official_offer`)
+  - channel (`messenger`, `onsite`, `ford_official`)
+
 ### experiment_exposure
 - Trigger: when user sees Hero primary CTA experiment
 - Params:
@@ -148,6 +163,7 @@ Analytics utility will automatically attach session context fields to every even
 - Primary lead: `cta_click` where `channel=messenger` and (`cta=quote_primary_control` or `cta=quote_primary_benefit` or `cta=chat_with_quote`)
 - Call lead: `cta_click` where `channel=phone`
 - Offer intent: `cta_click` where `area=offers`
+- Campaign CTR: `campaign_click_through / campaign_view` by `cta`
 - Experiment winner: `experiment_conversion / experiment_exposure` by `variant`
 - Funnel by section: `section_view(hero -> offers -> calculator -> contact)`
 - Engagement depth: distribution of `scroll_depth` milestones per traffic source

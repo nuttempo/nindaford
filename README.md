@@ -24,11 +24,7 @@
 
 ## Tracking Events
 
-- มี `Campaign Landing` section สำหรับรวม CTA แคมเปญในจุดเดียว
-- มี `section_view` อัตโนมัติสำหรับวิเคราะห์ funnel การเลื่อนดูแต่ละ section
-- มี first-touch attribution อัตโนมัติ (UTM/referrer) แนบไปกับทุก event
-- มี session context อัตโนมัติ (`session_id`, `event_index`) ในทุก event
-- มี `scroll_depth` อัตโนมัติที่ milestone 25/50/75/100%
+- Campaign Landing มี event เฉพาะ `campaign_view` และ `campaign_click_through`
 - มี `time_on_page` อัตโนมัติที่ 30/60/120 วินาที
 - มี engagement event เพิ่มเติม: `faq_toggle` และ `carousel_interaction`
 - มี event `test_drive_submit` สำหรับฟอร์มจองทดลองขับ
