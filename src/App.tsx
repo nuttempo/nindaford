@@ -1,5 +1,6 @@
 import {
   CalculatorSection,
+  CampaignSection,
   ContactSection,
   FaqSection,
   FeaturesSection,
@@ -44,6 +45,7 @@ export default function WebsiteStarter() {
           main={
             <>
               <StatsSection />
+              <CampaignSection />
               <OffersSection />
               <FeaturesSection />
               <CalculatorSection {...financeCalculator} fordModels={FORD_MODELS} />

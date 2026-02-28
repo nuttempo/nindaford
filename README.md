@@ -24,10 +24,7 @@
 
 ## Tracking Events
 
-- โปรเจกต์มี utility ติดตาม event ที่ `src/utils/analytics.ts`
-- CTA หลัก (Hero, Offers, Calculator, Contact, Floating CTA) ส่ง event `cta_click` ไปที่ `window.gtag` (ถ้ามี) หรือ `window.dataLayer`
-- รองรับ GTM แบบ env-safe: ตั้งค่า `VITE_GTM_ID` แล้วระบบจะ inject script อัตโนมัติ
-- Hero CTA มี A/B test (`hero_primary_cta_v1`) พร้อม event `experiment_exposure` และ `experiment_conversion`
+- มี `Campaign Landing` section สำหรับรวม CTA แคมเปญในจุดเดียว
 - มี `section_view` อัตโนมัติสำหรับวิเคราะห์ funnel การเลื่อนดูแต่ละ section
 - มี first-touch attribution อัตโนมัติ (UTM/referrer) แนบไปกับทุก event
 - มี session context อัตโนมัติ (`session_id`, `event_index`) ในทุก event

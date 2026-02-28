@@ -1,5 +1,6 @@
 export { TopNav } from "./TopNav";
 export { HeroSection } from "./HeroSection";
+export { CampaignSection } from "./CampaignSection";
 export { StatsSection } from "./StatsSection";
 export { OffersSection } from "./OffersSection";
 export { TestDriveSection } from "./TestDriveSection";

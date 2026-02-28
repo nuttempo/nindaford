@@ -26,6 +26,7 @@ import type {
 } from "./types";
 
 export const NAV: NavItem[] = [
+  { id: "campaign", label: "Campaign" },
   { id: "offers", label: "โปรฯ Everest" },
   { id: "models", label: "รุ่นอื่นๆ" },
   { id: "test-drive", label: "จองทดลองขับ" },

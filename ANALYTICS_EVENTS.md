@@ -118,7 +118,7 @@ Analytics utility will automatically attach session context fields to every even
 ### cta_click
 - Trigger: all major CTA links/buttons
 - Common params:
-  - area (hero, top_nav, top_nav_mobile, offers, calculator, models, reviews, sidebar, contact, floating, ...)
+  - area (hero, top_nav, top_nav_mobile, campaign, offers, calculator, models, reviews, sidebar, contact, floating, ...)
   - channel (messenger, phone, facebook, ford_official, onsite)
   - cta (specific action id)
 - Extra params (where available):
