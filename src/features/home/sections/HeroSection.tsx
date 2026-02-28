@@ -6,7 +6,7 @@ import { trackEvent } from "../../../utils/analytics";
 import { useHeroCtaExperiment } from "../hooks";
 
 export function HeroSection() {
-  const { variant, primaryLabel, primaryCtaId, experimentId } = useHeroCtaExperiment();
+  const { variant, assignmentSource, primaryLabel, primaryCtaId, experimentId } = useHeroCtaExperiment();
   const hasTrackedExposure = useRef(false);
   const hasTrackedHeroView = useRef(false);
 
@@ -31,11 +31,12 @@ export function HeroSection() {
     trackEvent("experiment_exposure", {
       experiment_id: experimentId,
       variant,
+      assignment_source: assignmentSource,
       placement: "hero_primary_cta",
     });
 
     hasTrackedExposure.current = true;
-  }, [experimentId, variant]);
+  }, [assignmentSource, experimentId, variant]);
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-900 to-[color:var(--c-primary)]/30 pb-20 pt-10 md:pt-20 rounded-b-[2.5rem] md:rounded-b-[4rem] shadow-2xl z-20">
@@ -85,11 +86,13 @@ export function HeroSection() {
                       cta: primaryCtaId,
                       experiment_id: experimentId,
                       variant,
+                      assignment_source: assignmentSource,
                     });
 
                     trackEvent("experiment_conversion", {
                       experiment_id: experimentId,
                       variant,
+                      assignment_source: assignmentSource,
                       goal: "messenger_click",
                     });
                   }}

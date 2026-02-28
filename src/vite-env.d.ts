@@ -2,6 +2,7 @@
 
 interface ImportMetaEnv {
     readonly VITE_GTM_ID?: string;
+    readonly VITE_HERO_CTA_VARIANT?: "control" | "benefit";
 }
 
 interface ImportMeta {

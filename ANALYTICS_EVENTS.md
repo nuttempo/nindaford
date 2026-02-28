@@ -6,6 +6,9 @@
 2. Set `VITE_GTM_ID=GTM-XXXXXXX`
 3. Start app (`npm run dev`) or deploy build
 
+Optional (QA for A/B test):
+- Set `VITE_HERO_CTA_VARIANT=control` or `VITE_HERO_CTA_VARIANT=benefit`
+
 Project bootstraps analytics in `src/main.tsx` via `bootstrapAnalytics()` and pushes events from `src/utils/analytics.ts`.
 
 ## Auto Attribution (First-touch)
@@ -64,6 +67,7 @@ Priority:
 - Params:
   - experiment_id (`hero_primary_cta_v1`)
   - variant (`control` or `benefit`)
+  - assignment_source (`forced`, `stored`, `random`, `ssr`)
   - placement (`hero_primary_cta`)
 
 ### experiment_conversion
@@ -71,6 +75,7 @@ Priority:
 - Params:
   - experiment_id (`hero_primary_cta_v1`)
   - variant (`control` or `benefit`)
+  - assignment_source (`forced`, `stored`, `random`, `ssr`)
   - goal (`messenger_click`)
 
 ## Suggested Conversions in GA4
