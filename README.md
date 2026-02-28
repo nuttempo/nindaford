@@ -31,6 +31,7 @@
 - มี `section_view` อัตโนมัติสำหรับวิเคราะห์ funnel การเลื่อนดูแต่ละ section
 - มี first-touch attribution อัตโนมัติ (UTM/referrer) แนบไปกับทุก event
 - มี `scroll_depth` อัตโนมัติที่ milestone 25/50/75/100%
+- มี `time_on_page` อัตโนมัติที่ 30/60/120 วินาที
 - มี engagement event เพิ่มเติม: `faq_toggle` และ `carousel_interaction`
 - มี event `test_drive_submit` สำหรับฟอร์มจองทดลองขับ
 - มี event funnel ฟอร์มเพิ่ม: `test_drive_start` และ `test_drive_validation_error`

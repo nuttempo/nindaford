@@ -50,6 +50,13 @@ Priority:
   - scroll_percent
   - page_path
 
+### time_on_page
+- Trigger: when user stays on page for milestone duration
+- Milestones: 30s, 60s, 120s
+- Params:
+  - seconds
+  - page_path
+
 ### faq_toggle
 - Trigger: when user opens/closes FAQ item
 - Params:
@@ -122,6 +129,7 @@ Priority:
 - Experiment winner: `experiment_conversion / experiment_exposure` by `variant`
 - Funnel by section: `section_view(hero -> offers -> calculator -> contact)`
 - Engagement depth: distribution of `scroll_depth` milestones per traffic source
+- Engagement duration: distribution of `time_on_page` milestones by source/campaign
 - Content engagement: FAQ interest (`faq_toggle`) and offer image exploration (`carousel_interaction`)
 - Test drive demand: count `test_drive_submit` by model/date
 - Test drive drop-off: compare `test_drive_start` vs `test_drive_submit` and inspect `test_drive_validation_error`

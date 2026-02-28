@@ -13,9 +13,11 @@ type AttributionPayload = {
 
 const ATTRIBUTION_STORAGE_KEY = "nf_attribution_v1";
 const SCROLL_MILESTONES = [25, 50, 75, 100] as const;
+const TIME_ON_PAGE_MILESTONES = [30, 60, 120] as const;
 
 let cachedAttribution: AttributionPayload | null = null;
 let hasInitializedScrollTracking = false;
+let hasInitializedTimeTracking = false;
 
 declare global {
   interface Window {
@@ -236,12 +238,45 @@ function initScrollDepthTracking() {
   trackCurrentDepth();
 }
 
+function initTimeOnPageTracking() {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  if (hasInitializedTimeTracking) {
+    return;
+  }
+
+  hasInitializedTimeTracking = true;
+  const timers: number[] = [];
+
+  for (const seconds of TIME_ON_PAGE_MILESTONES) {
+    const timerId = window.setTimeout(() => {
+      trackEvent("time_on_page", {
+        seconds,
+        page_path: `${window.location.pathname}${window.location.search}`,
+      });
+    }, seconds * 1000);
+
+    timers.push(timerId);
+  }
+
+  const clearTimers = () => {
+    for (const timerId of timers) {
+      window.clearTimeout(timerId);
+    }
+  };
+
+  window.addEventListener("beforeunload", clearTimers, { once: true });
+}
+
 export function bootstrapAnalytics() {
   initAnalyticsLayer();
   initAttributionContext();
   initTagManager();
   trackPageView();
   initScrollDepthTracking();
+  initTimeOnPageTracking();
 }
 
 export function trackEvent(eventName: string, params: EventParams = {}) {
