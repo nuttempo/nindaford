@@ -12,10 +12,13 @@ type AttributionPayload = {
 };
 
 const ATTRIBUTION_STORAGE_KEY = "nf_attribution_v1";
+const SESSION_STORAGE_KEY = "nf_session_id_v1";
 const SCROLL_MILESTONES = [25, 50, 75, 100] as const;
 const TIME_ON_PAGE_MILESTONES = [30, 60, 120] as const;
 
 let cachedAttribution: AttributionPayload | null = null;
+let cachedSessionId: string | null = null;
+let eventIndex = 0;
 let hasInitializedScrollTracking = false;
 let hasInitializedTimeTracking = false;
 
@@ -150,6 +153,41 @@ function compactParams(params: EventParams) {
   return Object.fromEntries(Object.entries(params).filter(([, value]) => value !== undefined));
 }
 
+function createSessionId() {
+  if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
+    return crypto.randomUUID();
+  }
+
+  return `sess_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
+}
+
+function initSessionContext() {
+  if (cachedSessionId) {
+    return cachedSessionId;
+  }
+
+  if (typeof window === "undefined") {
+    cachedSessionId = "ssr";
+    return cachedSessionId;
+  }
+
+  try {
+    const existingSessionId = window.sessionStorage.getItem(SESSION_STORAGE_KEY);
+    if (existingSessionId) {
+      cachedSessionId = existingSessionId;
+      return cachedSessionId;
+    }
+
+    const nextSessionId = createSessionId();
+    window.sessionStorage.setItem(SESSION_STORAGE_KEY, nextSessionId);
+    cachedSessionId = nextSessionId;
+    return cachedSessionId;
+  } catch {
+    cachedSessionId = createSessionId();
+    return cachedSessionId;
+  }
+}
+
 function getTagManagerId() {
   return import.meta.env.VITE_GTM_ID?.trim();
 }
@@ -273,6 +311,7 @@ function initTimeOnPageTracking() {
 export function bootstrapAnalytics() {
   initAnalyticsLayer();
   initAttributionContext();
+  initSessionContext();
   initTagManager();
   trackPageView();
   initScrollDepthTracking();
@@ -287,8 +326,12 @@ export function trackEvent(eventName: string, params: EventParams = {}) {
   initAnalyticsLayer();
 
   const attributionParams = initAttributionContext();
+  const sessionId = initSessionContext();
+  eventIndex += 1;
   const mergedParams = compactParams({
     ...attributionParams,
+    session_id: sessionId,
+    event_index: eventIndex,
     ...params,
   });
 

@@ -29,6 +29,13 @@ Priority:
 2. Referrer fallback (`source=referral`, `medium=referral`)
 3. Empty attribution when no signal
 
+## Auto Session Context
+
+Analytics utility will automatically attach session context fields to every event:
+
+- `session_id` (per browser tab/session)
+- `event_index` (incremental event order in current session)
+
 ## Events
 
 ### page_view
