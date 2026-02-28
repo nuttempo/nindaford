@@ -11,6 +11,7 @@ import {
   SidebarEmbedSection,
   SiteFooter,
   StatsSection,
+  TestDriveSection,
   TestimonialsSection,
   TopNav,
   useFinanceCalculator,
@@ -48,6 +49,7 @@ export default function WebsiteStarter() {
               <CalculatorSection {...financeCalculator} fordModels={FORD_MODELS} />
               <ReviewsSection />
               <ModelsSection />
+              <TestDriveSection />
               <TestimonialsSection />
               <FaqSection />
               <ContactSection />

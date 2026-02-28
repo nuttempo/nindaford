@@ -2,6 +2,7 @@ export { TopNav } from "./TopNav";
 export { HeroSection } from "./HeroSection";
 export { StatsSection } from "./StatsSection";
 export { OffersSection } from "./OffersSection";
+export { TestDriveSection } from "./TestDriveSection";
 export { FeaturesSection } from "./FeaturesSection";
 export { CalculatorSection } from "./CalculatorSection";
 export { ReviewsSection } from "./ReviewsSection";

@@ -64,6 +64,14 @@ Priority:
   - target_index
   - total_items
 
+### test_drive_submit
+- Trigger: when user submits test drive booking form
+- Params:
+  - area (`test_drive`)
+  - channel (`messenger`)
+  - model
+  - preferred_date (optional)
+
 ### cta_click
 - Trigger: all major CTA links/buttons
 - Common params:
@@ -101,6 +109,7 @@ Priority:
 - Funnel by section: `section_view(hero -> offers -> calculator -> contact)`
 - Engagement depth: distribution of `scroll_depth` milestones per traffic source
 - Content engagement: FAQ interest (`faq_toggle`) and offer image exploration (`carousel_interaction`)
+- Test drive demand: count `test_drive_submit` by model/date
 
 ## Validation Checklist
 

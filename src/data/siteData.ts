@@ -28,6 +28,7 @@ import type {
 export const NAV: NavItem[] = [
   { id: "offers", label: "โปรฯ Everest" },
   { id: "models", label: "รุ่นอื่นๆ" },
+  { id: "test-drive", label: "จองทดลองขับ" },
   { id: "features", label: "จุดเด่น" },
   { id: "calculator", label: "คำนวณค่างวด" },
   { id: "reviews", label: "รีวิว" },
