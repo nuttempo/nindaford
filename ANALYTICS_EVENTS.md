@@ -72,6 +72,20 @@ Priority:
   - model
   - preferred_date (optional)
 
+### test_drive_start
+- Trigger: when user starts interacting with test drive form
+- Params:
+  - area (`test_drive`)
+  - first_field (`name`, `phone`, `model`, `date`, `note`)
+
+### test_drive_validation_error
+- Trigger: when user submits incomplete test drive form
+- Params:
+  - area (`test_drive`)
+  - missing_name
+  - missing_phone
+  - missing_model
+
 ### cta_click
 - Trigger: all major CTA links/buttons
 - Common params:
@@ -110,6 +124,7 @@ Priority:
 - Engagement depth: distribution of `scroll_depth` milestones per traffic source
 - Content engagement: FAQ interest (`faq_toggle`) and offer image exploration (`carousel_interaction`)
 - Test drive demand: count `test_drive_submit` by model/date
+- Test drive drop-off: compare `test_drive_start` vs `test_drive_submit` and inspect `test_drive_validation_error`
 
 ## Validation Checklist
 

@@ -33,6 +33,7 @@
 - มี `scroll_depth` อัตโนมัติที่ milestone 25/50/75/100%
 - มี engagement event เพิ่มเติม: `faq_toggle` และ `carousel_interaction`
 - มี event `test_drive_submit` สำหรับฟอร์มจองทดลองขับ
+- มี event funnel ฟอร์มเพิ่ม: `test_drive_start` และ `test_drive_validation_error`
 - รองรับ `VITE_HERO_CTA_VARIANT` เพื่อบังคับ variant ตอน QA
 
 ### ตั้งค่า GTM/GA4

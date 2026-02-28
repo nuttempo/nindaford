@@ -10,13 +10,32 @@ export function TestDriveSection() {
   const [model, setModel] = React.useState(FORD_MODELS[0].name);
   const [date, setDate] = React.useState("");
   const [note, setNote] = React.useState("");
+  const hasStartedRef = React.useRef(false);
 
   const canSubmit = name.trim().length > 1 && phone.trim().length >= 9 && model.trim().length > 0;
+
+  const trackStart = (firstField: string) => {
+    if (hasStartedRef.current) {
+      return;
+    }
+
+    hasStartedRef.current = true;
+    trackEvent("test_drive_start", {
+      area: "test_drive",
+      first_field: firstField,
+    });
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!canSubmit) {
+      trackEvent("test_drive_validation_error", {
+        area: "test_drive",
+        missing_name: name.trim().length <= 1,
+        missing_phone: phone.trim().length < 9,
+        missing_model: model.trim().length === 0,
+      });
       return;
     }
 
@@ -54,6 +73,7 @@ export function TestDriveSection() {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                onFocus={() => trackStart("name")}
                 placeholder="เช่น คุณนิดา"
                 className="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-4 py-3 text-sm outline-none focus:border-[color:var(--c-primary)] focus:ring-4 focus:ring-[color:var(--c-primary)]/10"
               />
@@ -65,6 +85,7 @@ export function TestDriveSection() {
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
+                onFocus={() => trackStart("phone")}
                 placeholder="08x-xxx-xxxx"
                 className="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-4 py-3 text-sm outline-none focus:border-[color:var(--c-primary)] focus:ring-4 focus:ring-[color:var(--c-primary)]/10"
               />
@@ -77,6 +98,7 @@ export function TestDriveSection() {
               <select
                 value={model}
                 onChange={(e) => setModel(e.target.value)}
+                onFocus={() => trackStart("model")}
                 className="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-4 py-3 text-sm outline-none focus:border-[color:var(--c-primary)] focus:ring-4 focus:ring-[color:var(--c-primary)]/10"
               >
                 {FORD_MODELS.slice(0, 12).map((item) => (
@@ -91,6 +113,7 @@ export function TestDriveSection() {
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
+                onFocus={() => trackStart("date")}
                 className="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-4 py-3 text-sm outline-none focus:border-[color:var(--c-primary)] focus:ring-4 focus:ring-[color:var(--c-primary)]/10"
               />
             </label>
@@ -101,6 +124,7 @@ export function TestDriveSection() {
             <textarea
               value={note}
               onChange={(e) => setNote(e.target.value)}
+              onFocus={() => trackStart("note")}
               rows={3}
               placeholder="เช่น สะดวกช่วงบ่ายหลัง 14:00"
               className="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-4 py-3 text-sm outline-none focus:border-[color:var(--c-primary)] focus:ring-4 focus:ring-[color:var(--c-primary)]/10"
