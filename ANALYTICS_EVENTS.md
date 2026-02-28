@@ -8,6 +8,24 @@
 
 Project bootstraps analytics in `src/main.tsx` via `bootstrapAnalytics()` and pushes events from `src/utils/analytics.ts`.
 
+## Auto Attribution (First-touch)
+
+Analytics utility will automatically attach first-touch attribution fields to every event (stored in localStorage):
+
+- `attribution_source`
+- `attribution_medium`
+- `attribution_campaign`
+- `attribution_term`
+- `attribution_content`
+- `attribution_gclid`
+- `attribution_fbclid`
+- `attribution_landing_path`
+
+Priority:
+1. UTM/gclid/fbclid from landing URL
+2. Referrer fallback (`source=referral`, `medium=referral`)
+3. Empty attribution when no signal
+
 ## Events
 
 ### page_view

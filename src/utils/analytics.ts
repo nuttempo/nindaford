@@ -1,5 +1,20 @@
 type EventParams = Record<string, string | number | boolean | undefined>;
 
+type AttributionPayload = {
+  attribution_source?: string;
+  attribution_medium?: string;
+  attribution_campaign?: string;
+  attribution_term?: string;
+  attribution_content?: string;
+  attribution_gclid?: string;
+  attribution_fbclid?: string;
+  attribution_landing_path?: string;
+};
+
+const ATTRIBUTION_STORAGE_KEY = "nf_attribution_v1";
+
+let cachedAttribution: AttributionPayload | null = null;
+
 declare global {
   interface Window {
     dataLayer?: Array<Record<string, unknown>>;
@@ -15,6 +30,120 @@ export function initAnalyticsLayer() {
   if (!window.dataLayer) {
     window.dataLayer = [];
   }
+}
+
+function parseAttributionFromUrl() {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  const searchParams = new URLSearchParams(window.location.search);
+
+  const source = searchParams.get("utm_source") ?? undefined;
+  const medium = searchParams.get("utm_medium") ?? undefined;
+  const campaign = searchParams.get("utm_campaign") ?? undefined;
+  const term = searchParams.get("utm_term") ?? undefined;
+  const content = searchParams.get("utm_content") ?? undefined;
+  const gclid = searchParams.get("gclid") ?? undefined;
+  const fbclid = searchParams.get("fbclid") ?? undefined;
+
+  const hasAttributionSignals = source || medium || campaign || term || content || gclid || fbclid;
+  if (!hasAttributionSignals) {
+    return null;
+  }
+
+  return {
+    attribution_source: source,
+    attribution_medium: medium,
+    attribution_campaign: campaign,
+    attribution_term: term,
+    attribution_content: content,
+    attribution_gclid: gclid,
+    attribution_fbclid: fbclid,
+    attribution_landing_path: `${window.location.pathname}${window.location.search}`,
+  } satisfies AttributionPayload;
+}
+
+function buildReferrerAttribution() {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  if (!document.referrer) {
+    return null;
+  }
+
+  return {
+    attribution_source: "referral",
+    attribution_medium: "referral",
+    attribution_campaign: undefined,
+    attribution_term: undefined,
+    attribution_content: undefined,
+    attribution_gclid: undefined,
+    attribution_fbclid: undefined,
+    attribution_landing_path: `${window.location.pathname}${window.location.search}`,
+  } satisfies AttributionPayload;
+}
+
+function readStoredAttribution() {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  try {
+    const rawAttribution = window.localStorage.getItem(ATTRIBUTION_STORAGE_KEY);
+    if (!rawAttribution) {
+      return null;
+    }
+    return JSON.parse(rawAttribution) as AttributionPayload;
+  } catch {
+    return null;
+  }
+}
+
+function persistAttribution(attribution: AttributionPayload) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  try {
+    window.localStorage.setItem(ATTRIBUTION_STORAGE_KEY, JSON.stringify(attribution));
+  } catch {
+    return;
+  }
+}
+
+function initAttributionContext() {
+  if (cachedAttribution) {
+    return cachedAttribution;
+  }
+
+  const storedAttribution = readStoredAttribution();
+  if (storedAttribution) {
+    cachedAttribution = storedAttribution;
+    return cachedAttribution;
+  }
+
+  const attributionFromUrl = parseAttributionFromUrl();
+  if (attributionFromUrl) {
+    persistAttribution(attributionFromUrl);
+    cachedAttribution = attributionFromUrl;
+    return cachedAttribution;
+  }
+
+  const attributionFromReferrer = buildReferrerAttribution();
+  if (attributionFromReferrer) {
+    persistAttribution(attributionFromReferrer);
+    cachedAttribution = attributionFromReferrer;
+    return cachedAttribution;
+  }
+
+  cachedAttribution = {};
+  return cachedAttribution;
+}
+
+function compactParams(params: EventParams) {
+  return Object.fromEntries(Object.entries(params).filter(([, value]) => value !== undefined));
 }
 
 function getTagManagerId() {
@@ -64,6 +193,7 @@ export function trackPageView(pagePath = `${window.location.pathname}${window.lo
 
 export function bootstrapAnalytics() {
   initAnalyticsLayer();
+  initAttributionContext();
   initTagManager();
   trackPageView();
 }
@@ -75,13 +205,19 @@ export function trackEvent(eventName: string, params: EventParams = {}) {
 
   initAnalyticsLayer();
 
+  const attributionParams = initAttributionContext();
+  const mergedParams = compactParams({
+    ...attributionParams,
+    ...params,
+  });
+
   if (window.gtag) {
-    window.gtag("event", eventName, params);
+    window.gtag("event", eventName, mergedParams);
     return;
   }
 
   window.dataLayer?.push({
     event: eventName,
-    ...params,
+    ...mergedParams,
   });
 }

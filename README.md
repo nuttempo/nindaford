@@ -29,6 +29,7 @@
 - รองรับ GTM แบบ env-safe: ตั้งค่า `VITE_GTM_ID` แล้วระบบจะ inject script อัตโนมัติ
 - Hero CTA มี A/B test (`hero_primary_cta_v1`) พร้อม event `experiment_exposure` และ `experiment_conversion`
 - มี `section_view` อัตโนมัติสำหรับวิเคราะห์ funnel การเลื่อนดูแต่ละ section
+- มี first-touch attribution อัตโนมัติ (UTM/referrer) แนบไปกับทุก event
 
 ### ตั้งค่า GTM/GA4
 
