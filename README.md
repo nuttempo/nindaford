@@ -22,6 +22,20 @@
 - `npm run gemini:control` เปิด Gemini โหมดควบคุมงานแก้โค้ด (auto-edit)
 - `npm run gemini:control:yolo` เปิด Gemini โหมดควบคุมแบบอนุมัติทุก action อัตโนมัติ
 
+## AI Agents ฝ่ายต่างๆ
+
+Agent เฉพาะทางแต่ละฝ่ายใช้ policy ที่กำหนดขอบเขตและข้อจำกัดของตัวเองใน `.gemini/policies/agents/`
+
+| Agent | Execute | Plan (read-only) | ขอบเขต |
+|-------|---------|------------------|--------|
+| **UX/UI Designer** | `npm run agent:ux` | `npm run agent:ux:plan` | Visual design, layout, animation, responsive, UI components |
+| **Marketing/Content** | `npm run agent:marketing` | `npm run agent:marketing:plan` | Copy, โปรโมชัน, campaign, CTA, hero messaging |
+| **Analytics** | `npm run agent:analytics` | `npm run agent:analytics:plan` | Event tracking, GA4/GTM, KPI, conversion funnel |
+| **Performance** | `npm run agent:performance` | `npm run agent:performance:plan` | Build optimization, Lighthouse, bundle size, web vitals |
+| **QA** | `npm run agent:qa` | `npm run agent:qa:plan` | TypeScript errors, ESLint, accessibility, validation |
+
+> แต่ละ agent มีสองโหมด: **Execute** (auto-edit) สำหรับลงมือทำ และ **Plan** (read-only) สำหรับวางแผนก่อนลงมือ
+
 ## Tracking Events
 
 - Campaign Landing มี event เฉพาะ `campaign_view` และ `campaign_click_through`
@@ -89,3 +103,4 @@ src/
 - หน้า Home ถูกแยกแบบ co-location ไว้ใน `src/features/home`
 - `App.tsx` ทำหน้าที่ประกอบหน้า (composition) และส่ง props ระหว่างส่วนต่าง ๆ
 - คำสั่ง Gemini ใช้ policy จาก `.gemini/policies` และ instructions โครงการจาก `GEMINI.md`
+- Agent ฝ่ายต่างๆ มี policy เฉพาะใน `.gemini/policies/agents/` — แต่ละ agent มีขอบเขตและข้อจำกัดของตัวเอง
