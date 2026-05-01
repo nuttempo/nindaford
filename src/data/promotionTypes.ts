@@ -1,4 +1,4 @@
-/** Data shape for the editable promotion (Everest Trend offer). */
+/** Data shape for a single editable promotion. */
 export type PromotionData = {
   name: string;
   normalPrice: string;
@@ -7,6 +7,13 @@ export type PromotionData = {
   note: string;
   offerUrl: string;
   allOffersUrl: string;
+};
+
+/** A complete promotion item: data + its images. */
+export type PromotionItem = {
+  id: string;
+  data: PromotionData;
+  images: StoredImageItem[];
 };
 
 /** Image item stored in localStorage (base64 src). */

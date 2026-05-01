@@ -1,106 +1,86 @@
 import React from "react";
 import {
-  getPromotion,
-  savePromotion,
-  resetPromotion,
-  getPromotionImages,
-  savePromotionImages,
-  resetPromotionImages,
+  getPromotions,
+  savePromotions,
+  resetPromotions,
   compressImage,
-  hasCustomPromotion,
-  hasCustomImages,
+  hasCustomPromotions,
+  createBlankPromotion,
 } from "../../data/promotionStore";
-import type { PromotionData, StoredImageItem } from "../../data/promotionTypes";
+import type { PromotionData, PromotionItem, StoredImageItem } from "../../data/promotionTypes";
 
 /* ──────────────────────────────────────────────────────────────────── */
 
 export function AdminPanel() {
-  // ── Promo form state ────────────────────────────────────────────
-  const [form, setForm] = React.useState<PromotionData>(getPromotion);
-  const [images, setImages] = React.useState<StoredImageItem[]>(getPromotionImages);
+  const [items, setItems] = React.useState<PromotionItem[]>(getPromotions);
   const [saved, setSaved] = React.useState(false);
-  const [imageSaved, setImageSaved] = React.useState(false);
-  const [uploading, setUploading] = React.useState(false);
-  const fileRef = React.useRef<HTMLInputElement>(null);
+  const [expandedId, setExpandedId] = React.useState<string | null>(() => {
+    const promos = getPromotions();
+    return promos.length > 0 ? promos[0].id : null;
+  });
 
-  const update = (field: keyof PromotionData, value: string) => {
-    setForm((prev) => ({ ...prev, [field]: value }));
+  // ── Item CRUD ───────────────────────────────────────────────────
+
+  const addItem = () => {
+    const blank = createBlankPromotion();
+    setItems((prev) => [...prev, blank]);
+    setExpandedId(blank.id);
+    setSaved(false);
+  };
+
+  const removeItem = (id: string) => {
+    if (items.length <= 1) {
+      alert("ต้องมีอย่างน้อย 1 โปรโมชั่น");
+      return;
+    }
+    if (!confirm("ลบโปรโมชั่นนี้?")) return;
+    setItems((prev) => prev.filter((i) => i.id !== id));
+    if (expandedId === id) setExpandedId(null);
+    setSaved(false);
+  };
+
+  const moveItem = (idx: number, dir: -1 | 1) => {
+    const target = idx + dir;
+    if (target < 0 || target >= items.length) return;
+    setItems((prev) => {
+      const next = [...prev];
+      [next[idx], next[target]] = [next[target], next[idx]];
+      return next;
+    });
+    setSaved(false);
+  };
+
+  const updateData = (id: string, field: keyof PromotionData, value: string) => {
+    setItems((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, data: { ...item.data, [field]: value } } : item
+      )
+    );
+    setSaved(false);
+  };
+
+  const updateImages = (id: string, images: StoredImageItem[]) => {
+    setItems((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, images } : item))
+    );
     setSaved(false);
   };
 
   // ── Save / Reset ────────────────────────────────────────────────
 
-  const handleSavePromo = () => {
-    savePromotion(form);
+  const handleSave = () => {
+    savePromotions(items);
     setSaved(true);
     setTimeout(() => setSaved(false), 2500);
   };
 
-  const handleResetPromo = () => {
-    if (!confirm("รีเซ็ตข้อมูลโปรโมชั่นกลับเป็นค่าเริ่มต้น?")) return;
-    resetPromotion();
-    setForm(getPromotion());
+  const handleReset = () => {
+    if (!confirm("รีเซ็ตโปรโมชั่นทั้งหมดกลับเป็นค่าเริ่มต้น?")) return;
+    resetPromotions();
+    const defaults = getPromotions();
+    setItems(defaults);
+    setExpandedId(defaults[0]?.id ?? null);
     setSaved(false);
-  };
-
-  const handleSaveImages = () => {
-    savePromotionImages(images);
-    setImageSaved(true);
-    setTimeout(() => setImageSaved(false), 2500);
-  };
-
-  const handleResetImages = () => {
-    if (!confirm("รีเซ็ตรูปภาพกลับเป็นค่าเริ่มต้น?")) return;
-    resetPromotionImages();
-    setImages(getPromotionImages());
-    setImageSaved(false);
-  };
-
-  // ── Image upload ────────────────────────────────────────────────
-
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files?.length) return;
-
-    setUploading(true);
-    try {
-      const newImages: StoredImageItem[] = [];
-      for (const file of Array.from(files)) {
-        const base64 = await compressImage(file);
-        newImages.push({
-          src: base64,
-          caption: file.name.replace(/\.[^.]+$/, ""),
-        });
-      }
-      setImages((prev) => [...prev, ...newImages]);
-      setImageSaved(false);
-    } catch (err) {
-      alert("เกิดข้อผิดพลาดในการอัพโหลดรูป: " + (err instanceof Error ? err.message : "Unknown"));
-    } finally {
-      setUploading(false);
-      if (fileRef.current) fileRef.current.value = "";
-    }
-  };
-
-  const removeImage = (idx: number) => {
-    setImages((prev) => prev.filter((_, i) => i !== idx));
-    setImageSaved(false);
-  };
-
-  const updateCaption = (idx: number, caption: string) => {
-    setImages((prev) => prev.map((img, i) => (i === idx ? { ...img, caption } : img)));
-    setImageSaved(false);
-  };
-
-  const moveImage = (idx: number, dir: -1 | 1) => {
-    const target = idx + dir;
-    if (target < 0 || target >= images.length) return;
-    setImages((prev) => {
-      const next = [...prev];
-      [next[idx], next[target]] = [next[target], next[idx]];
-      return next;
-    });
-    setImageSaved(false);
   };
 
   // ── Render ──────────────────────────────────────────────────────
@@ -111,73 +91,234 @@ export function AdminPanel() {
       <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-zinc-200 shadow-sm">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 flex items-center justify-between h-14">
           <h1 className="text-lg font-bold text-zinc-900">⚙️ จัดการโปรโมชั่น</h1>
-          <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              window.location.hash = "";
-            }}
-            className="rounded-lg bg-zinc-100 px-4 py-1.5 text-sm text-zinc-600 hover:bg-zinc-200 transition-colors"
-          >
-            ← กลับหน้าหลัก
-          </a>
-        </div>
-      </header>
-
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 py-8 space-y-8">
-        {/* ─── PROMO DATA FORM ─────────────────────────────────── */}
-        <section className="rounded-2xl bg-white p-6 md:p-8 shadow-sm ring-1 ring-black/5">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-zinc-900">📋 ข้อมูลโปรโมชั่น</h2>
-            {hasCustomPromotion() && (
-              <span className="text-xs bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full font-medium">
+          <div className="flex items-center gap-3">
+            {hasCustomPromotions() && (
+              <span className="hidden sm:inline text-xs bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full font-medium">
                 ✏️ มีข้อมูลที่กำหนดเอง
               </span>
             )}
-          </div>
-
-          <div className="grid gap-5">
-            <Field label="ชื่อรุ่น / ชื่อโปรฯ" value={form.name} onChange={(v) => update("name", v)} />
-            <div className="grid gap-5 sm:grid-cols-3">
-              <Field label="ราคาปกติ" value={form.normalPrice} onChange={(v) => update("normalPrice", v)} placeholder="เช่น 1,397,000" />
-              <Field label="ราคาพิเศษ" value={form.specialPrice} onChange={(v) => update("specialPrice", v)} placeholder="เช่น 1,249,000" />
-              <Field label="ส่วนลด" value={form.save} onChange={(v) => update("save", v)} placeholder="เช่น 148,000" />
-            </div>
-            <Field label="หมายเหตุ" value={form.note} onChange={(v) => update("note", v)} multiline />
-            <Field label="ลิงก์โปรฯ ทางการ (Ford)" value={form.offerUrl} onChange={(v) => update("offerUrl", v)} type="url" />
-            <Field label="ลิงก์รวมโปรฯ ทั้งหมด" value={form.allOffersUrl} onChange={(v) => update("allOffersUrl", v)} type="url" />
-          </div>
-
-          <div className="mt-6 flex flex-wrap gap-3">
-            <button
-              onClick={handleSavePromo}
-              className="rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-md hover:bg-blue-700 transition-colors"
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                window.location.hash = "";
+              }}
+              className="rounded-lg bg-zinc-100 px-4 py-1.5 text-sm text-zinc-600 hover:bg-zinc-200 transition-colors"
             >
-              {saved ? "✅ บันทึกแล้ว!" : "💾 บันทึกข้อมูล"}
-            </button>
-            <button
-              onClick={handleResetPromo}
-              className="rounded-xl bg-zinc-100 px-6 py-2.5 text-sm font-medium text-zinc-600 hover:bg-zinc-200 transition-colors"
-            >
-              🔄 รีเซ็ตเป็นค่าเริ่มต้น
-            </button>
+              ← กลับหน้าหลัก
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 py-8 space-y-6">
+        {/* ─── PROMOTION LIST ──────────────────────────────────── */}
+        {items.map((item, idx) => (
+          <PromotionEditor
+            key={item.id}
+            item={item}
+            index={idx}
+            total={items.length}
+            expanded={expandedId === item.id}
+            onToggle={() => setExpandedId(expandedId === item.id ? null : item.id)}
+            onUpdateData={(field, value) => updateData(item.id, field, value)}
+            onUpdateImages={(imgs) => updateImages(item.id, imgs)}
+            onRemove={() => removeItem(item.id)}
+            onMove={(dir) => moveItem(idx, dir)}
+          />
+        ))}
+
+        {/* ─── ADD + GLOBAL ACTIONS ────────────────────────────── */}
+        <div className="flex flex-wrap gap-3">
+          <button
+            onClick={addItem}
+            className="rounded-xl bg-emerald-600 px-6 py-2.5 text-sm font-semibold text-white shadow-md hover:bg-emerald-700 transition-colors"
+          >
+            ➕ เพิ่มโปรโมชั่นใหม่
+          </button>
+          <button
+            onClick={handleSave}
+            className="rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-md hover:bg-blue-700 transition-colors"
+          >
+            {saved ? "✅ บันทึกทั้งหมดแล้ว!" : "💾 บันทึกทั้งหมด"}
+          </button>
+          <button
+            onClick={handleReset}
+            className="rounded-xl bg-zinc-100 px-6 py-2.5 text-sm font-medium text-zinc-600 hover:bg-zinc-200 transition-colors"
+          >
+            🔄 รีเซ็ตเป็นค่าเริ่มต้น
+          </button>
+        </div>
+
+        {/* ─── PREVIEW ALL ─────────────────────────────────────── */}
+        <section className="rounded-2xl bg-white p-6 md:p-8 shadow-sm ring-1 ring-black/5">
+          <h2 className="text-xl font-bold text-zinc-900 mb-6">
+            👁️ ตัวอย่าง ({items.length} รุ่น)
+          </h2>
+          <div className="space-y-4">
+            {items.map((item) => (
+              <div key={item.id} className="rounded-xl border border-zinc-200 bg-zinc-50 p-5 space-y-3">
+                <div className="text-lg font-bold text-zinc-900">
+                  {item.data.name || <span className="text-zinc-300 italic">ยังไม่ได้ตั้งชื่อ</span>}
+                </div>
+                <div className="grid gap-3 grid-cols-3">
+                  <PriceBox label="ราคาปกติ" value={item.data.normalPrice} />
+                  <PriceBox label="ราคาพิเศษ" value={item.data.specialPrice} highlight />
+                  <PriceBox label="ส่วนลด" value={item.data.save} />
+                </div>
+                {item.data.note && <p className="text-sm text-zinc-500">{item.data.note}</p>}
+                {item.images.length > 0 && (
+                  <div className="flex gap-2 overflow-x-auto pb-1">
+                    {item.images.map((img, i) => (
+                      <img
+                        key={i}
+                        src={img.src}
+                        alt={img.caption}
+                        className="h-16 w-24 flex-none rounded-lg object-cover border border-zinc-200"
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </section>
+      </div>
+    </div>
+  );
+}
 
-        {/* ─── IMAGE MANAGEMENT ────────────────────────────────── */}
-        <section className="rounded-2xl bg-white p-6 md:p-8 shadow-sm ring-1 ring-black/5">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-zinc-900">🖼️ รูปภาพสไลด์</h2>
-            {hasCustomImages() && (
-              <span className="text-xs bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full font-medium">
-                ✏️ มีรูปที่กำหนดเอง
-              </span>
-            )}
+/* ──────────────────────────────────────────────────────────────────── */
+/* PromotionEditor — collapsible editor for a single promotion item    */
+/* ──────────────────────────────────────────────────────────────────── */
+
+function PromotionEditor({
+  item,
+  index,
+  total,
+  expanded,
+  onToggle,
+  onUpdateData,
+  onUpdateImages,
+  onRemove,
+  onMove,
+}: {
+  item: PromotionItem;
+  index: number;
+  total: number;
+  expanded: boolean;
+  onToggle: () => void;
+  onUpdateData: (field: keyof PromotionData, value: string) => void;
+  onUpdateImages: (images: StoredImageItem[]) => void;
+  onRemove: () => void;
+  onMove: (dir: -1 | 1) => void;
+}) {
+  const [uploading, setUploading] = React.useState(false);
+  const fileRef = React.useRef<HTMLInputElement>(null);
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files?.length) return;
+    setUploading(true);
+    try {
+      const newImages: StoredImageItem[] = [];
+      for (const file of Array.from(files)) {
+        const base64 = await compressImage(file);
+        newImages.push({
+          src: base64,
+          caption: file.name.replace(/\.[^.]+$/, ""),
+        });
+      }
+      onUpdateImages([...item.images, ...newImages]);
+    } catch (err) {
+      alert("เกิดข้อผิดพลาด: " + (err instanceof Error ? err.message : "Unknown"));
+    } finally {
+      setUploading(false);
+      if (fileRef.current) fileRef.current.value = "";
+    }
+  };
+
+  const removeImage = (idx: number) => {
+    onUpdateImages(item.images.filter((_, i) => i !== idx));
+  };
+
+  const updateCaption = (idx: number, caption: string) => {
+    onUpdateImages(item.images.map((img, i) => (i === idx ? { ...img, caption } : img)));
+  };
+
+  const moveImage = (idx: number, dir: -1 | 1) => {
+    const target = idx + dir;
+    if (target < 0 || target >= item.images.length) return;
+    const next = [...item.images];
+    [next[idx], next[target]] = [next[target], next[idx]];
+    onUpdateImages(next);
+  };
+
+  return (
+    <section className="rounded-2xl bg-white shadow-sm ring-1 ring-black/5 overflow-hidden">
+      {/* Header — always visible */}
+      <button
+        type="button"
+        onClick={onToggle}
+        className="w-full flex items-center justify-between p-5 md:p-6 hover:bg-zinc-50/50 transition-colors text-left"
+      >
+        <div className="flex items-center gap-3 min-w-0">
+          <span className="flex-none inline-flex h-8 w-8 items-center justify-center rounded-lg bg-blue-100 text-blue-700 text-sm font-bold">
+            {index + 1}
+          </span>
+          <div className="min-w-0">
+            <div className="font-bold text-zinc-900 truncate">
+              {item.data.name || <span className="text-zinc-300 italic">โปรโมชั่นใหม่</span>}
+            </div>
+            <div className="text-xs text-zinc-400 mt-0.5">
+              {item.data.specialPrice ? `฿${item.data.specialPrice}` : "ยังไม่ได้ตั้งราคา"} · {item.images.length} รูป
+            </div>
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="flex gap-1 mr-2" onClick={(e) => e.stopPropagation()}>
+            <button
+              onClick={() => onMove(-1)}
+              disabled={index === 0}
+              className="rounded-md bg-zinc-100 px-2 py-1 text-xs text-zinc-500 hover:bg-zinc-200 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              title="เลื่อนขึ้น"
+            >
+              ▲
+            </button>
+            <button
+              onClick={() => onMove(1)}
+              disabled={index === total - 1}
+              className="rounded-md bg-zinc-100 px-2 py-1 text-xs text-zinc-500 hover:bg-zinc-200 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              title="เลื่อนลง"
+            >
+              ▼
+            </button>
+          </div>
+          <span className="text-zinc-400 text-lg">{expanded ? "▾" : "▸"}</span>
+        </div>
+      </button>
+
+      {/* Body — collapsible */}
+      {expanded && (
+        <div className="border-t border-zinc-100 p-5 md:p-6 space-y-6">
+          {/* Data fields */}
+          <div className="grid gap-5">
+            <Field label="ชื่อรุ่น / ชื่อโปรฯ" value={item.data.name} onChange={(v) => onUpdateData("name", v)} />
+            <div className="grid gap-5 sm:grid-cols-3">
+              <Field label="ราคาปกติ" value={item.data.normalPrice} onChange={(v) => onUpdateData("normalPrice", v)} placeholder="เช่น 1,397,000" />
+              <Field label="ราคาพิเศษ" value={item.data.specialPrice} onChange={(v) => onUpdateData("specialPrice", v)} placeholder="เช่น 1,249,000" />
+              <Field label="ส่วนลด" value={item.data.save} onChange={(v) => onUpdateData("save", v)} placeholder="เช่น 148,000" />
+            </div>
+            <Field label="หมายเหตุ" value={item.data.note} onChange={(v) => onUpdateData("note", v)} multiline />
+            <Field label="ลิงก์โปรฯ ทางการ (Ford)" value={item.data.offerUrl} onChange={(v) => onUpdateData("offerUrl", v)} type="url" />
+            <Field label="ลิงก์รวมโปรฯ ทั้งหมด" value={item.data.allOffersUrl} onChange={(v) => onUpdateData("allOffersUrl", v)} type="url" />
           </div>
 
-          {/* Upload */}
-          <div className="mb-6">
-            <label className="block">
+          {/* Image management */}
+          <div>
+            <h3 className="text-base font-bold text-zinc-800 mb-3">🖼️ รูปภาพ ({item.images.length})</h3>
+
+            <div className="mb-4">
               <input
                 ref={fileRef}
                 type="file"
@@ -188,129 +329,62 @@ export function AdminPanel() {
               />
               <div
                 onClick={() => fileRef.current?.click()}
-                className="cursor-pointer rounded-xl border-2 border-dashed border-zinc-300 bg-zinc-50 p-6 text-center hover:border-blue-400 hover:bg-blue-50/50 transition-colors"
+                className="cursor-pointer rounded-xl border-2 border-dashed border-zinc-300 bg-zinc-50 p-4 text-center hover:border-blue-400 hover:bg-blue-50/50 transition-colors"
               >
                 {uploading ? (
-                  <p className="text-sm text-zinc-500">⏳ กำลังประมวลผลรูป...</p>
+                  <p className="text-sm text-zinc-500">⏳ กำลังประมวลผล...</p>
                 ) : (
-                  <>
-                    <p className="text-2xl mb-1">📤</p>
-                    <p className="text-sm font-medium text-zinc-600">คลิกเพื่ออัพโหลดรูป</p>
-                    <p className="text-xs text-zinc-400 mt-1">รองรับ JPG, PNG, WebP · ปรับขนาดอัตโนมัติ</p>
-                  </>
+                  <p className="text-sm text-zinc-500">📤 คลิกเพื่ออัพโหลดรูป (JPG, PNG, WebP)</p>
                 )}
               </div>
-            </label>
-          </div>
+            </div>
 
-          {/* Gallery */}
-          {images.length === 0 ? (
-            <p className="text-sm text-zinc-400 text-center py-8">ยังไม่มีรูปภาพ</p>
-          ) : (
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {images.map((img, idx) => (
-                <div
-                  key={idx}
-                  className="rounded-xl border border-zinc-200 bg-zinc-50 overflow-hidden"
-                >
-                  <div className="aspect-[16/10] bg-zinc-200">
-                    <img
-                      src={img.src}
-                      alt={img.caption}
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                  <div className="p-3 space-y-2">
-                    <input
-                      type="text"
-                      value={img.caption}
-                      onChange={(e) => updateCaption(idx, e.target.value)}
-                      className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-sm text-zinc-700 outline-none focus:ring-2 focus:ring-blue-300"
-                      placeholder="คำอธิบายรูป"
-                    />
-                    <div className="flex items-center justify-between">
-                      <div className="flex gap-1">
-                        <button
-                          onClick={() => moveImage(idx, -1)}
-                          disabled={idx === 0}
-                          className="rounded-md bg-zinc-100 px-2 py-1 text-xs text-zinc-500 hover:bg-zinc-200 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                          title="เลื่อนไปซ้าย"
-                        >
-                          ◀
-                        </button>
-                        <button
-                          onClick={() => moveImage(idx, 1)}
-                          disabled={idx === images.length - 1}
-                          className="rounded-md bg-zinc-100 px-2 py-1 text-xs text-zinc-500 hover:bg-zinc-200 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                          title="เลื่อนไปขวา"
-                        >
-                          ▶
-                        </button>
+            {item.images.length > 0 && (
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {item.images.map((img, idx) => (
+                  <div key={idx} className="rounded-xl border border-zinc-200 bg-zinc-50 overflow-hidden">
+                    <div className="aspect-[16/10] bg-zinc-200">
+                      <img src={img.src} alt={img.caption} className="h-full w-full object-cover" />
+                    </div>
+                    <div className="p-2.5 space-y-2">
+                      <input
+                        type="text"
+                        value={img.caption}
+                        onChange={(e) => updateCaption(idx, e.target.value)}
+                        className="w-full rounded-lg border border-zinc-200 bg-white px-2.5 py-1 text-xs text-zinc-700 outline-none focus:ring-2 focus:ring-blue-300"
+                        placeholder="คำอธิบายรูป"
+                      />
+                      <div className="flex items-center justify-between">
+                        <div className="flex gap-1">
+                          <button onClick={() => moveImage(idx, -1)} disabled={idx === 0} className="rounded bg-zinc-100 px-1.5 py-0.5 text-xs text-zinc-500 hover:bg-zinc-200 disabled:opacity-30 disabled:cursor-not-allowed">◀</button>
+                          <button onClick={() => moveImage(idx, 1)} disabled={idx === item.images.length - 1} className="rounded bg-zinc-100 px-1.5 py-0.5 text-xs text-zinc-500 hover:bg-zinc-200 disabled:opacity-30 disabled:cursor-not-allowed">▶</button>
+                        </div>
+                        <button onClick={() => removeImage(idx)} className="rounded bg-red-50 px-2 py-0.5 text-xs text-red-500 hover:bg-red-100">🗑️ ลบ</button>
                       </div>
-                      <button
-                        onClick={() => removeImage(idx)}
-                        className="rounded-md bg-red-50 px-2.5 py-1 text-xs text-red-500 hover:bg-red-100 transition-colors"
-                      >
-                        🗑️ ลบ
-                      </button>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          <div className="mt-6 flex flex-wrap gap-3">
-            <button
-              onClick={handleSaveImages}
-              disabled={images.length === 0}
-              className="rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-md hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-            >
-              {imageSaved ? "✅ บันทึกรูปแล้ว!" : "💾 บันทึกรูปภาพ"}
-            </button>
-            <button
-              onClick={handleResetImages}
-              className="rounded-xl bg-zinc-100 px-6 py-2.5 text-sm font-medium text-zinc-600 hover:bg-zinc-200 transition-colors"
-            >
-              🔄 รีเซ็ตรูปเป็นค่าเริ่มต้น
-            </button>
-          </div>
-        </section>
-
-        {/* ─── PREVIEW ────────────────────────────────────────── */}
-        <section className="rounded-2xl bg-white p-6 md:p-8 shadow-sm ring-1 ring-black/5">
-          <h2 className="text-xl font-bold text-zinc-900 mb-6">👁️ ตัวอย่าง (Preview)</h2>
-
-          <div className="rounded-xl border border-zinc-200 bg-zinc-50 p-5 space-y-3">
-            <div className="text-lg font-bold text-zinc-900">{form.name}</div>
-            <div className="grid gap-3 grid-cols-3">
-              <PriceBox label="ราคาปกติ" value={form.normalPrice} />
-              <PriceBox label="ราคาพิเศษ" value={form.specialPrice} highlight />
-              <PriceBox label="ส่วนลด" value={form.save} />
-            </div>
-            <p className="text-sm text-zinc-500">{form.note}</p>
+                ))}
+              </div>
+            )}
           </div>
 
-          {images.length > 0 && (
-            <div className="mt-4 flex gap-2 overflow-x-auto pb-2">
-              {images.map((img, i) => (
-                <img
-                  key={i}
-                  src={img.src}
-                  alt={img.caption}
-                  className="h-20 w-32 flex-none rounded-lg object-cover border border-zinc-200"
-                />
-              ))}
-            </div>
-          )}
-        </section>
-      </div>
-    </div>
+          {/* Delete button */}
+          <div className="pt-2 border-t border-zinc-100">
+            <button
+              onClick={onRemove}
+              className="rounded-xl bg-red-50 px-5 py-2 text-sm font-medium text-red-600 hover:bg-red-100 transition-colors"
+            >
+              🗑️ ลบโปรโมชั่นนี้
+            </button>
+          </div>
+        </div>
+      )}
+    </section>
   );
 }
 
 /* ──────────────────────────────────────────────────────────────────── */
-/* Reusable sub-components (internal to this file)                     */
+/* Reusable sub-components                                              */
 /* ──────────────────────────────────────────────────────────────────── */
 
 function Field({
@@ -364,7 +438,7 @@ function PriceBox({ label, value, highlight }: { label: string; value: string; h
     >
       <div className="text-xs text-zinc-500">{label}</div>
       <div className={"mt-0.5 text-sm font-bold tabular-nums " + (highlight ? "text-blue-600" : "text-zinc-900")}>
-        ฿{value}
+        {value ? `฿${value}` : "—"}
       </div>
     </div>
   );

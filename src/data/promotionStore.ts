@@ -1,15 +1,15 @@
 /**
- * promotionStore — read/write promotion data & images via localStorage.
+ * promotionStore — read/write multiple promotion items via localStorage.
  *
- * If nothing is saved yet the getters fall back to the hard-coded defaults
- * exported from siteData.ts so the public site always works out-of-the-box.
+ * Each promotion has its own data (name, prices, …) and images.
+ * If nothing is saved yet the getter falls back to the hard-coded
+ * Everest Trend default so the public site always works out-of-the-box.
  */
 
 import { EVEREST_TREND_OFFER, EVEREST_TREND_IMAGES } from "./siteData";
-import type { PromotionData, StoredImageItem } from "./promotionTypes";
+import type { PromotionData, PromotionItem, StoredImageItem } from "./promotionTypes";
 
-const PROMO_KEY = "nindaford_promotion";
-const IMAGES_KEY = "nindaford_promotion_images";
+const PROMOS_KEY = "nindaford_promotions";
 
 // ─── helpers ────────────────────────────────────────────────────────
 
@@ -25,53 +25,79 @@ function toPromotionData(src: typeof EVEREST_TREND_OFFER): PromotionData {
   };
 }
 
-// ─── promotion data ────────────────────────────────────────────────
+function defaultPromotions(): PromotionItem[] {
+  return [
+    {
+      id: "default_everest_trend",
+      data: toPromotionData(EVEREST_TREND_OFFER),
+      images: EVEREST_TREND_IMAGES.map((img) => ({
+        src: img.src,
+        caption: img.caption,
+      })),
+    },
+  ];
+}
 
+export function generateId(): string {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+}
+
+/** Create a blank promotion item with default empty values. */
+export function createBlankPromotion(): PromotionItem {
+  return {
+    id: generateId(),
+    data: {
+      name: "",
+      normalPrice: "",
+      specialPrice: "",
+      save: "",
+      note: "",
+      offerUrl: "",
+      allOffersUrl: "",
+    },
+    images: [],
+  };
+}
+
+// ─── promotions (multi-item) ────────────────────────────────────────
+
+export function getPromotions(): PromotionItem[] {
+  try {
+    const raw = localStorage.getItem(PROMOS_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw) as PromotionItem[];
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    }
+  } catch {
+    /* corrupted → fall through */
+  }
+  return defaultPromotions();
+}
+
+export function savePromotions(items: PromotionItem[]): void {
+  localStorage.setItem(PROMOS_KEY, JSON.stringify(items));
+  window.dispatchEvent(new Event("promotion-updated"));
+}
+
+export function resetPromotions(): void {
+  localStorage.removeItem(PROMOS_KEY);
+  window.dispatchEvent(new Event("promotion-updated"));
+}
+
+export function hasCustomPromotions(): boolean {
+  return localStorage.getItem(PROMOS_KEY) !== null;
+}
+
+// ─── backward compat helpers (single-item API) ─────────────────────
+
+/** Get first promotion (for CampaignSection). */
 export function getPromotion(): PromotionData {
-  try {
-    const raw = localStorage.getItem(PROMO_KEY);
-    if (raw) return JSON.parse(raw) as PromotionData;
-  } catch {
-    /* corrupted → fall through */
-  }
-  return toPromotionData(EVEREST_TREND_OFFER);
+  return getPromotions()[0].data;
 }
 
-export function savePromotion(data: PromotionData): void {
-  localStorage.setItem(PROMO_KEY, JSON.stringify(data));
-  // Notify other tabs / components listening on storage
-  window.dispatchEvent(new Event("promotion-updated"));
-}
-
-export function resetPromotion(): void {
-  localStorage.removeItem(PROMO_KEY);
-  window.dispatchEvent(new Event("promotion-updated"));
-}
-
-// ─── promotion images ──────────────────────────────────────────────
-
+/** Get first promotion's images. */
 export function getPromotionImages(): StoredImageItem[] {
-  try {
-    const raw = localStorage.getItem(IMAGES_KEY);
-    if (raw) return JSON.parse(raw) as StoredImageItem[];
-  } catch {
-    /* corrupted → fall through */
-  }
-  // Return default images (these use Vite-resolved import paths)
-  return EVEREST_TREND_IMAGES.map((img) => ({
-    src: img.src,
-    caption: img.caption,
-  }));
-}
-
-export function savePromotionImages(images: StoredImageItem[]): void {
-  localStorage.setItem(IMAGES_KEY, JSON.stringify(images));
-  window.dispatchEvent(new Event("promotion-updated"));
-}
-
-export function resetPromotionImages(): void {
-  localStorage.removeItem(IMAGES_KEY);
-  window.dispatchEvent(new Event("promotion-updated"));
+  return getPromotions()[0].images;
 }
 
 // ─── image helpers ─────────────────────────────────────────────────
@@ -109,14 +135,4 @@ export function compressImage(file: File): Promise<string> {
     reader.onerror = () => reject(new Error("Failed to read file"));
     reader.readAsDataURL(file);
   });
-}
-
-/** Check whether the stored promotion differs from the hard-coded default. */
-export function hasCustomPromotion(): boolean {
-  return localStorage.getItem(PROMO_KEY) !== null;
-}
-
-/** Check whether stored images differ from the hard-coded default. */
-export function hasCustomImages(): boolean {
-  return localStorage.getItem(IMAGES_KEY) !== null;
 }

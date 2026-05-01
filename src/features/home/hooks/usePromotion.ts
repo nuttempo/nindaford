@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
-import { getPromotion, getPromotionImages } from "../../../data/promotionStore";
-import type { PromotionData, StoredImageItem } from "../../../data/promotionTypes";
+import { getPromotions } from "../../../data/promotionStore";
+import type { PromotionItem } from "../../../data/promotionTypes";
 
 /**
- * Hook that returns the current promotion data and images.
+ * Hook that returns all promotion items (multi-promotion).
  *
  * Reads from localStorage (if customised via admin panel),
  * otherwise falls back to the hard-coded defaults in siteData.ts.
@@ -11,21 +11,13 @@ import type { PromotionData, StoredImageItem } from "../../../data/promotionType
  * Automatically refreshes when the "promotion-updated" custom event fires
  * (triggered by the admin panel's save/reset actions).
  */
-export function usePromotion() {
-  const read = useCallback(() => ({
-    promotion: getPromotion(),
-    images: getPromotionImages(),
-  }), []);
-
-  const [state, setState] = useState<{
-    promotion: PromotionData;
-    images: StoredImageItem[];
-  }>(read);
+export function usePromotions(): PromotionItem[] {
+  const read = useCallback(() => getPromotions(), []);
+  const [items, setItems] = useState<PromotionItem[]>(read);
 
   useEffect(() => {
-    const handler = () => setState(read());
+    const handler = () => setItems(read());
     window.addEventListener("promotion-updated", handler);
-    // Also listen to native "storage" events (cross-tab sync)
     window.addEventListener("storage", handler);
     return () => {
       window.removeEventListener("promotion-updated", handler);
@@ -33,5 +25,18 @@ export function usePromotion() {
     };
   }, [read]);
 
-  return state;
+  return items;
+}
+
+/**
+ * Backward-compat hook — returns first promotion's data + images.
+ * Used by CampaignSection.
+ */
+export function usePromotion() {
+  const items = usePromotions();
+  const first = items[0];
+  return {
+    promotion: first.data,
+    images: first.images,
+  };
 }
