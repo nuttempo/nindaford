@@ -125,7 +125,7 @@ export function TestDriveSection() {
       });
     });
 
-    window.open(`https://m.me/nindaford?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+    window.open(`https://m.me/fordninda?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
   };
 
   return (

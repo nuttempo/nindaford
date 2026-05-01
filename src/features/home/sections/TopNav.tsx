@@ -35,7 +35,7 @@ export function TopNav() {
           </nav>
 
           <div className="flex items-center gap-2">
-            <a href="https://m.me/nindaford" target="_blank" rel="noreferrer" className="hidden sm:inline-block" onClick={() => trackEvent("cta_click", { area: "top_nav", channel: "messenger", cta: "quote_nav_desktop" })}>
+            <a href="https://m.me/fordninda" target="_blank" rel="noreferrer" className="hidden sm:inline-block" onClick={() => trackEvent("cta_click", { area: "top_nav", channel: "messenger", cta: "quote_nav_desktop" })}>
               <Button variant="primary" className="rounded-full px-6 shadow-[color:var(--c-primary)]/40 hover:shadow-[color:var(--c-primary)]/60">
                 ขอใบเสนอราคา <ArrowRight className="h-4 w-4" />
               </Button>
@@ -72,7 +72,7 @@ export function TopNav() {
                 </a>
               ))}
               <a
-                href="https://m.me/nindaford"
+                href="https://m.me/fordninda"
                 target="_blank"
                 rel="noreferrer"
                 onClick={() => {

@@ -203,7 +203,7 @@ export function CalculatorSection({
             </div>
 
             <div className="mt-10 relative z-10">
-              <a href={`https://m.me/nindaford?text=${encodeURIComponent(`สนใจให้ทำใบเสนอราคา\nรุ่นรถ: ${fordModels[selectedModelIndex].name}\nราคารถ: ${formatTHB(carPrice)} บ.\nดาวน์: ${downPercent}% (${formatTHB(downAmount)} บ.)\nผ่อน: ${months} งวด\n(รบกวนคำนวณเรทดอกเบี้ย ${interestRate}% ให้หน่อยค่ะ)`)}`} target="_blank" rel="noreferrer" className="block w-full group" onClick={() => trackEvent("cta_click", { area: "calculator", channel: "messenger", cta: "chat_with_quote", model: fordModels[selectedModelIndex].name, months })}>
+              <a href={`https://m.me/fordninda?text=${encodeURIComponent(`สนใจให้ทำใบเสนอราคา\nรุ่นรถ: ${fordModels[selectedModelIndex].name}\nราคารถ: ${formatTHB(carPrice)} บ.\nดาวน์: ${downPercent}% (${formatTHB(downAmount)} บ.)\nผ่อน: ${months} งวด\n(รบกวนคำนวณเรทดอกเบี้ย ${interestRate}% ให้หน่อยค่ะ)`)}`} target="_blank" rel="noreferrer" className="block w-full group" onClick={() => trackEvent("cta_click", { area: "calculator", channel: "messenger", cta: "chat_with_quote", model: fordModels[selectedModelIndex].name, months })}>
                 <Button variant="outline" className="w-full py-4 text-[16px] rounded-2xl bg-white text-[color:var(--c-primary)] shadow-xl hover:scale-[1.02] transition-transform font-bold border-transparent">
                   ทักแชทพร้อมยอดนี้ <ArrowRight className="h-4.5 w-4.5 group-hover:translate-x-1 transition-transform" />
                 </Button>

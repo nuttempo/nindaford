@@ -113,7 +113,7 @@ export function CampaignSection() {
 
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             <a
-              href="https://m.me/nindaford"
+              href="https://m.me/fordninda"
               target="_blank"
               rel="noreferrer"
               onClick={() => {

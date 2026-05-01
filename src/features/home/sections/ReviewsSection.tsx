@@ -25,7 +25,7 @@ export function ReviewsSection() {
         ))}
       </div>
       <div className="mt-12 text-center">
-        <a href="https://www.facebook.com/nindaford/" target="_blank" rel="noreferrer" onClick={() => trackEvent("cta_click", { area: "reviews", channel: "facebook", cta: "view_more_reviews" })}>
+        <a href="https://www.facebook.com/fordninda/" target="_blank" rel="noreferrer" onClick={() => trackEvent("cta_click", { area: "reviews", channel: "facebook", cta: "view_more_reviews" })}>
           <Button variant="outline" className="rounded-2xl px-10 py-3 bg-white shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all text-slate-700">
             ดูรีวิวเพิ่มเติมที่เพจ <ArrowRight className="h-4 w-4" />
           </Button>

@@ -54,7 +54,7 @@ export function OffersSection() {
             </div>
 
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
-              <a href="https://m.me/nindaford" target="_blank" rel="noreferrer" onClick={() => trackEvent("cta_click", { area: "offers", channel: "messenger", cta: "request_personal_offer" })}>
+              <a href="https://m.me/fordninda" target="_blank" rel="noreferrer" onClick={() => trackEvent("cta_click", { area: "offers", channel: "messenger", cta: "request_personal_offer" })}>
                 <Button variant="primary" className="w-full sm:w-auto py-3 rounded-xl shadow-md shadow-[color:var(--c-primary)]/20">
                   ขอข้อเสนอเฉพาะของคุณ <ArrowRight className="h-4 w-4" />
                 </Button>
@@ -88,7 +88,7 @@ export function OffersSection() {
             </ul>
           </div>
           <div className="mt-8">
-            <a href="https://m.me/nindaford" target="_blank" rel="noreferrer" onClick={() => trackEvent("cta_click", { area: "offers_info", channel: "messenger", cta: "inbox_offer_now" })}>
+            <a href="https://m.me/fordninda" target="_blank" rel="noreferrer" onClick={() => trackEvent("cta_click", { area: "offers_info", channel: "messenger", cta: "inbox_offer_now" })}>
               <Button variant="outline" className="w-full justify-center py-3.5 rounded-xl border-[color:var(--c-primary)]/20 text-[color:var(--c-primary)] hover:bg-[color:var(--c-primary)]/5 font-semibold text-base">ทัก Inbox รับข้อเสนอทันที</Button>
             </a>
           </div>

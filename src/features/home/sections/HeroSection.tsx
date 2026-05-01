@@ -77,7 +77,7 @@ export function HeroSection() {
 
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
                 <a
-                  href="https://m.me/nindaford"
+                  href="https://m.me/fordninda"
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => {
@@ -137,15 +137,15 @@ export function HeroSection() {
                 </div>
 
                 <div className="mt-6 grid gap-3">
-                  <a href="https://m.me/nindaford" target="_blank" rel="noreferrer" onClick={() => trackEvent("cta_click", { area: "hero_quick", channel: "messenger", cta: "quote_quick" })}>
+                  <a href="https://m.me/fordninda" target="_blank" rel="noreferrer" onClick={() => trackEvent("cta_click", { area: "hero_quick", channel: "messenger", cta: "quote_quick" })}>
                     <Button variant="primary" className="w-full justify-between py-3.5 rounded-xl text-base shadow-lg shadow-[color:var(--c-primary)]/20 hover:scale-[1.02] transition-transform">
                       ขอใบเสนอราคา <ArrowRight className="h-4.5 w-4.5" />
                     </Button>
                   </a>
-                  <a href="https://m.me/nindaford" target="_blank" rel="noreferrer" onClick={() => trackEvent("cta_click", { area: "hero_quick", channel: "messenger", cta: "inbox_page" })}>
+                  <a href="https://m.me/fordninda" target="_blank" rel="noreferrer" onClick={() => trackEvent("cta_click", { area: "hero_quick", channel: "messenger", cta: "inbox_page" })}>
                     <Button variant="outline" className="w-full justify-center py-3 rounded-xl border-black/10 text-zinc-700 bg-white hover:bg-zinc-50 font-medium">ทัก Inbox เพจ</Button>
                   </a>
-                  <a href="https://www.facebook.com/nindaford/" target="_blank" rel="noreferrer" onClick={() => trackEvent("cta_click", { area: "hero_quick", channel: "facebook", cta: "open_facebook_page" })}>
+                  <a href="https://www.facebook.com/fordninda/" target="_blank" rel="noreferrer" onClick={() => trackEvent("cta_click", { area: "hero_quick", channel: "facebook", cta: "open_facebook_page" })}>
                     <Button variant="outline" className="w-full justify-center py-3 rounded-xl border-black/10 text-zinc-700 bg-white hover:bg-zinc-50 font-medium">เปิดดูเพจ Facebook</Button>
                   </a>
                 </div>

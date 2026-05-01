@@ -19,7 +19,7 @@ export function SidebarEmbedSection() {
             title="NindaFord Facebook"
             src={
               "https://www.facebook.com/plugins/page.php?href=" +
-              encodeURIComponent("https://www.facebook.com/nindaford/") +
+              encodeURIComponent("https://www.facebook.com/fordninda/") +
               "&tabs=timeline&width=340&height=520&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true"
             }
             width="100%"
@@ -32,12 +32,12 @@ export function SidebarEmbedSection() {
         </div>
 
         <div className="mt-4 grid gap-2">
-          <a href="https://m.me/nindaford" target="_blank" rel="noreferrer" onClick={() => trackEvent("cta_click", { area: "sidebar", channel: "messenger", cta: "sidebar_inbox" })}>
+          <a href="https://m.me/fordninda" target="_blank" rel="noreferrer" onClick={() => trackEvent("cta_click", { area: "sidebar", channel: "messenger", cta: "sidebar_inbox" })}>
             <Button variant="primary" className="w-full justify-center">
               ทัก Inbox <ArrowRight className="h-4 w-4" />
             </Button>
           </a>
-          <a href="https://www.facebook.com/nindaford/" target="_blank" rel="noreferrer" onClick={() => trackEvent("cta_click", { area: "sidebar", channel: "facebook", cta: "sidebar_open_page" })}>
+          <a href="https://www.facebook.com/fordninda/" target="_blank" rel="noreferrer" onClick={() => trackEvent("cta_click", { area: "sidebar", channel: "facebook", cta: "sidebar_open_page" })}>
             <Button variant="outline" className="w-full justify-center">เปิดหน้าเพจ</Button>
           </a>
         </div>

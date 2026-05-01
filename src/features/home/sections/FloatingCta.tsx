@@ -17,7 +17,7 @@ export function FloatingCta() {
         <span>โทรเลย</span>
       </motion.a>
       <motion.a
-        href="https://m.me/nindaford"
+        href="https://m.me/fordninda"
         onClick={() => trackEvent("cta_click", { area: "floating", channel: "messenger", cta: "floating_chat" })}
         target="_blank"
         rel="noreferrer"

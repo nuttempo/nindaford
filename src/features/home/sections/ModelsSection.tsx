@@ -30,7 +30,7 @@ export function ModelsSection() {
                   </div>
                 ))}
               </div>
-              <a href="https://m.me/nindaford" target="_blank" rel="noreferrer" onClick={() => trackEvent("cta_click", { area: "models", channel: "messenger", cta: "request_model_offer", model: m.name })}>
+              <a href="https://m.me/fordninda" target="_blank" rel="noreferrer" onClick={() => trackEvent("cta_click", { area: "models", channel: "messenger", cta: "request_model_offer", model: m.name })}>
                 <Button variant="primary" className="w-full py-3 rounded-xl">ขอข้อเสนอ {m.badge} <ArrowRight className="h-4 w-4" /></Button>
               </a>
             </div>

@@ -16,13 +16,13 @@ export function ContactSection() {
             <div className="text-xs text-[color:var(--c-primary)] font-medium mt-0.5">กดเพื่อโทรทันที</div>
           </Card>
         </a>
-        <a href="https://m.me/nindaford" target="_blank" rel="noreferrer" className="group" onClick={() => trackEvent("cta_click", { area: "contact", channel: "messenger", cta: "inbox_card" })}>
+        <a href="https://m.me/fordninda" target="_blank" rel="noreferrer" className="group" onClick={() => trackEvent("cta_click", { area: "contact", channel: "messenger", cta: "inbox_card" })}>
           <Card className="p-6 text-center shadow-sm ring-1 ring-slate-900/5 hover:shadow-lg hover:-translate-y-1.5 transition-all duration-300">
             <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg mb-4 group-hover:scale-110 transition-transform">
               <MessageCircle className="h-6 w-6" />
             </div>
             <div className="font-bold text-zinc-900">Inbox Facebook</div>
-            <div className="mt-1 text-sm text-zinc-500">nindaford</div>
+            <div className="mt-1 text-sm text-zinc-500">fordninda</div>
             <div className="text-xs text-[color:var(--c-primary)] font-medium mt-0.5">ตอบภายใน 24 ชม.</div>
           </Card>
         </a>
