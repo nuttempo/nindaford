@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { getPromotions } from "../../../data/promotionStore";
+import { getPromotions, getCampaigns } from "../../../data/promotionStore";
 import type { PromotionItem } from "../../../data/promotionTypes";
 
 /**
@@ -39,4 +39,24 @@ export function usePromotion() {
     promotion: first.data,
     images: first.images,
   };
+}
+
+/**
+ * Hook that returns all campaign items.
+ */
+export function useCampaigns(): PromotionItem[] {
+  const read = useCallback(() => getCampaigns(), []);
+  const [items, setItems] = useState<PromotionItem[]>(read);
+
+  useEffect(() => {
+    const handler = () => setItems(read());
+    window.addEventListener("campaign-updated", handler);
+    window.addEventListener("storage", handler);
+    return () => {
+      window.removeEventListener("campaign-updated", handler);
+      window.removeEventListener("storage", handler);
+    };
+  }, [read]);
+
+  return items;
 }

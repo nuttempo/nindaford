@@ -1,15 +1,16 @@
 import { ArrowRight, CheckCircle2 } from "lucide-react";
-import { OTHER_MODELS } from "../../../data/siteData";
+import { useOtherModels } from "../hooks";
 import { trackEvent } from "../../../utils/analytics";
 import { formatTHB } from "../../../utils/format";
 import { Button, Card, Pill, Section } from "../../../components/ui";
 
 export function ModelsSection() {
+  const models = useOtherModels();
   return (
     <Section id="models" title="รุ่นรถอื่นๆ ที่น่าสนใจ" subtitle="ไม่ใช่แค่ Everest — นินดาดูแลทุกรุ่น ทุกโปร พร้อมทำข้อเสนอเฉพาะคุณ">
       <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2">
-        {OTHER_MODELS.map((m) => (
-          <Card key={m.name} className="overflow-hidden shadow-sm ring-1 ring-slate-900/5 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300">
+        {models.map((m) => (
+          <Card key={m.id} className="overflow-hidden shadow-sm ring-1 ring-slate-900/5 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300">
             <div className={`h-3 bg-gradient-to-r ${m.color}`} />
             <div className="p-6">
               <Pill className={`bg-gradient-to-r ${m.color} text-white border-transparent mb-3`}>{m.badge}</Pill>

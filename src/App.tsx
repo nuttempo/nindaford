@@ -19,7 +19,7 @@ import {
   useFinanceCalculator,
   PageShell,
 } from "./features/home";
-import { FORD_MODELS } from "./data/siteData";
+import { useFordModels } from "./features/home/hooks";
 import { AdminGate, AdminPanel } from "./features/admin";
 
 /**
@@ -45,7 +45,8 @@ function useHashRoute() {
 
 export default function WebsiteStarter() {
   const hash = useHashRoute();
-  const financeCalculator = useFinanceCalculator(FORD_MODELS);
+  const fordModels = useFordModels();
+  const financeCalculator = useFinanceCalculator(fordModels);
 
   // ── Admin route ───────────────────────────────────────────────
   if (hash === "#admin") {
@@ -71,7 +72,7 @@ export default function WebsiteStarter() {
               <CampaignSection />
               <OffersSection />
               <FeaturesSection />
-              <CalculatorSection {...financeCalculator} fordModels={FORD_MODELS} />
+              <CalculatorSection {...financeCalculator} fordModels={fordModels} />
               <ReviewsSection />
               <ModelsSection />
               <TestDriveSection />

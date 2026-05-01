@@ -3,21 +3,46 @@ import {
   getPromotions,
   savePromotions,
   resetPromotions,
-  compressImage,
   hasCustomPromotions,
+  getCampaigns,
+  saveCampaigns,
+  resetCampaigns,
+  hasCustomCampaigns,
+  compressImage,
   createBlankPromotion,
 } from "../../data/promotionStore";
+import { hasCustomFordModels, hasCustomOtherModels } from "../../data/modelsStore";
 import type { PromotionData, PromotionItem, StoredImageItem } from "../../data/promotionTypes";
+import { FordModelsManager, OtherModelsManager } from "./ModelsManagers";
 
 /* ──────────────────────────────────────────────────────────────────── */
 
 export function AdminPanel() {
-  const [items, setItems] = React.useState<PromotionItem[]>(getPromotions);
-  const [saved, setSaved] = React.useState(false);
+  const [tab, setTab] = React.useState<"promotions" | "campaigns" | "ford_models" | "other_models">("promotions");
+
+  const [promoItems, setPromoItems] = React.useState<PromotionItem[]>(getPromotions);
+  const [campItems, setCampItems] = React.useState<PromotionItem[]>(getCampaigns);
+
+  const [promoSaved, setPromoSaved] = React.useState(false);
+  const [campSaved, setCampSaved] = React.useState(false);
+
   const [expandedId, setExpandedId] = React.useState<string | null>(() => {
     const promos = getPromotions();
     return promos.length > 0 ? promos[0].id : null;
   });
+
+  const items = tab === "promotions" ? promoItems : campItems;
+  const setItems = tab === "promotions" ? setPromoItems : setCampItems;
+  const saved = tab === "promotions" ? promoSaved : campSaved;
+  const setSaved = tab === "promotions" ? setPromoSaved : setCampSaved;
+
+  const switchTab = (newTab: "promotions" | "campaigns" | "ford_models" | "other_models") => {
+    setTab(newTab);
+    if (newTab === "promotions" || newTab === "campaigns") {
+      const targetItems = newTab === "promotions" ? promoItems : campItems;
+      setExpandedId(targetItems.length > 0 ? targetItems[0].id : null);
+    }
+  };
 
   // ── Item CRUD ───────────────────────────────────────────────────
 
@@ -69,17 +94,30 @@ export function AdminPanel() {
   // ── Save / Reset ────────────────────────────────────────────────
 
   const handleSave = () => {
-    savePromotions(items);
+    if (tab === "promotions") {
+      savePromotions(promoItems);
+    } else {
+      saveCampaigns(campItems);
+    }
     setSaved(true);
     setTimeout(() => setSaved(false), 2500);
   };
 
   const handleReset = () => {
-    if (!confirm("รีเซ็ตโปรโมชั่นทั้งหมดกลับเป็นค่าเริ่มต้น?")) return;
-    resetPromotions();
-    const defaults = getPromotions();
-    setItems(defaults);
-    setExpandedId(defaults[0]?.id ?? null);
+    const isPromo = tab === "promotions";
+    if (!confirm(`รีเซ็ต${isPromo ? "โปรโมชั่น" : "แคมเปญ"}ทั้งหมดกลับเป็นค่าเริ่มต้น?`)) return;
+    
+    if (isPromo) {
+      resetPromotions();
+      const defaults = getPromotions();
+      setPromoItems(defaults);
+      setExpandedId(defaults[0]?.id ?? null);
+    } else {
+      resetCampaigns();
+      const defaults = getCampaigns();
+      setCampItems(defaults);
+      setExpandedId(defaults[0]?.id ?? null);
+    }
     setSaved(false);
   };
 
@@ -90,9 +128,60 @@ export function AdminPanel() {
       {/* Header */}
       <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-zinc-200 shadow-sm">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 flex items-center justify-between h-14">
-          <h1 className="text-lg font-bold text-zinc-900">⚙️ จัดการโปรโมชั่น</h1>
+          <div className="flex items-center gap-4">
+            <h1 className="text-lg font-bold text-zinc-900">⚙️ จัดการเนื้อหา</h1>
+            <div className="hidden sm:flex items-center bg-zinc-100 rounded-lg p-1">
+              <button
+                onClick={() => switchTab("promotions")}
+                className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                  tab === "promotions" ? "bg-white text-blue-700 shadow-sm" : "text-zinc-600 hover:text-zinc-900"
+                }`}
+              >
+                โปรโมชั่น
+              </button>
+              <button
+                onClick={() => switchTab("campaigns")}
+                className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                  tab === "campaigns" ? "bg-white text-blue-700 shadow-sm" : "text-zinc-600 hover:text-zinc-900"
+                }`}
+              >
+                Campaign Landing
+              </button>
+              <button
+                onClick={() => switchTab("ford_models")}
+                className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                  tab === "ford_models" ? "bg-white text-blue-700 shadow-sm" : "text-zinc-600 hover:text-zinc-900"
+                }`}
+              >
+                รถในค่างวด
+              </button>
+              <button
+                onClick={() => switchTab("other_models")}
+                className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                  tab === "other_models" ? "bg-white text-blue-700 shadow-sm" : "text-zinc-600 hover:text-zinc-900"
+                }`}
+              >
+                รุ่นอื่นๆที่น่าสนใจ
+              </button>
+            </div>
+          </div>
           <div className="flex items-center gap-3">
-            {hasCustomPromotions() && (
+            {tab === "promotions" && hasCustomPromotions() && (
+              <span className="hidden sm:inline text-xs bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full font-medium">
+                ✏️ มีข้อมูลที่กำหนดเอง
+              </span>
+            )}
+            {tab === "campaigns" && hasCustomCampaigns() && (
+              <span className="hidden sm:inline text-xs bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full font-medium">
+                ✏️ มีข้อมูลที่กำหนดเอง
+              </span>
+            )}
+            {tab === "ford_models" && hasCustomFordModels() && (
+              <span className="hidden sm:inline text-xs bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full font-medium">
+                ✏️ มีข้อมูลที่กำหนดเอง
+              </span>
+            )}
+            {tab === "other_models" && hasCustomOtherModels() && (
               <span className="hidden sm:inline text-xs bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full font-medium">
                 ✏️ มีข้อมูลที่กำหนดเอง
               </span>
@@ -112,8 +201,44 @@ export function AdminPanel() {
       </header>
 
       <div className="mx-auto max-w-5xl px-4 sm:px-6 py-8 space-y-6">
-        {/* ─── PROMOTION LIST ──────────────────────────────────── */}
-        {items.map((item, idx) => (
+        <div className="sm:hidden grid grid-cols-2 bg-zinc-100 rounded-lg p-1 mb-4 gap-1">
+          <button
+            onClick={() => switchTab("promotions")}
+            className={`px-3 py-2 text-xs font-medium rounded-md transition-colors ${
+              tab === "promotions" ? "bg-white text-blue-700 shadow-sm" : "text-zinc-600"
+            }`}
+          >
+            โปรโมชั่น
+          </button>
+          <button
+            onClick={() => switchTab("campaigns")}
+            className={`px-3 py-2 text-xs font-medium rounded-md transition-colors ${
+              tab === "campaigns" ? "bg-white text-blue-700 shadow-sm" : "text-zinc-600"
+            }`}
+          >
+            Campaigns
+          </button>
+          <button
+            onClick={() => switchTab("ford_models")}
+            className={`px-3 py-2 text-xs font-medium rounded-md transition-colors ${
+              tab === "ford_models" ? "bg-white text-blue-700 shadow-sm" : "text-zinc-600"
+            }`}
+          >
+            รถในค่างวด
+          </button>
+          <button
+            onClick={() => switchTab("other_models")}
+            className={`px-3 py-2 text-xs font-medium rounded-md transition-colors ${
+              tab === "other_models" ? "bg-white text-blue-700 shadow-sm" : "text-zinc-600"
+            }`}
+          >
+            รุ่นอื่นๆที่น่าสนใจ
+          </button>
+        </div>
+        {/* ─── PROMOTION & CAMPAIGN LIST ──────────────────────────────────── */}
+        {(tab === "promotions" || tab === "campaigns") && (
+          <>
+            {items.map((item, idx) => (
           <PromotionEditor
             key={item.id}
             item={item}
@@ -125,6 +250,7 @@ export function AdminPanel() {
             onUpdateImages={(imgs) => updateImages(item.id, imgs)}
             onRemove={() => removeItem(item.id)}
             onMove={(dir) => moveItem(idx, dir)}
+            tab={tab}
           />
         ))}
 
@@ -134,7 +260,7 @@ export function AdminPanel() {
             onClick={addItem}
             className="rounded-xl bg-emerald-600 px-6 py-2.5 text-sm font-semibold text-white shadow-md hover:bg-emerald-700 transition-colors"
           >
-            ➕ เพิ่มโปรโมชั่นใหม่
+            ➕ เพิ่ม{tab === "promotions" ? "โปรโมชั่น" : "แคมเปญ"}ใหม่
           </button>
           <button
             onClick={handleSave}
@@ -183,6 +309,11 @@ export function AdminPanel() {
             ))}
           </div>
         </section>
+        </>
+        )}
+        
+        {tab === "ford_models" && <FordModelsManager />}
+        {tab === "other_models" && <OtherModelsManager />}
       </div>
     </div>
   );
@@ -202,6 +333,7 @@ function PromotionEditor({
   onUpdateImages,
   onRemove,
   onMove,
+  tab,
 }: {
   item: PromotionItem;
   index: number;
@@ -212,7 +344,11 @@ function PromotionEditor({
   onUpdateImages: (images: StoredImageItem[]) => void;
   onRemove: () => void;
   onMove: (dir: -1 | 1) => void;
+  tab: "promotions" | "campaigns";
 }) {
+  // Derive a simple string like 'promotions' or 'campaigns' based on the name fallback, mostly for generic buttons
+  // But actually we need `tab` to be passed down. Since `tab` isn't passed down, we use generic text in the body or pass `tab` as prop.
+  // Wait, I can just use generic text.
   const [uploading, setUploading] = React.useState(false);
   const fileRef = React.useRef<HTMLInputElement>(null);
 
@@ -268,7 +404,7 @@ function PromotionEditor({
           </span>
           <div className="min-w-0">
             <div className="font-bold text-zinc-900 truncate">
-              {item.data.name || <span className="text-zinc-300 italic">โปรโมชั่นใหม่</span>}
+              {item.data.name || <span className="text-zinc-300 italic">{tab === "promotions" ? "โปรโมชั่น" : "แคมเปญ"}ใหม่</span>}
             </div>
             <div className="text-xs text-zinc-400 mt-0.5">
               {item.data.specialPrice ? `฿${item.data.specialPrice}` : "ยังไม่ได้ตั้งราคา"} · {item.images.length} รูป
@@ -374,7 +510,7 @@ function PromotionEditor({
               onClick={onRemove}
               className="rounded-xl bg-red-50 px-5 py-2 text-sm font-medium text-red-600 hover:bg-red-100 transition-colors"
             >
-              🗑️ ลบโปรโมชั่นนี้
+              🗑️ ลบ{tab === "promotions" ? "โปรโมชั่น" : "แคมเปญ"}นี้
             </button>
           </div>
         </div>

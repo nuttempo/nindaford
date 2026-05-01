@@ -10,6 +10,7 @@ import { EVEREST_TREND_OFFER, EVEREST_TREND_IMAGES } from "./siteData";
 import type { PromotionData, PromotionItem, StoredImageItem } from "./promotionTypes";
 
 const PROMOS_KEY = "nindaford_promotions";
+const CAMPAIGNS_KEY = "nindaford_campaigns";
 
 // ─── helpers ────────────────────────────────────────────────────────
 
@@ -86,6 +87,35 @@ export function resetPromotions(): void {
 
 export function hasCustomPromotions(): boolean {
   return localStorage.getItem(PROMOS_KEY) !== null;
+}
+
+// ─── campaigns (multi-item) ────────────────────────────────────────
+
+export function getCampaigns(): PromotionItem[] {
+  try {
+    const raw = localStorage.getItem(CAMPAIGNS_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw) as PromotionItem[];
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    }
+  } catch {
+    /* corrupted → fall through */
+  }
+  return defaultPromotions();
+}
+
+export function saveCampaigns(items: PromotionItem[]): void {
+  localStorage.setItem(CAMPAIGNS_KEY, JSON.stringify(items));
+  window.dispatchEvent(new Event("campaign-updated"));
+}
+
+export function resetCampaigns(): void {
+  localStorage.removeItem(CAMPAIGNS_KEY);
+  window.dispatchEvent(new Event("campaign-updated"));
+}
+
+export function hasCustomCampaigns(): boolean {
+  return localStorage.getItem(CAMPAIGNS_KEY) !== null;
 }
 
 // ─── backward compat helpers (single-item API) ─────────────────────
