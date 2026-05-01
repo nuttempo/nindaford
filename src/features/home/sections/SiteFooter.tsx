@@ -14,7 +14,7 @@ export function SiteFooter() {
               <div className="text-sm font-bold text-gradient">นินดาขายฟอร์ด</div>
             </div>
             <div className="text-xs text-zinc-400">
-              © 2026 — นินดาขายฟอร์ด | สุขุมวิท 62
+              © 2026 — นินดาขายฟอร์ด | บางปู
             </div>
           </div>
         </div>

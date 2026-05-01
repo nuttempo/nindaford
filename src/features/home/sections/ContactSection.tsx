@@ -39,9 +39,9 @@ export function ContactSection() {
       <div className="mt-8 rounded-3xl overflow-hidden border border-black/5 shadow-sm">
         <div className="flex items-center gap-2 px-5 py-3 bg-white border-b border-black/5">
           <MapPin className="h-4 w-4 text-[color:var(--c-primary)]" />
-          <span className="text-sm font-semibold text-zinc-800">นินดาขายฟอร์ด — สุขุมวิท 62</span>
+          <span className="text-sm font-semibold text-zinc-800">นินดาขายฟอร์ด — บางปู</span>
         </div>
-        <iframe title="NindaFord Location" src="https://www.google.com/maps?q=13.694910870806051,100.6040596960761&output=embed" width="100%" height="280" style={{ border: "none" }} loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+        <iframe title="NindaFord Location" src="https://www.google.com/maps?q=13.538465645393027,100.62196027301505&output=embed" width="100%" height="280" style={{ border: "none" }} loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
       </div>
     </Section>
   );
