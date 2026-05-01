@@ -1,11 +1,12 @@
 import React from "react";
 import { ArrowRight, BadgePercent, CalendarClock, ShieldCheck } from "lucide-react";
-import { EVEREST_TREND_OFFER } from "../../../data/siteData";
 import { formatTHB } from "../../../utils/format";
 import { trackEvent } from "../../../utils/analytics";
 import { Button, Card, Pill, Section } from "../../../components/ui";
+import { usePromotion } from "../hooks/usePromotion";
 
 export function CampaignSection() {
+  const { promotion: offer } = usePromotion();
   const campaignId = "everest_trend_campaign_v1";
   const sectionRef = React.useRef<HTMLElement | null>(null);
   const hasTrackedViewRef = React.useRef(false);
@@ -92,21 +93,21 @@ export function CampaignSection() {
           </div>
 
           <div className="rounded-2xl border border-black/5 bg-zinc-50 p-5 md:p-6">
-            <h3 className="text-xl md:text-2xl font-extrabold text-zinc-900 leading-tight">{EVEREST_TREND_OFFER.name}</h3>
+            <h3 className="text-xl md:text-2xl font-extrabold text-zinc-900 leading-tight">{offer.name}</h3>
             <p className="mt-2 text-sm md:text-base text-zinc-600">ดีลกลางที่ใช้เป็นฐานต่อรอง พร้อมช่วยสรุปค่างวดให้เหมาะกับงบก่อนตัดสินใจ</p>
 
             <div className="mt-4 grid gap-3 grid-cols-1 sm:grid-cols-3">
               <div className="rounded-xl border border-black/5 bg-white p-4">
                 <div className="text-xs text-zinc-500">ราคาปกติ</div>
-                <div className="mt-1 text-base font-bold text-zinc-900 tabular-nums">฿{formatTHB(EVEREST_TREND_OFFER.normalPrice)}</div>
+                <div className="mt-1 text-base font-bold text-zinc-900 tabular-nums">฿{formatTHB(offer.normalPrice)}</div>
               </div>
               <div className="rounded-xl border border-[color:var(--c-primary)]/15 bg-[color:var(--c-primary)]/5 p-4">
                 <div className="text-xs text-zinc-500">ราคาแคมเปญ</div>
-                <div className="mt-1 text-base font-bold text-[color:var(--c-primary)] tabular-nums">฿{formatTHB(EVEREST_TREND_OFFER.specialPrice)}</div>
+                <div className="mt-1 text-base font-bold text-[color:var(--c-primary)] tabular-nums">฿{formatTHB(offer.specialPrice)}</div>
               </div>
               <div className="rounded-xl border border-emerald-200/70 bg-emerald-50 p-4">
                 <div className="text-xs text-emerald-700/80">ส่วนต่างสูงสุด</div>
-                <div className="mt-1 text-base font-bold text-emerald-700 tabular-nums">฿{formatTHB(EVEREST_TREND_OFFER.save)}</div>
+                <div className="mt-1 text-base font-bold text-emerald-700 tabular-nums">฿{formatTHB(offer.save)}</div>
               </div>
             </div>
           </div>
@@ -139,7 +140,7 @@ export function CampaignSection() {
             </a>
 
             <a
-              href={EVEREST_TREND_OFFER.offerUrl}
+              href={offer.offerUrl}
               target="_blank"
               rel="noreferrer"
               onClick={() => {

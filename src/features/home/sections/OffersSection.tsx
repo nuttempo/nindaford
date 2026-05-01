@@ -1,10 +1,12 @@
 import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
-import { EVEREST_TREND_IMAGES, EVEREST_TREND_OFFER } from "../../../data/siteData";
 import { formatTHB } from "../../../utils/format";
 import { trackEvent } from "../../../utils/analytics";
 import { AutoCarousel, Button, Card, Pill, Section } from "../../../components/ui";
+import { usePromotion } from "../hooks/usePromotion";
 
 export function OffersSection() {
+  const { promotion: offer, images } = usePromotion();
+
   return (
     <Section
       id="offers"
@@ -15,18 +17,18 @@ export function OffersSection() {
         <Card className="p-6 md:p-8 shadow-sm ring-1 ring-slate-900/5 bg-white hover:shadow-lg hover:ring-slate-900/10 transition-all duration-300">
           <div className="grid gap-4">
             <AutoCarousel
-              items={EVEREST_TREND_IMAGES}
+              items={images}
               intervalMs={3500}
               overlayTitle="Everest Trend"
               overlaySubtitle="โปรฯ กลางอ้างอิง Ford Thailand"
-              overlayPrice={EVEREST_TREND_OFFER.specialPrice}
+              overlayPrice={offer.specialPrice}
             />
 
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <Pill className="border-black/5 bg-zinc-100/50">Everest Trend</Pill>
-                <div className="mt-3 text-lg font-bold text-zinc-900 break-words">{EVEREST_TREND_OFFER.name}</div>
-                <div className="mt-2 text-sm text-zinc-500">{EVEREST_TREND_OFFER.note}</div>
+                <div className="mt-3 text-lg font-bold text-zinc-900 break-words">{offer.name}</div>
+                <div className="mt-2 text-sm text-zinc-500">{offer.note}</div>
               </div>
               <Pill className="bg-orange-100/50 text-orange-700 border-orange-200/50">
                 <Sparkles className="h-3.5 w-3.5" />
@@ -35,7 +37,7 @@ export function OffersSection() {
             </div>
 
             <div className="mt-2 grid gap-3 grid-cols-1 sm:grid-cols-3">
-              {[{ label: "ราคาปกติ", value: EVEREST_TREND_OFFER.normalPrice }, { label: "ราคาพิเศษ", value: EVEREST_TREND_OFFER.specialPrice }, { label: "ส่วนลด", value: EVEREST_TREND_OFFER.save }].map(
+              {[{ label: "ราคาปกติ", value: offer.normalPrice }, { label: "ราคาพิเศษ", value: offer.specialPrice }, { label: "ส่วนลด", value: offer.save }].map(
                 (x) => (
                   <div
                     key={x.label}
@@ -59,10 +61,10 @@ export function OffersSection() {
                   ขอข้อเสนอเฉพาะของคุณ <ArrowRight className="h-4 w-4" />
                 </Button>
               </a>
-              <a href={EVEREST_TREND_OFFER.offerUrl} target="_blank" rel="noreferrer" onClick={() => trackEvent("cta_click", { area: "offers", channel: "ford_official", cta: "official_offer" })}>
+              <a href={offer.offerUrl} target="_blank" rel="noreferrer" onClick={() => trackEvent("cta_click", { area: "offers", channel: "ford_official", cta: "official_offer" })}>
                 <Button variant="outline" className="w-full sm:w-auto py-3 rounded-xl bg-slate-50 border-black/5 hover:bg-slate-100">ดูโปรฯ ทางการ (Ford)</Button>
               </a>
-              <a href={EVEREST_TREND_OFFER.allOffersUrl} target="_blank" rel="noreferrer" onClick={() => trackEvent("cta_click", { area: "offers", channel: "ford_official", cta: "all_offers" })}>
+              <a href={offer.allOffersUrl} target="_blank" rel="noreferrer" onClick={() => trackEvent("cta_click", { area: "offers", channel: "ford_official", cta: "all_offers" })}>
                 <Button variant="outline" className="w-full sm:w-auto py-3 rounded-xl bg-slate-50 border-black/5 hover:bg-slate-100">ดูรวมโปรฯ ทั้งหมด</Button>
               </a>
             </div>
